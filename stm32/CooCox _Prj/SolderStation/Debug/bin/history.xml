@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -g2 -nostartfiles -Map=SolderStation.map -O0 --gc-sections -LC:\Users\Drovosekov\AppData\Roaming\CooCox\CoIDE\configuration\ProgramData\SolderStation -TC:\Users\Drovosekov\AppData\Roaming\CooCox\CoIDE\configuration\ProgramData\SolderStation/link.ld -g">
+      <target file="SolderStation.elf" lastModified="152690898bf">
+         <source file="..\obj\stm32f10x_tim.o" lastModified="152687ea50d"/>
+         <source file="..\obj\mcu_tim.o" lastModified="152690895ff"/>
+         <source file="..\obj\mcu_gpio.o" lastModified="152690895b5"/>
+         <source file="..\obj\i2cm.o" lastModified="152687ea599"/>
+         <source file="..\obj\stm32f10x_adc.o" lastModified="152687ea7df"/>
+         <source file="..\obj\mcu_adc.o" lastModified="15269089698"/>
+         <source file="..\obj\delay.o" lastModified="152687ea445"/>
+         <source file="..\obj\startup_stm32f10x_md.o" lastModified="152687ea5fd"/>
+         <source file="..\obj\stm32f10x_gpio.o" lastModified="152687ea64d"/>
+         <source file="..\obj\system_stm32f10x.o" lastModified="152687ea5d5"/>
+         <source file="..\obj\hd44780.o" lastModified="152687ea753"/>
+         <source file="..\obj\syscalls.o" lastModified="152687ea857"/>
+         <source file="..\obj\stm32f10x_rcc.o" lastModified="152687ea6ed"/>
+         <source file="..\obj\pcf8574.o" lastModified="152687ea956"/>
+         <source file="..\obj\cp866toepson.o" lastModified="152687ea771"/>
+         <source file="..\obj\stm32f10x_dma.o" lastModified="152687ea89d"/>
+         <source file="..\obj\cp1251toepson.o" lastModified="152687ea8bb"/>
+         <source file="..\obj\stm32f10x_i2c.o" lastModified="152687ea924"/>
+         <source file="..\obj\main.o" lastModified="1526908964e"/>
+      </target>
+   </processor>
+</history>

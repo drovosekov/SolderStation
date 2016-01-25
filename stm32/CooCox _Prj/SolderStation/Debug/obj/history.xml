@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m3 -mthumb -g2 -w -O0 -c -DSTM32F100R8T6B -D__ASSEMBLY__ -DSTM32F10X_MD_VL -DUSE_STDPERIPH_DRIVER -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\cmsis -ID:\WorkSync\SolderStation\stm32\CooCox _Prj -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\delay -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\cmsis_boot -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\stm_lib -ID:\WorkSync\SolderStation\stm32 -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\hd44780 -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\peripherals\inc -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\peripherals -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\stm_lib\inc">
+      <target file="mcu_gpio.o" lastModified="152690895b5">
+         <source file="..\..\..\app\peripherals\src\mcu_gpio.c" lastModified="152643e0756"/>
+      </target>
+      <target file="i2cm.o" lastModified="152687ea599">
+         <source file="..\..\..\app\hd44780\i2cm.c" lastModified="152643fb436"/>
+      </target>
+      <target file="stm32f10x_rcc.o" lastModified="152687ea6ed">
+         <source file="..\..\..\stm_lib\src\stm32f10x_rcc.c" lastModified="15260851b10"/>
+      </target>
+      <target file="mcu_adc.o" lastModified="15269089698">
+         <source file="..\..\..\app\peripherals\src\mcu_adc.c" lastModified="15263006531"/>
+      </target>
+      <target file="mcu_tim.o" lastModified="152690895ff">
+         <source file="..\..\..\app\peripherals\src\mcu_tim.c" lastModified="15265d73a30"/>
+      </target>
+      <target file="stm32f10x_i2c.o" lastModified="152687ea924">
+         <source file="..\..\..\stm_lib\src\stm32f10x_i2c.c" lastModified="15260859040"/>
+      </target>
+      <target file="startup_stm32f10x_md.o" lastModified="152687ea5fd">
+         <source file="..\..\..\cmsis_boot\startup\startup_stm32f10x_md.c" lastModified="15260851b10"/>
+      </target>
+      <target file="stm32f10x_gpio.o" lastModified="152687ea64d">
+         <source file="..\..\..\stm_lib\src\stm32f10x_gpio.c" lastModified="15260859040"/>
+      </target>
+      <target file="delay.o" lastModified="152687ea445">
+         <source file="..\..\..\app\delay\delay.c" lastModified="152643cce4e"/>
+      </target>
+      <target file="system_stm32f10x.o" lastModified="152687ea5d5">
+         <source file="..\..\..\cmsis_boot\system_stm32f10x.c" lastModified="15260851b10"/>
+      </target>
+      <target file="syscalls.o" lastModified="152687ea857">
+         <source file="..\..\..\components\coocox-master\C_library\source\syscalls.c" lastModified="15245d14a50"/>
+      </target>
+      <target file="pcf8574.o" lastModified="152687ea956">
+         <source file="..\..\..\app\hd44780\pcf8574.c" lastModified="1521b59e430"/>
+      </target>
+      <target file="stm32f10x_tim.o" lastModified="152687ea50d">
+         <source file="..\..\..\stm_lib\src\stm32f10x_tim.c" lastModified="15260895ce8"/>
+      </target>
+      <target file="stm32f10x_adc.o" lastModified="152687ea7df">
+         <source file="..\..\..\stm_lib\src\stm32f10x_adc.c" lastModified="15260873620"/>
+      </target>
+      <target file="cp1251toepson.o" lastModified="152687ea8bb">
+         <source file="..\..\..\app\hd44780\cp1251toepson.c" lastModified="15265e54fa8"/>
+      </target>
+      <target file="hd44780.o" lastModified="152687ea753">
+         <source file="..\..\..\app\hd44780\hd44780.c" lastModified="15265e68ff8"/>
+      </target>
+      <target file="stm32f10x_dma.o" lastModified="152687ea89d">
+         <source file="..\..\..\stm_lib\src\stm32f10x_dma.c" lastModified="15260851b10"/>
+      </target>
+      <target file="cp866toepson.o" lastModified="152687ea771">
+         <source file="..\..\..\app\hd44780\cp866toepson.c" lastModified="15265e56330"/>
+      </target>
+      <target file="main.o" lastModified="1526908964e">
+         <source file="..\..\..\app\main.c" lastModified="15269088fbf"/>
+      </target>
+   </processor>
+</history>
