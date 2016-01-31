@@ -79,8 +79,8 @@
     <File name="hd44780/i2cm.h" path="app/hd44780/i2cm.h" type="1"/>
     <File name="stm_lib/inc/stm32f10x_tim.h" path="stm_lib/inc/stm32f10x_tim.h" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
-    <File name="hd44780/cp1251toepson.h" path="app/hd44780/cp1251toepson.h" type="1"/>
     <File name="stm_lib/src/stm32f10x_tim.c" path="stm_lib/src/stm32f10x_tim.c" type="1"/>
+    <File name="hd44780/cp1251toepson.h" path="app/hd44780/cp1251toepson.h" type="1"/>
     <File name="cmsis_boot/startup" path="" type="2"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
     <File name="peripherals/src/mcu_tim.c" path="app/peripherals/src/mcu_tim.c" type="1"/>

@@ -11,28 +11,28 @@ void mcu_gpio_deinit();
 /////should be defined by user /////
 
 /* ADC defines */
-#define SOLDER_TEMP_ADC		A, 1, HIGH, ANALOG, SPEED_2MHZ //уст. температуры паяльника
-#define AIRFEN_TEMP_ADC		A, 2, HIGH, ANALOG, SPEED_2MHZ //уст. температуры фена
-#define AIR_FLOW_ADC		A, 3, HIGH, ANALOG, SPEED_2MHZ //уст. мощность воздушного потока
+#define SOLDER_TEMP_ADC			A, 1, LOW, ANALOG, SPEED_2MHZ //уст. температуры паяльника
+#define AIRFEN_TEMP_ADC			A, 2, LOW, ANALOG, SPEED_2MHZ //уст. температуры фена
+#define AIR_FLOW_ADC			A, 3, LOW, ANALOG, SPEED_2MHZ //уст. мощность воздушного потока
 /* end ADC defines */
 
 /* buttons defines */
-#define SOLDER_ONOFF_BUT	A, 6, HIGH, INPUT_PULL_UP, SPEED_2MHZ //кнопка влючения/отключения паяльника
-#define AIRFEN_ONOFF_BUT	A, 7, HIGH, INPUT_PULL_UP, SPEED_2MHZ //кнопка влючения/отключения фена
+#define SOLDER_ONOFF_BUT		C, 1, HIGH, INPUT_PULL_UP, SPEED_2MHZ //кнопка влючения/отключения паяльника
+#define AIRFEN_ONOFF_BUT		C, 2, HIGH, INPUT_PULL_UP, SPEED_2MHZ //кнопка влючения/отключения фена
 
-#define USER_BTN			A, 0, HIGH, INPUT_PULL_UP, SPEED_2MHZ //user button on STM32F100R8T6B dev board
+#define USER_BTN				A, 0, HIGH, INPUT_PULL_UP, SPEED_2MHZ //user button on STM32F100R8T6B dev board
 #ifdef STM32F100_DISCOVERY_BOARD
-	#define USER_LED			C, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED green on STM32F100R8T6B dev board
+	#define USER_LED_green		C, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED green on STM32F100R8T6B dev board
 	#define USER_LED_blue		C, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED blue on STM32F100R8T6B dev board
 #else
-	#define USER_LED			C, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED green on STM32F103C8T6 dev board
+	#define USER_LED_green		C, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //user LED green on STM32F103C8T6 dev board
 #endif
 /* end buttons defines */
 
 /* out pins defines */
-#define AIR_FLOW_PWM		B, 1, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH4 - ШИМ для фена
-#define AIR_HEATER			B, 2, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH4 - ШИМ для фена
-#define SOLDER_HEATER		B, 3, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH4 - ШИМ для фена
+#define SOLDER_HEATER			C, 3, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя паяльника
+#define AIR_HEATER				C, 4, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя фена
+#define AIR_FLOW_PWM			A, 15, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM2 CH1 - ШИМ для фена
 /* end out pins defines */
 
 
@@ -134,39 +134,43 @@ void mcu_gpio_deinit();
 			}
 
 //-----------------------------------------------------------------------------
-#define GPIO_PIN_ON_HIGH(PORT, PIN, LEVEL, MODE, SPEED) \
+#define GPIO_PIN_ON_HIGH(PORT, PIN) \
 			{ GPIO##PORT->BSRR |= (1UL << PIN); }
 
-#define GPIO_PIN_ON_LOW(PORT, PIN, LEVEL, MODE, SPEED) \
+#define GPIO_PIN_ON_LOW(PORT, PIN) \
 			{ GPIO##PORT->BSRR |= (1UL << PIN) << 16; }
 
-#define GPIO_PIN_OFF_HIGH(PORT, PIN, LEVEL, MODE, SPEED) \
+#define GPIO_PIN_OFF_HIGH(PORT, PIN) \
 			{ GPIO##PORT->BSRR |= (1UL << PIN) << 16; }
 
-#define GPIO_PIN_OFF_LOW(PORT, PIN, LEVEL, MODE, SPEED) \
+#define GPIO_PIN_OFF_LOW(PORT, PIN) \
 			{ GPIO##PORT->BSRR |= (1UL << PIN); }
 
 //-----------------------------------------------------------------------------
 #define GPIO_PIN_ON(PORT, PIN, LEVEL, MODE, SPEED) \
-			{ GPIO_PIN_ON_##LEVEL(PORT, PIN, LEVEL, MODE, SPEED) }
+			{ GPIO_PIN_ON_##LEVEL(PORT, PIN) }
 
 #define GPIO_PIN_OFF(PORT, PIN, LEVEL, MODE, SPEED) \
-			{ GPIO_PIN_OFF_##LEVEL(PORT, PIN, LEVEL, MODE, SPEED) }
+			{ GPIO_PIN_OFF_##LEVEL(PORT, PIN) }
 
+#define GPIO_PIN_REVERSE(PORT, PIN, LEVEL, MODE, SPEED) \
+			{ if(GPIO_PIN_SIGNAL_##LEVEL(PORT, PIN)) { GPIO_PIN_OFF_##LEVEL(PORT, PIN) } \
+			  else { GPIO_PIN_ON_##LEVEL(PORT, PIN) } }
 //-----------------------------------------------------------------------------
-#define GPIO_PIN_SIGNAL_HIGH(PORT, PIN, LEVEL, MODE, SPEED) \
+#define GPIO_PIN_SIGNAL_HIGH(PORT, PIN) \
 			( (GPIO##PORT->IDR & (1UL << PIN)) == (1UL << PIN) )
 
-#define GPIO_PIN_SIGNAL_LOW(PORT, PIN, LEVEL, MODE, SPEED) \
+#define GPIO_PIN_SIGNAL_LOW(PORT, PIN) \
 		( (GPIO##PORT->IDR & (1UL << PIN)) != (1UL << PIN) )
 
 #define GPIO_PIN_SIGNAL(PORT, PIN, LEVEL, MODE, SPEED) \
-			( GPIO_PIN_SIGNAL_##LEVEL(PORT, PIN, LEVEL, MODE, SPEED) )
+			( GPIO_PIN_SIGNAL_##LEVEL(PORT, PIN) )
 
 //-----------------------------------------------------------------------------
 #define PIN_CONFIGURATION(PIN_DESCRIPTION) GPIO_PIN_CONFIGURATION(PIN_DESCRIPTION)
 #define PIN_ON(PIN_DESCRIPTION) GPIO_PIN_ON(PIN_DESCRIPTION)
 #define PIN_OFF(PIN_DESCRIPTION) GPIO_PIN_OFF(PIN_DESCRIPTION)
+#define PIN_REVERSE(PIN_DESCRIPTION) GPIO_PIN_REVERSE(PIN_DESCRIPTION)
 #define PIN_STATE(PIN_DESCRIPTION) GPIO_PIN_SIGNAL(PIN_DESCRIPTION)
 
 #endif /* MCU_GPIO_H_ */

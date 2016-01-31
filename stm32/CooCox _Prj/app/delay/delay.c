@@ -7,6 +7,7 @@
 // Автор: Надыршин Руслан / Nadyrshin Ruslan
 //------------------------------------------------------------------------------
 #include "delay.h"
+#include "main.h"
 
 //Timer Functions
 static unsigned int delay = 0;
@@ -16,7 +17,14 @@ static unsigned int delay = 0;
 //==============================================================================
 void SysTick_Handler(void)
 {
+	static u16 led = 0;
+
 	if(delay){delay--;}
+
+	if(++led >= 50000){
+		led=0;
+		PIN_REVERSE(USER_LED_green);
+	}
 }
 
 //==============================================================================

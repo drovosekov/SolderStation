@@ -332,6 +332,14 @@ void hd44780_bus_init(void)
 //==============================================================================
 void hd44780_start(void)
 {
+	delay_ms(15);
+	hd44780_write_cmd(0x30); //reset lcd
+	delay_ms(5);
+	hd44780_write_cmd(0x30); //reset lcd
+	delay_ms(1);
+	hd44780_write_cmd(0x30); //reset lcd
+	delay_ms(1);
+
 #if HD44780_4bitMode
   hd44780_write_cmd(0x02);       // Размер символа, ширина шина данных
   uint8_t Reg = 0x20;
@@ -348,6 +356,7 @@ void hd44780_start(void)
   hd44780_write_cmd(0x0C);      // Включаем дисплей
   delay_ms(10);
   hd44780_write_cmd(0x06);      // Автоинкремент адреса
+  delay_ms(10);
   hd44780_clear();              // Очистка экрана
 }
 //==============================================================================

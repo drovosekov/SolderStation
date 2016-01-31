@@ -6,12 +6,12 @@
 // "Электроника в объектике" https://www.youtube.com/channel/UChButpZaL5kUUl_zTyIDFkQ
 // Автор: Надыршин Руслан / Nadyrshin Ruslan
 //------------------------------------------------------------------------------
-#ifndef MAIN
-#define MAIN
+#ifndef MAIN_H_
+#define MAIN_H_
 
 #define STM32F100_DISCOVERY_BOARD
 
-#define delay_airflow_off_ms 10000
+#define delay_airflow_off_ms 5000
 
 #include <stdlib.h>
 #include <string.h>
@@ -27,7 +27,6 @@
 #include "peripherals/inc/mcu_tim.h"
 
 void init_All();
-void blink_led();
 void turnon_backlight();
 u8 get_TIM_state(TIM_TypeDef* TIMx);
 

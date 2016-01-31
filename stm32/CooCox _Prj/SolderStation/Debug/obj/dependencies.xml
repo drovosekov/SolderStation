@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dependencies>
    <includePath signature="/ID:\WorkSync\SolderStation\stm32\CooCox _Prj\cmsis /ID:\WorkSync\SolderStation\stm32\CooCox _Prj /ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\delay /ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app /ID:\WorkSync\SolderStation\stm32\CooCox _Prj\cmsis_boot /ID:\WorkSync\SolderStation\stm32\CooCox _Prj\stm_lib /ID:\WorkSync\SolderStation\stm32 /ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\hd44780 /ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\peripherals\inc /ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\peripherals /ID:\WorkSync\SolderStation\stm32\CooCox _Prj\stm_lib\inc">
-      <source file="..\..\..\cmsis\core_cm3.h" lastModified="15260851ef8">
-         <include file="..\..\..\cmsis\core_cmInstr.h"/>
-         <include file="..\..\..\cmsis\core_cmFunc.h"/>
-      </source>
       <source file="..\..\..\stm_lib\src\stm32f10x_i2c.c" lastModified="15260859040">
          <include file="..\..\..\stm_lib\inc\stm32f10x_i2c.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
       </source>
-      <source file="..\..\..\app\hd44780\hd44780.h" lastModified="15265e92808">
+      <source file="..\..\..\cmsis\core_cm3.h" lastModified="15260851ef8">
+         <include file="..\..\..\cmsis\core_cmInstr.h"/>
+         <include file="..\..\..\cmsis\core_cmFunc.h"/>
+      </source>
+      <source file="..\..\..\app\hd44780\hd44780.h" lastModified="1527f8013af">
          <include file="..\..\..\app\types.h"/>
       </source>
       <source file="..\..\..\stm_lib\inc\stm32f10x_rcc.h" lastModified="15260851b10">
@@ -19,7 +19,7 @@
          <include file="..\..\..\stm_lib\inc\stm32f10x_gpio.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
       </source>
-      <source file="..\..\..\app\hd44780\hd44780.c" lastModified="15265e69f98">
+      <source file="..\..\..\app\hd44780\hd44780.c" lastModified="1527faf1f5d">
          <include file="..\..\..\stm_lib\inc\stm32f10x_gpio.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
          <include file="..\..\..\app\delay\delay.h"/>
@@ -64,25 +64,26 @@
       </source>
       <source file="..\..\..\app\delay\delay.h" lastModified="1526097bc98">
       </source>
-      <source file="..\..\..\app\hd44780\cp866toepson.c" lastModified="15265e56330">
+      <source file="..\..\..\app\hd44780\cp866toepson.c" lastModified="15265e564bb">
          <include file="..\..\..\app\hd44780\cp866toepson.h"/>
       </source>
       <source file="..\..\..\stm_lib\inc\stm32f10x_i2c.h" lastModified="15260859040">
          <include file="..\..\..\cmsis_boot\stm32f10x.h"/>
       </source>
-      <source file="..\..\..\app\delay\delay.c" lastModified="152643cce4e">
+      <source file="..\..\..\app\delay\delay.c" lastModified="1527f5ca1b8">
          <include file="..\..\..\app\delay\delay.h"/>
+         <include file="..\..\..\app\main.h"/>
       </source>
       <source file="..\..\..\app\types.h" lastModified="1521b59e430">
       </source>
       <source file="..\..\..\cmsis\core_cmInstr.h" lastModified="152608522e0">
       </source>
-      <source file="..\..\..\app\peripherals\src\mcu_tim.c" lastModified="15265d73a30">
+      <source file="..\..\..\app\peripherals\src\mcu_tim.c" lastModified="1528eda0882">
          <include file="..\..\..\app\main.h"/>
       </source>
       <source file="..\..\..\components\coocox-master\C_library\source\syscalls.c" lastModified="15245d159f0">
       </source>
-      <source file="..\..\..\app\main.h" lastModified="152690827cc">
+      <source file="..\..\..\app\main.h" lastModified="1528409eb69">
          <include file="..\..\..\cmsis_boot\stm32f10x.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_adc.h"/>
@@ -97,25 +98,30 @@
       <source file="..\..\..\stm_lib\src\stm32f10x_rcc.c" lastModified="15260851b10">
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
       </source>
-      <source file="..\..\..\cmsis_boot\stm32f10x.h" lastModified="15260851ef8">
+      <source file="..\..\..\cmsis_boot\stm32f10x.h" lastModified="1527f9f3bab">
          <include file="..\..\..\cmsis\core_cm3.h"/>
          <include file="..\..\..\cmsis_boot\system_stm32f10x.h"/>
          <include file="..\..\..\cmsis_boot\stm32f10x_conf.h"/>
       </source>
-      <source file="..\..\..\app\peripherals\inc\mcu_adc.h" lastModified="15263004d8e">
+      <source file="..\..\..\app\peripherals\inc\mcu_adc.h" lastModified="15298e94834">
       </source>
       <source file="..\..\..\app\hd44780\i2cm.h" lastModified="1521b59e430">
          <include file="..\..\..\app\types.h"/>
+      </source>
+      <source file="..\..\..\app\main.c" lastModified="15293e13908">
+         <include file="..\..\..\app\main.h"/>
       </source>
       <source file="..\..\..\stm_lib\src\stm32f10x_adc.c" lastModified="15260873620">
          <include file="..\..\..\stm_lib\inc\stm32f10x_adc.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
       </source>
-      <source file="..\..\..\app\hd44780\i2cm.c" lastModified="152643fb436">
+      <source file="..\..\..\app\hd44780\i2cm.c" lastModified="1527fc4cd7e">
          <include file="..\..\..\stm_lib\inc\stm32f10x_gpio.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_i2c.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
          <include file="..\..\..\app\hd44780\i2cm.h"/>
+      </source>
+      <source file="..\..\..\app\peripherals\inc\mcu_gpio.h" lastModified="1529941886a">
       </source>
       <source file="..\..\..\stm_lib\src\stm32f10x_dma.c" lastModified="15260851b10">
          <include file="..\..\..\stm_lib\inc\stm32f10x_dma.h"/>
@@ -127,15 +133,15 @@
       <source file="..\..\..\stm_lib\inc\stm32f10x_tim.h" lastModified="15260895ce8">
          <include file="..\..\..\cmsis_boot\stm32f10x.h"/>
       </source>
-      <source file="..\..\..\app\peripherals\src\mcu_adc.c" lastModified="15263006531">
+      <source file="..\..\..\app\peripherals\src\mcu_adc.c" lastModified="152992dcdfc">
          <include file="..\..\..\app\main.h"/>
       </source>
       <source file="..\..\..\app\hd44780\cp1251toepson.h" lastModified="1521b59e430">
       </source>
-      <source file="..\..\..\app\peripherals\src\mcu_gpio.c" lastModified="152643e0756">
+      <source file="..\..\..\app\peripherals\src\mcu_gpio.c" lastModified="152992a5bb7">
          <include file="..\..\..\app\main.h"/>
       </source>
-      <source file="..\..\..\app\hd44780\cp1251toepson.c" lastModified="15265e54fa8">
+      <source file="..\..\..\app\hd44780\cp1251toepson.c" lastModified="15265e55097">
          <include file="..\..\..\app\hd44780\cp1251toepson.h"/>
       </source>
    </includePath>

@@ -1,62 +1,62 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
-   <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m3 -mthumb -g2 -w -O0 -c -DSTM32F100R8T6B -D__ASSEMBLY__ -DSTM32F10X_MD_VL -DUSE_STDPERIPH_DRIVER -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\cmsis -ID:\WorkSync\SolderStation\stm32\CooCox _Prj -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\delay -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\cmsis_boot -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\stm_lib -ID:\WorkSync\SolderStation\stm32 -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\hd44780 -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\peripherals\inc -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\peripherals -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\stm_lib\inc">
-      <target file="mcu_gpio.o" lastModified="152690895b5">
-         <source file="..\..\..\app\peripherals\src\mcu_gpio.c" lastModified="152643e0756"/>
+   <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m3 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F100R8 -D__ASSEMBLY__ -DSTM32F10X_MD_VL -DUSE_STDPERIPH_DRIVER -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\cmsis -ID:\WorkSync\SolderStation\stm32\CooCox _Prj -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\delay -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\cmsis_boot -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\stm_lib -ID:\WorkSync\SolderStation\stm32 -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\hd44780 -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\peripherals\inc -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\app\peripherals -ID:\WorkSync\SolderStation\stm32\CooCox _Prj\stm_lib\inc">
+      <target file="mcu_gpio.o" lastModified="1529941bae7">
+         <source file="..\..\..\app\peripherals\src\mcu_gpio.c" lastModified="152992a5bb7"/>
       </target>
-      <target file="i2cm.o" lastModified="152687ea599">
-         <source file="..\..\..\app\hd44780\i2cm.c" lastModified="152643fb436"/>
+      <target file="i2cm.o" lastModified="1529941bd04">
+         <source file="..\..\..\app\hd44780\i2cm.c" lastModified="1527fc4cd7e"/>
       </target>
-      <target file="stm32f10x_rcc.o" lastModified="152687ea6ed">
+      <target file="stm32f10x_rcc.o" lastModified="1529941be98">
          <source file="..\..\..\stm_lib\src\stm32f10x_rcc.c" lastModified="15260851b10"/>
       </target>
-      <target file="mcu_adc.o" lastModified="15269089698">
-         <source file="..\..\..\app\peripherals\src\mcu_adc.c" lastModified="15263006531"/>
+      <target file="mcu_tim.o" lastModified="1529941bc72">
+         <source file="..\..\..\app\peripherals\src\mcu_tim.c" lastModified="1528eda0882"/>
       </target>
-      <target file="mcu_tim.o" lastModified="152690895ff">
-         <source file="..\..\..\app\peripherals\src\mcu_tim.c" lastModified="15265d73a30"/>
+      <target file="mcu_adc.o" lastModified="1529941c015">
+         <source file="..\..\..\app\peripherals\src\mcu_adc.c" lastModified="152992dcdfc"/>
       </target>
-      <target file="stm32f10x_i2c.o" lastModified="152687ea924">
+      <target file="stm32f10x_i2c.o" lastModified="1529941c123">
          <source file="..\..\..\stm_lib\src\stm32f10x_i2c.c" lastModified="15260859040"/>
       </target>
-      <target file="startup_stm32f10x_md.o" lastModified="152687ea5fd">
+      <target file="startup_stm32f10x_md.o" lastModified="1529941bd97">
          <source file="..\..\..\cmsis_boot\startup\startup_stm32f10x_md.c" lastModified="15260851b10"/>
       </target>
-      <target file="stm32f10x_gpio.o" lastModified="152687ea64d">
+      <target file="stm32f10x_gpio.o" lastModified="1529941bde7">
          <source file="..\..\..\stm_lib\src\stm32f10x_gpio.c" lastModified="15260859040"/>
       </target>
-      <target file="delay.o" lastModified="152687ea445">
-         <source file="..\..\..\app\delay\delay.c" lastModified="152643cce4e"/>
+      <target file="delay.o" lastModified="1529941bb47">
+         <source file="..\..\..\app\delay\delay.c" lastModified="1527f5ca1b8"/>
       </target>
-      <target file="system_stm32f10x.o" lastModified="152687ea5d5">
+      <target file="system_stm32f10x.o" lastModified="1529941bd63">
          <source file="..\..\..\cmsis_boot\system_stm32f10x.c" lastModified="15260851b10"/>
       </target>
-      <target file="syscalls.o" lastModified="152687ea857">
+      <target file="syscalls.o" lastModified="1529941c057">
          <source file="..\..\..\components\coocox-master\C_library\source\syscalls.c" lastModified="15245d14a50"/>
       </target>
-      <target file="pcf8574.o" lastModified="152687ea956">
+      <target file="pcf8574.o" lastModified="1529941c160">
          <source file="..\..\..\app\hd44780\pcf8574.c" lastModified="1521b59e430"/>
       </target>
-      <target file="stm32f10x_tim.o" lastModified="152687ea50d">
+      <target file="stm32f10x_tim.o" lastModified="1529941bc20">
          <source file="..\..\..\stm_lib\src\stm32f10x_tim.c" lastModified="15260895ce8"/>
       </target>
-      <target file="stm32f10x_adc.o" lastModified="152687ea7df">
+      <target file="stm32f10x_adc.o" lastModified="1529941bfbd">
          <source file="..\..\..\stm_lib\src\stm32f10x_adc.c" lastModified="15260873620"/>
       </target>
-      <target file="cp1251toepson.o" lastModified="152687ea8bb">
-         <source file="..\..\..\app\hd44780\cp1251toepson.c" lastModified="15265e54fa8"/>
+      <target file="cp1251toepson.o" lastModified="1529941c0c4">
+         <source file="..\..\..\app\hd44780\cp1251toepson.c" lastModified="15265e55097"/>
       </target>
-      <target file="hd44780.o" lastModified="152687ea753">
-         <source file="..\..\..\app\hd44780\hd44780.c" lastModified="15265e68ff8"/>
+      <target file="hd44780.o" lastModified="1529941bf18">
+         <source file="..\..\..\app\hd44780\hd44780.c" lastModified="1527faf0fbd"/>
       </target>
-      <target file="stm32f10x_dma.o" lastModified="152687ea89d">
+      <target file="stm32f10x_dma.o" lastModified="1529941c0a3">
          <source file="..\..\..\stm_lib\src\stm32f10x_dma.c" lastModified="15260851b10"/>
       </target>
-      <target file="cp866toepson.o" lastModified="152687ea771">
-         <source file="..\..\..\app\hd44780\cp866toepson.c" lastModified="15265e56330"/>
+      <target file="cp866toepson.o" lastModified="1529941bf4f">
+         <source file="..\..\..\app\hd44780\cp866toepson.c" lastModified="15265e564bb"/>
       </target>
-      <target file="main.o" lastModified="1526908964e">
-         <source file="..\..\..\app\main.c" lastModified="15269088fbf"/>
+      <target file="main.o" lastModified="1529941be3e">
+         <source file="..\..\..\app\main.c" lastModified="15293e13908"/>
       </target>
    </processor>
 </history>

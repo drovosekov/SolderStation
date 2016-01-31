@@ -16,9 +16,9 @@ void init_tim(){
     // Полярность => пульс - это единица (+3.3V)
     TIM_OCConfig.TIM_OCPolarity = TIM_OCPolarity_Low;
     // Инициализируем 3й выход таймера №3
-    TIM_OC3Init(TIM3, &TIM_OCConfig);
+    TIM_OC3Init(TIM2, &TIM_OCConfig);
 
-    TIM_Cmd(TIM3, DISABLE);
+    TIM_Cmd(TIM2, DISABLE);
 
 
 	//устанавливаем уровень приоритета прерывания от таймера TIM4
@@ -63,6 +63,6 @@ void TIM6_DAC_IRQHandler(void)
 {
 	hd44780_backlight_set(0);
 
-	TIM_ClearFlag(TIM6, TIM_SR_UIF);//Сбрасываем флаг прерывания
+	//TIM_ClearFlag(TIM6, TIM_SR_UIF);//Сбрасываем флаг прерывания
 	TIM_Cmd(TIM6, DISABLE);
 }

@@ -9,60 +9,58 @@
 
 #include "main.h"
 
-static u8 i=0;
-
 int main()
 {
+	static u16 oldSolderT = 0, oldAirT = 0;
+	u16 airT = 0, solderT = 0;
+	u8 symbUpTemp = 0;
+
 	init_All();
 
 	while (1)
 	{
 		hd44780_goto_xy(0, 0);
 
-		hd44780_printf("Solder t: %c%d%c\n", 1, 260, 8);
+		solderT = get_solder_settemp();
+		symbUpTemp = (oldSolderT < solderT) ? 1 : 20;
+		hd44780_printf("Solder t: %c%d%c  \n", symbUpTemp, solderT, 8);
+
+		airT = get_airfen_settemp();
 
 		hd44780_printf("Air: ");
-		if(PIN_STATE(USER_BTN)){
-			hd44780_printf("%d%%", 87);
+		//if(PIN_STATE(USER_BTN)){
+			hd44780_printf("%d%%  ", get_airfen_airflow_perc_value());
 
 			hd44780_goto_xy(1, 10);
-			hd44780_printf("%c%d%c", 20, 155, 8);
-		}else{
-			hd44780_printf("off         ");
-		}
+			symbUpTemp = (oldAirT < airT) ? 1 : 20;
+			hd44780_printf("%c%d%c  ", symbUpTemp, airT, 8);
+		//}else{
+		//	hd44780_printf("off         ");
+		//}
 
-		if(PIN_STATE(USER_BTN)){
+		//if(PIN_STATE(USER_BTN)){
 			turnon_backlight();
+		//}
+
+#ifdef STM32F100_DISCOVERY_BOARD
+		if(get_TIM_state(TIM6)){
+			PIN_ON(USER_LED_blue);
+		}else{
+			PIN_OFF(USER_LED_blue);
 		}
+#endif
 
-		delay_ms(50);
+		delay_ms(150);
 
-		blink_led();
+		oldSolderT = solderT;
+		oldAirT = airT;
 	}
 }
 
 void turnon_backlight(){
-	TIM_Cmd(TIM6, DISABLE);
-	TIM_Cmd(TIM6, ENABLE);
+	//TIM_Cmd(TIM6, DISABLE);
+	//TIM_Cmd(TIM6, ENABLE);
 	hd44780_backlight_set(1);
-}
-
-
-void blink_led(){
-#ifdef STM32F100_DISCOVERY_BOARD
-	if(get_TIM_state(TIM6)){
-		PIN_ON(USER_LED_blue);
-	}else{
-		PIN_OFF(USER_LED_blue);
-	}
-#endif
-	if(i % 2 == 0){
-		PIN_ON(USER_LED);
-	}else{
-		PIN_OFF(USER_LED);
-	}
-	i++;
-	if(i==256){i=0;}
 }
 
 void init_All(){
@@ -75,7 +73,6 @@ void init_All(){
 	mcu_gpio_deinit();
 
 	hd44780_init();
-
 
 	u8 user_char[8]; //—юда будем записывать пользовательский символ
 
@@ -101,10 +98,9 @@ void init_All(){
 
 	hd44780_set_user_char(1, user_char);
 
+	init_adc();
 
-	//init_adc();
-
-	init_tim();
+	//init_tim();
 }
 
 
