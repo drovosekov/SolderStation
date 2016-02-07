@@ -9,7 +9,7 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-#define STM32F100_DISCOVERY_BOARD
+//#define STM32F100_DISCOVERY_BOARD
 
 #define delay_airflow_off_ms 5000
 
@@ -28,6 +28,5 @@
 
 void init_All();
 void turnon_backlight();
-u8 get_TIM_state(TIM_TypeDef* TIMx);
 
 #endif

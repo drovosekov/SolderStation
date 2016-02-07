@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Project version="2G - 2.0.3" name="SolderStation">
   <Target name="SolderStation" isCurrent="1">
-    <Device manufacturerId="9" manufacturerName="ST" chipId="503" chipName="STM32F100R8T6B" boardId="" boardName=""/>
+    <Device manufacturerId="9" manufacturerName="ST" chipId="503" chipName="STM32F100R8T6B" boardId="" boardName="" boardUrl="" coreId="" coreName=""/>
     <BuildOption>
       <Compile>
         <Option name="OptimizationLevel" value="0"/>
@@ -37,7 +37,7 @@
           <Memory name="IROM2" type="ReadOnly" size="" startValue=""/>
           <Memory name="IRAM2" type="ReadWrite" size="" startValue=""/>
         </MemoryAreas>
-        <LocateLinkFile path="c:/coocox/coide/configuration/programdata/solderstation/link.ld" type="0"/>
+        <LocateLinkFile path="c:/users/drovosekov/appdata/roaming/coocox/coide/configuration/programdata/solderstation/link.ld" type="0"/>
       </Link>
       <Output>
         <Option name="OutputFileType" value="0"/>
@@ -74,13 +74,14 @@
     <ExcludeFile/>
   </Target>
   <Components path="./"/>
+  <LocalComponents/>
   <Files>
     <File name="types.h" path="app/types.h" type="1"/>
     <File name="hd44780/i2cm.h" path="app/hd44780/i2cm.h" type="1"/>
     <File name="stm_lib/inc/stm32f10x_tim.h" path="stm_lib/inc/stm32f10x_tim.h" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
-    <File name="stm_lib/src/stm32f10x_tim.c" path="stm_lib/src/stm32f10x_tim.c" type="1"/>
     <File name="hd44780/cp1251toepson.h" path="app/hd44780/cp1251toepson.h" type="1"/>
+    <File name="stm_lib/src/stm32f10x_tim.c" path="stm_lib/src/stm32f10x_tim.c" type="1"/>
     <File name="cmsis_boot/startup" path="" type="2"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
     <File name="peripherals/src/mcu_tim.c" path="app/peripherals/src/mcu_tim.c" type="1"/>
@@ -131,4 +132,5 @@
     <File name="stm_lib/inc" path="" type="2"/>
     <File name="main.c" path="app/main.c" type="1"/>
   </Files>
+  <Bookmarks/>
 </Project>

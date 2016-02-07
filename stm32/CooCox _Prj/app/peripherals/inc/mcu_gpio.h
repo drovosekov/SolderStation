@@ -13,15 +13,18 @@ void mcu_gpio_deinit();
 /* ADC defines */
 #define SOLDER_TEMP_ADC			A, 1, LOW, ANALOG, SPEED_2MHZ //уст. температуры паяльника
 #define AIRFEN_TEMP_ADC			A, 2, LOW, ANALOG, SPEED_2MHZ //уст. температуры фена
-#define AIR_FLOW_ADC			A, 3, LOW, ANALOG, SPEED_2MHZ //уст. мощность воздушного потока
 /* end ADC defines */
 
 /* buttons defines */
-#define SOLDER_ONOFF_BUT		C, 1, HIGH, INPUT_PULL_UP, SPEED_2MHZ //кнопка влючения/отключения паяльника
-#define AIRFEN_ONOFF_BUT		C, 2, HIGH, INPUT_PULL_UP, SPEED_2MHZ //кнопка влючения/отключения фена
+#define ENCODER_A				A, 6, HIGH, INPUT_PULL_UP, SPEED_10MHZ //энкодер вход 1
+#define ENCODER_B				A, 7, HIGH, INPUT_PULL_UP, SPEED_10MHZ //энкодер вход 2
 
-#define USER_BTN				A, 0, HIGH, INPUT_PULL_UP, SPEED_2MHZ //user button on STM32F100R8T6B dev board
+#define SELECT_BTN				C, 15, HIGH, INPUT_PULL_UP, SPEED_2MHZ //кнопка на энкодере
+#define GERKON_AIR				A, 15, HIGH, INPUT_PULL_UP, SPEED_2MHZ //геркон установки фена на подставку
+#define GERKON_SOLDER			B, 4, HIGH,  INPUT_PULL_UP, SPEED_2MHZ  //геркон установки паяльника на подставку
+
 #ifdef STM32F100_DISCOVERY_BOARD
+	#define USER_BTN			A, 0, HIGH, INPUT_PULL_UP, SPEED_2MHZ //user button on STM32F100R8T6B dev board
 	#define USER_LED_green		C, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED green on STM32F100R8T6B dev board
 	#define USER_LED_blue		C, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED blue on STM32F100R8T6B dev board
 #else
@@ -30,9 +33,11 @@ void mcu_gpio_deinit();
 /* end buttons defines */
 
 /* out pins defines */
-#define SOLDER_HEATER			C, 3, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя паяльника
-#define AIR_HEATER				C, 4, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя фена
-#define AIR_FLOW_PWM			A, 15, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM2 CH1 - ШИМ для фена
+#define SOLDER_HEATER			B, 6, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя паяльника
+#define SOLDER_GREEN_LED		B, 5, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //зеленый светодиод паяльника
+#define AIR_HEATER				B, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя фена
+#define AIR_GREEN_LED			B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //зеленый светодиод фена
+#define AIR_FLOW_PWM			B, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM1 CH1N - ШИМ для фена
 /* end out pins defines */
 
 
@@ -172,5 +177,6 @@ void mcu_gpio_deinit();
 #define PIN_OFF(PIN_DESCRIPTION) GPIO_PIN_OFF(PIN_DESCRIPTION)
 #define PIN_REVERSE(PIN_DESCRIPTION) GPIO_PIN_REVERSE(PIN_DESCRIPTION)
 #define PIN_STATE(PIN_DESCRIPTION) GPIO_PIN_SIGNAL(PIN_DESCRIPTION)
+#define PIN_N_STATE(PIN_DESCRIPTION) !GPIO_PIN_SIGNAL(PIN_DESCRIPTION)
 
 #endif /* MCU_GPIO_H_ */

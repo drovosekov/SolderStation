@@ -22,6 +22,7 @@ void i2cm_init(I2C_TypeDef* I2Cx, uint32_t i2c_clock)
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);
   else
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C2, ENABLE);
+
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 
   // Настраиваем I2C

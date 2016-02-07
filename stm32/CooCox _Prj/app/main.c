@@ -17,6 +17,9 @@ int main()
 
 	init_All();
 
+	PIN_ON(SOLDER_HEATER);
+	PIN_ON(AIR_HEATER);
+
 	while (1)
 	{
 		hd44780_goto_xy(0, 0);
@@ -25,32 +28,34 @@ int main()
 		symbUpTemp = (oldSolderT < solderT) ? 1 : 20;
 		hd44780_printf("Solder t: %c%d%c  \n", symbUpTemp, solderT, 8);
 
-		airT = get_airfen_settemp();
+		airT = TIM3->CNT;//get_airfen_settemp();
 
 		hd44780_printf("Air: ");
-		//if(PIN_STATE(USER_BTN)){
+		if(PIN_STATE(SELECT_BTN)){
 			hd44780_printf("%d%%  ", get_airfen_airflow_perc_value());
 
 			hd44780_goto_xy(1, 10);
 			symbUpTemp = (oldAirT < airT) ? 1 : 20;
 			hd44780_printf("%c%d%c  ", symbUpTemp, airT, 8);
-		//}else{
-		//	hd44780_printf("off         ");
-		//}
+		}else{
+			hd44780_printf("off         ");
+		}
 
 		//if(PIN_STATE(USER_BTN)){
 			turnon_backlight();
 		//}
 
-#ifdef STM32F100_DISCOVERY_BOARD
-		if(get_TIM_state(TIM6)){
-			PIN_ON(USER_LED_blue);
-		}else{
-			PIN_OFF(USER_LED_blue);
-		}
-#endif
+			if(PIN_N_STATE(GERKON_SOLDER)){
+				PIN_REVERSE(SOLDER_HEATER);
+				PIN_REVERSE(SOLDER_GREEN_LED);
+			}
 
-		delay_ms(150);
+			if(PIN_N_STATE(GERKON_AIR)){
+				PIN_REVERSE(AIR_HEATER);
+				PIN_REVERSE(AIR_GREEN_LED);
+			}
+
+		//delay_ms(50);
 
 		oldSolderT = solderT;
 		oldAirT = airT;
@@ -98,14 +103,10 @@ void init_All(){
 
 	hd44780_set_user_char(1, user_char);
 
-	init_adc();
+	//init_adc();
 
-	//init_tim();
+	init_tim();
 }
 
 
 
-//состояние таймера - запущен или нет
-u8 get_TIM_state(TIM_TypeDef* TIMx){
-	return TIMx->CR1 & TIM_CR1_CEN;
-}

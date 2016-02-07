@@ -6,6 +6,16 @@ void init_tim(){
     // Конфигурация выхода таймера
     TIM_OCInitTypeDef TIM_OCConfig;
 
+    //работа энкодера
+    TIM_TimeBaseStructInit(&TIM_BaseConfig);
+    TIM_BaseConfig.TIM_Period = 512;
+    TIM_BaseConfig.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_TimeBaseInit(TIM3, &TIM_BaseConfig);
+    TIM_EncoderInterfaceConfig(TIM3, TIM_EncoderMode_TI12, TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);
+    TIM3->CNT=22; //начальное значение
+    TIM_Cmd(TIM3, ENABLE);
+
+
     //ШИМ для вентилятора фена
     // Конфигурируем выход таймера, режим - PWM1
     TIM_OCConfig.TIM_OCMode = TIM_OCMode_PWM1;
@@ -65,4 +75,9 @@ void TIM6_DAC_IRQHandler(void)
 
 	//TIM_ClearFlag(TIM6, TIM_SR_UIF);//Сбрасываем флаг прерывания
 	TIM_Cmd(TIM6, DISABLE);
+}
+
+//состояние таймера - запущен или нет
+u8 get_TIM_state(TIM_TypeDef* TIMx){
+	return TIMx->CR1 & TIM_CR1_CEN;
 }

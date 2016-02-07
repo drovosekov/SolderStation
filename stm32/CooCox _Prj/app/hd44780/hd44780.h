@@ -25,7 +25,7 @@
   // 0x20-0x27 дл€ pcf8574 и 0x38-0x3F дл€ pcf8574a.
   // ќтсутствие перемычки - обычно лог. 1
   #define HD44780_pcf8574_addr          0x27    // 7-битный i2c-адрес микросхемы pcf8574(a)      
-  #define HD44780_pcf8574_i2c_periph    I2C1    // I2C1 или I2C2        
+  #define HD44780_pcf8574_i2c_periph    I2C2    // I2C1 или I2C2
   
   #define HD44780_4bitMode              1       // Ќ≈ ћ≈Ќя“№ - 4-бит режим  
   #define HD44780_Data_Shift            4       // Ќ≈ ћ≈Ќя“№ - Ѕитовый сдвиг параллельной шины влево 
