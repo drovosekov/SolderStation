@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 #ifndef TYPES
 #define TYPES
-
+/*
 // Определения типов для 32-разрядных процессоров
 #define int8_t          signed char
 #define uint8_t         unsigned char
@@ -16,5 +16,12 @@
 #define uint16_t        unsigned short int
 #define int32_t         signed int
 #define uint32_t        unsigned int
+*/
+
+enum EncoderModes{
+	selSolderTemperature = 0,
+	selAirFlowPower = 1,
+	selAirHeaterTemperature = 2
+};
 
 #endif

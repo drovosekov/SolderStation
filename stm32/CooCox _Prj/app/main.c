@@ -12,6 +12,7 @@
 int main()
 {
 	static u16 oldSolderT = 0, oldAirT = 0;
+	//static EncoderModes modeSelected = selSolderTemperature;
 	u16 airT = 0, solderT = 0;
 	u8 symbUpTemp = 0;
 
@@ -20,15 +21,22 @@ int main()
 	PIN_ON(SOLDER_HEATER);
 	PIN_ON(AIR_HEATER);
 
+	turnon_backlight();
+	hd44780_goto_xy(0, 0);
+	hd44780_printf(" Solder station \n drovosekov.net");
+	delay_ms(3000);
+	hd44780_clear();
+
 	while (1)
 	{
 		hd44780_goto_xy(0, 0);
 
+		//if(modeSelected == selSolderTemperature){
 		solderT = get_solder_settemp();
 		symbUpTemp = (oldSolderT < solderT) ? 1 : 20;
 		hd44780_printf("Solder t: %c%d%c  \n", symbUpTemp, solderT, 8);
 
-		airT = TIM3->CNT;//get_airfen_settemp();
+		airT = get_airfen_settemp();
 
 		hd44780_printf("Air: ");
 		if(PIN_STATE(SELECT_BTN)){
@@ -45,17 +53,21 @@ int main()
 			turnon_backlight();
 		//}
 
-			if(PIN_N_STATE(GERKON_SOLDER)){
-				PIN_REVERSE(SOLDER_HEATER);
-				PIN_REVERSE(SOLDER_GREEN_LED);
-			}
+		if(PIN_N_STATE(GERKON_SOLDER)){
+			PIN_OFF(SOLDER_HEATER);
+			PIN_ON(SOLDER_GREEN_LED);
+		}else{
+			PIN_OFF(SOLDER_GREEN_LED);
+			PIN_ON(SOLDER_HEATER);
+		}
 
-			if(PIN_N_STATE(GERKON_AIR)){
-				PIN_REVERSE(AIR_HEATER);
-				PIN_REVERSE(AIR_GREEN_LED);
-			}
-
-		//delay_ms(50);
+		if(PIN_N_STATE(GERKON_AIR)){
+			PIN_OFF(AIR_HEATER);
+			PIN_ON(AIR_GREEN_LED);
+		}else{
+			PIN_OFF(AIR_GREEN_LED);
+			PIN_ON(AIR_HEATER);
+		}
 
 		oldSolderT = solderT;
 		oldAirT = airT;

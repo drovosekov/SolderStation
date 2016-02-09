@@ -9,7 +9,17 @@
 #ifndef _HD44780_H
 #define _HD44780_H
 
-#include "../types.h"
+#include "main.h"
+
+typedef enum {
+	LCD_DISABLE = 0,
+	LCD_ENABLE = !LCD_DISABLE
+} lcd_state;
+
+typedef enum {
+	CURSOR_DISABLE = 0,
+	CURSOR_ENABLE = !CURSOR_DISABLE
+} cursor_state;
 
 
 // Размеры индикатора
@@ -93,5 +103,6 @@ void hd44780_puts(char *str);
 void hd44780_printf(const char *format, ...);
 // Процедура записи в дисплей ползовательских символов
 void hd44780_set_user_char(uint8_t char_num, uint8_t * char_data);
-
+// Процедура установки режима дисплея
+void hd44780_set_state(lcd_state state, cursor_state cur_state);
 #endif

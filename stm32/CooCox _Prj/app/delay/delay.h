@@ -12,8 +12,8 @@
 
 void SysTick_Handler();
 // Процедура программной задержки ~1 мкс
-void delay_us(unsigned int us);
+void delay_us(u32 us);
 // Процедура программной задержки ~1 мс
-void delay_ms(unsigned int ms);
+void delay_ms(u32 ms);
 
 #endif

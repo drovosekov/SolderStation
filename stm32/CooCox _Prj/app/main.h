@@ -9,6 +9,7 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
+
 //#define STM32F100_DISCOVERY_BOARD
 
 #define delay_airflow_off_ms 5000
@@ -25,8 +26,11 @@
 #include "peripherals/inc/mcu_adc.h"
 #include "peripherals/inc/mcu_gpio.h"
 #include "peripherals/inc/mcu_tim.h"
+#include "types.h"
+#include "delay.h"
 
 void init_All();
 void turnon_backlight();
+
 
 #endif

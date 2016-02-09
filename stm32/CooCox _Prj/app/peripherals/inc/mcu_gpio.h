@@ -24,7 +24,7 @@ void mcu_gpio_deinit();
 #define GERKON_SOLDER			B, 4, HIGH,  INPUT_PULL_UP, SPEED_2MHZ  //геркон установки паяльника на подставку
 
 #ifdef STM32F100_DISCOVERY_BOARD
-	#define USER_BTN			A, 0, HIGH, INPUT_PULL_UP, SPEED_2MHZ //user button on STM32F100R8T6B dev board
+	#define USER_BTN			A, 0, HIGH, INPUT_PULL_UP, SPEED_2MHZ 				//user button on STM32F100R8T6B dev board
 	#define USER_LED_green		C, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED green on STM32F100R8T6B dev board
 	#define USER_LED_blue		C, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED blue on STM32F100R8T6B dev board
 #else

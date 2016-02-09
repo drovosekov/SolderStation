@@ -19,16 +19,6 @@
          <include file="..\..\..\stm_lib\inc\stm32f10x_gpio.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
       </source>
-      <source file="..\..\..\app\hd44780\hd44780.c" lastModified="152bc8e7899">
-         <include file="..\..\..\stm_lib\inc\stm32f10x_gpio.h"/>
-         <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
-         <include file="..\..\..\app\delay\delay.h"/>
-         <include file="..\..\..\app\hd44780\hd44780.h"/>
-         <include file="..\..\..\app\hd44780\i2cm.h"/>
-         <include file="..\..\..\app\hd44780\cp1251toepson.h"/>
-         <include file="..\..\..\app\hd44780\cp866toepson.h"/>
-         <include file="..\..\..\app\hd44780\pcf8574.h"/>
-      </source>
       <source file="..\..\..\stm_lib\inc\stm32f10x_adc.h" lastModified="15260873620">
          <include file="..\..\..\cmsis_boot\stm32f10x.h"/>
       </source>
@@ -62,7 +52,7 @@
          <include file="..\..\..\stm_lib\inc\stm32f10x_tim.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
       </source>
-      <source file="..\..\..\app\delay\delay.h" lastModified="1526097bc98">
+      <source file="..\..\..\app\delay\delay.h" lastModified="152c75cf7eb">
       </source>
       <source file="..\..\..\app\hd44780\cp866toepson.c" lastModified="15265e564bb">
          <include file="..\..\..\app\hd44780\cp866toepson.h"/>
@@ -70,17 +60,19 @@
       <source file="..\..\..\stm_lib\inc\stm32f10x_i2c.h" lastModified="15260859040">
          <include file="..\..\..\cmsis_boot\stm32f10x.h"/>
       </source>
-      <source file="..\..\..\app\delay\delay.c" lastModified="152bc78480e">
-         <include file="..\..\..\app\delay\delay.h"/>
+      <source file="..\..\..\app\delay\delay.c" lastModified="152c7944232">
          <include file="..\..\..\app\main.h"/>
       </source>
-      <source file="..\..\..\app\types.h" lastModified="1521b59e430">
+      <source file="..\..\..\app\types.h" lastModified="152c15aa810">
       </source>
       <source file="..\..\..\cmsis\core_cmInstr.h" lastModified="152608522e0">
       </source>
+      <source file="..\..\..\app\peripherals\src\mcu_tim.c" lastModified="152bd29b9d7">
+         <include file="..\..\..\app\main.h"/>
+      </source>
       <source file="..\..\..\components\coocox-master\C_library\source\syscalls.c" lastModified="15245d159f0">
       </source>
-      <source file="..\..\..\app\main.h" lastModified="152bc6c6e48">
+      <source file="..\..\..\app\main.h" lastModified="152c2341641">
          <include file="..\..\..\cmsis_boot\stm32f10x.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_adc.h"/>
@@ -91,6 +83,8 @@
          <include file="..\..\..\app\peripherals\inc\mcu_adc.h"/>
          <include file="..\..\..\app\peripherals\inc\mcu_gpio.h"/>
          <include file="..\..\..\app\peripherals\inc\mcu_tim.h"/>
+         <include file="..\..\..\app\types.h"/>
+         <include file="..\..\..\app\delay\delay.h"/>
       </source>
       <source file="..\..\..\stm_lib\src\stm32f10x_rcc.c" lastModified="15260851b10">
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
@@ -105,7 +99,7 @@
       <source file="..\..\..\app\hd44780\i2cm.h" lastModified="152b7407911">
          <include file="..\..\..\app\types.h"/>
       </source>
-      <source file="..\..\..\app\main.c" lastModified="152bcfcdebe">
+      <source file="..\..\..\app\main.c" lastModified="152c796557a">
          <include file="..\..\..\app\main.h"/>
       </source>
       <source file="..\..\..\stm_lib\src\stm32f10x_adc.c" lastModified="15260873620">
@@ -118,7 +112,7 @@
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
          <include file="..\..\..\app\hd44780\i2cm.h"/>
       </source>
-      <source file="..\..\..\app\peripherals\inc\mcu_gpio.h" lastModified="152bcefac7a">
+      <source file="..\..\..\app\peripherals\inc\mcu_gpio.h" lastModified="152c215d3fe">
       </source>
       <source file="..\..\..\stm_lib\src\stm32f10x_dma.c" lastModified="15260851b10">
          <include file="..\..\..\stm_lib\inc\stm32f10x_dma.h"/>
