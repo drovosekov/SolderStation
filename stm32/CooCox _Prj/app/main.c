@@ -53,7 +53,7 @@ int main()
 			turnon_backlight();
 		//}
 
-		if(PIN_N_STATE(GERKON_SOLDER)){
+		if(PIN_STATE(GERKON_SOLDER)){
 			PIN_OFF(SOLDER_HEATER);
 			PIN_ON(SOLDER_GREEN_LED);
 		}else{
@@ -61,7 +61,7 @@ int main()
 			PIN_ON(SOLDER_HEATER);
 		}
 
-		if(PIN_N_STATE(GERKON_AIR)){
+		if(PIN_STATE(GERKON_AIR)){
 			PIN_OFF(AIR_HEATER);
 			PIN_ON(AIR_GREEN_LED);
 		}else{

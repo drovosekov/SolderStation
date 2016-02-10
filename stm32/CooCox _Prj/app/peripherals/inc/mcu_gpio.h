@@ -20,8 +20,8 @@ void mcu_gpio_deinit();
 #define ENCODER_B				A, 7, HIGH, INPUT_PULL_UP, SPEED_10MHZ //энкодер вход 2
 
 #define SELECT_BTN				C, 15, HIGH, INPUT_PULL_UP, SPEED_2MHZ //кнопка на энкодере
-#define GERKON_AIR				A, 15, HIGH, INPUT_PULL_UP, SPEED_2MHZ //геркон установки фена на подставку
-#define GERKON_SOLDER			B, 4, HIGH,  INPUT_PULL_UP, SPEED_2MHZ  //геркон установки паяльника на подставку
+#define GERKON_AIR				A, 15, LOW, INPUT_PULL_UP, SPEED_2MHZ //геркон установки фена на подставку
+#define GERKON_SOLDER			B, 4, LOW,  INPUT_PULL_UP, SPEED_2MHZ  //геркон установки паяльника на подставку
 
 #ifdef STM32F100_DISCOVERY_BOARD
 	#define USER_BTN			A, 0, HIGH, INPUT_PULL_UP, SPEED_2MHZ 				//user button on STM32F100R8T6B dev board
@@ -41,8 +41,34 @@ void mcu_gpio_deinit();
 /* end out pins defines */
 
 
-///////////////////////////////////
 
+//////////////////////////////////////////////
+// Универсальные макросы для работы с GPIO
+//////////////////////////////////////////////
+
+#define PIN_CONFIGURATION(PIN_DESCRIPTION) GPIO_PIN_CONFIGURATION(PIN_DESCRIPTION) //задает конфигурацию конкретного вывода МК
+//формат конфигурацонной строки:
+//-----------------------------------------------------------------------------
+//#define NAME								название вывода в коде программы
+//		(A,B,C,D,E,F,G),					используемый порт IO
+//		(#0-15),							номер в порту
+//		(HIGH|			для корректной работы PIN_STATE() в случае входа подтянутого к GND (INPUT_PULL_DOWN); в случае сконфигурированного выхода через PIN_ON() установит VCC на выводе
+//		 LOW),			для корректной работы PIN_STATE() в случае входа подтянутого к VCC (INPUT_PULL_UP);   в случае сконфигурированного выхода через PIN_ON() установит GND на выводе
+//		(ANALOG|							аналоговый вход;
+//		 INPUT_FLOATING|					вход без подтяжки, болтающийся (англ. float) в воздухе
+//		 INPUT_PULL_DOWN|					вход с подтяжкой к земле (англ. Pull-down)
+//		 INPUT_PULL_UP|						вход с подтяжкой к питанию (англ. Pull-up)
+//		 GENERAL_OUTPUT_PUSH_PULL|			выход двумя состояниями (англ. Push-Pull — туда-сюда)
+//		 GENERAL_OUTPUT_OPEN_DRAIN|			выход с открытым стоком (англ. Open Drain)
+//		 ALTERNATE_OUTPUT_OPEN_DRAIN|		выход с открытым стоком для альтернативных функций (англ. Alternate Function).
+//Используется в случаях, когда выводом должна управлять периферия, прикрепленная к данному разряду порта (например, вывод Tx USART и т.п.)
+//		 ALTERNATE_OUTPUT_PUSH_PULL),		то же самое, но с двумя состояниями
+//		(SPEED_2MHZ|SPEED_10MHZ|SPEED_50MHZ)рабочая частота конфигурируемого вывода МК
+
+#define PIN_ON(PIN_DESCRIPTION) GPIO_PIN_ON(PIN_DESCRIPTION)			//включить выход
+#define PIN_OFF(PIN_DESCRIPTION) GPIO_PIN_OFF(PIN_DESCRIPTION)			//отключить выход
+#define PIN_REVERSE(PIN_DESCRIPTION) GPIO_PIN_REVERSE(PIN_DESCRIPTION)	//изменение состояния выхода на противоположное
+#define PIN_STATE(PIN_DESCRIPTION) GPIO_PIN_SIGNAL(PIN_DESCRIPTION)		//вернет состояние вывода (1-включен, 0-выключен)
 
 //-----------------------------------------------------------------------------
 #define GPIO_PIN_SPEED_2MHZ()	(2UL)
@@ -172,11 +198,5 @@ void mcu_gpio_deinit();
 			( GPIO_PIN_SIGNAL_##LEVEL(PORT, PIN) )
 
 //-----------------------------------------------------------------------------
-#define PIN_CONFIGURATION(PIN_DESCRIPTION) GPIO_PIN_CONFIGURATION(PIN_DESCRIPTION)
-#define PIN_ON(PIN_DESCRIPTION) GPIO_PIN_ON(PIN_DESCRIPTION)
-#define PIN_OFF(PIN_DESCRIPTION) GPIO_PIN_OFF(PIN_DESCRIPTION)
-#define PIN_REVERSE(PIN_DESCRIPTION) GPIO_PIN_REVERSE(PIN_DESCRIPTION)
-#define PIN_STATE(PIN_DESCRIPTION) GPIO_PIN_SIGNAL(PIN_DESCRIPTION)
-#define PIN_N_STATE(PIN_DESCRIPTION) !GPIO_PIN_SIGNAL(PIN_DESCRIPTION)
 
 #endif /* MCU_GPIO_H_ */
