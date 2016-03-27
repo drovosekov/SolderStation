@@ -34,10 +34,10 @@ void mcu_gpio_deinit();
 
 /* out pins defines */
 #define SOLDER_HEATER			B, 6, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя паяльника
-#define SOLDER_GREEN_LED		B, 5, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //зеленый светодиод паяльника
-#define AIR_HEATER				B, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя фена
-#define AIR_GREEN_LED			B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //зеленый светодиод фена
+#define AIR_HEATER				B, 5, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя фена
 #define AIR_FLOW_PWM			B, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM1 CH1N - ШИМ для фена
+
+#define BUZZER					B, 7, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_2MHZ //выход TIM4 CH2N - пищалка
 /* end out pins defines */
 
 
@@ -64,6 +64,10 @@ void mcu_gpio_deinit();
 //Используется в случаях, когда выводом должна управлять периферия, прикрепленная к данному разряду порта (например, вывод Tx USART и т.п.)
 //		 ALTERNATE_OUTPUT_PUSH_PULL),		то же самое, но с двумя состояниями
 //		(SPEED_2MHZ|SPEED_10MHZ|SPEED_50MHZ)рабочая частота конфигурируемого вывода МК
+//пример вызова:
+//=================================================================================================================
+//#define AIR_FLOW_PWM			B, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ
+//PIN_CONFIGURATION(AIR_FLOW_PWM);
 
 #define PIN_ON(PIN_DESCRIPTION) GPIO_PIN_ON(PIN_DESCRIPTION)			//включить выход
 #define PIN_OFF(PIN_DESCRIPTION) GPIO_PIN_OFF(PIN_DESCRIPTION)			//отключить выход

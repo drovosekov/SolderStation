@@ -14,64 +14,78 @@ int main()
 	static u16 oldSolderT = 0, oldAirT = 0;
 	//static EncoderModes modeSelected = selSolderTemperature;
 	u16 airT = 0, solderT = 0;
-	u8 symbUpTemp = 0;
 
 	init_All();
 
 	PIN_ON(SOLDER_HEATER);
 	PIN_ON(AIR_HEATER);
 
-	turnon_backlight();
-	hd44780_goto_xy(0, 0);
-	hd44780_printf(" Solder station \n drovosekov.net");
-	delay_ms(3000);
-	hd44780_clear();
-
 	while (1)
 	{
-		hd44780_goto_xy(0, 0);
-
-		//if(modeSelected == selSolderTemperature){
+		//=========Solder=========
 		solderT = get_solder_settemp();
-		symbUpTemp = (oldSolderT < solderT) ? 1 : 20;
-		hd44780_printf("Solder t: %c%d%c  \n", symbUpTemp, solderT, 8);
+		hd44780_goto_xy(0, 0);
+		hd44780_puts("Solder t: ");
+		if(oldSolderT < solderT){
+			hd44780_write_data(SYMB_UP_ARROW);
+		}else{
+			hd44780_write_data(SYMB_DN_ARROW);
+		}
+		lcd_write_dec_auto(solderT);
+		hd44780_write_data(SYMB_DEGREE);
+		//========================
 
+		//====AirFlow Solder======
 		airT = get_airfen_settemp();
 
-		hd44780_printf("Air: ");
+		hd44780_goto_xy(1, 0);
+		hd44780_puts("Air: ");
 		if(PIN_STATE(SELECT_BTN)){
-			hd44780_printf("%d%%  ", get_airfen_airflow_perc_value());
+			lcd_write_dec_auto(get_airfen_airflow_perc_value());
+			hd44780_puts("%   ");
 
 			hd44780_goto_xy(1, 10);
-			symbUpTemp = (oldAirT < airT) ? 1 : 20;
-			hd44780_printf("%c%d%c  ", symbUpTemp, airT, 8);
+			if(oldAirT < airT){
+				hd44780_write_data(SYMB_UP_ARROW);
+			}else{
+				hd44780_write_data(SYMB_DN_ARROW);
+			}
+			lcd_write_dec_auto(airT);
+			hd44780_write_data(SYMB_DEGREE);
 		}else{
-			hd44780_printf("off         ");
+			hd44780_puts("off         ");
 		}
+		//========================
 
-		//if(PIN_STATE(USER_BTN)){
-			turnon_backlight();
-		//}
+		if (PIN_STATE(GERKON_AIR)) {
+			PIN_ON(AIR_HEATER);
+			beep(2);
+		} else {
+			PIN_OFF(AIR_HEATER);
+		}
 
 		if(PIN_STATE(GERKON_SOLDER)){
-			PIN_OFF(SOLDER_HEATER);
-			PIN_ON(SOLDER_GREEN_LED);
-		}else{
-			PIN_OFF(SOLDER_GREEN_LED);
 			PIN_ON(SOLDER_HEATER);
-		}
-
-		if(PIN_STATE(GERKON_AIR)){
-			PIN_OFF(AIR_HEATER);
-			PIN_ON(AIR_GREEN_LED);
 		}else{
-			PIN_OFF(AIR_GREEN_LED);
-			PIN_ON(AIR_HEATER);
+			PIN_OFF(SOLDER_HEATER);
 		}
 
 		oldSolderT = solderT;
 		oldAirT = airT;
 	}
+}
+
+void beep(u8 count){
+	while(count--){
+		buzzer(ENABLE);
+		delay_ms(BEEP_DELAY_ms);
+		buzzer(DISABLE);
+		if(count) {delay_ms(BEEP_DELAY_ms);}
+	}
+}
+
+void buzzer(u8 state){
+	TIM_Cmd(TIM4, state);
 }
 
 void turnon_backlight(){
@@ -118,7 +132,20 @@ void init_All(){
 	//init_adc();
 
 	init_tim();
+
+	turnon_backlight();
+	draw_logo();
+	beep(3);
+	hd44780_clear();
+
 }
 
+void draw_logo(){
+	hd44780_goto_xy(0, 1);
+	hd44780_puts("Solder station");
+	hd44780_goto_xy(1, 1);
+	hd44780_puts("Drovosekov.net");
+	delay_ms(AFTER_LOGO_DELAY_ms);
+}
 
 

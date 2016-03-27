@@ -25,12 +25,31 @@ void init_tim(){
     TIM_OCConfig.TIM_Pulse = 500;
     // Полярность => пульс - это единица (+3.3V)
     TIM_OCConfig.TIM_OCPolarity = TIM_OCPolarity_Low;
-    // Инициализируем 3й выход таймера №3
-    TIM_OC3Init(TIM2, &TIM_OCConfig);
+    // Инициализируем 1й выход таймера №1
+    TIM_OC1Init(TIM1, &TIM_OCConfig);
+    TIM_Cmd(TIM1, DISABLE);
 
-    TIM_Cmd(TIM2, DISABLE);
 
+    //генератор для зуммера
+    // Конфигурируем выход таймера, режим - PWM1
+    TIM_OCConfig.TIM_OCMode = TIM_OCMode_Toggle;
+    // Собственно - выход включен
+    TIM_OCConfig.TIM_OutputState = TIM_OutputState_Enable;
+    // Полярность => пульс - это единица (+3.3V)
+    TIM_OCConfig.TIM_OCPolarity = TIM_OCPolarity_Low;
+    // Инициализируем 2й выход таймера №1
+    TIM_OC2Init(TIM4, &TIM_OCConfig);
 
+	TIM_TimeBaseInitTypeDef snd_timebase;
+	snd_timebase.TIM_CounterMode = TIM_CounterMode_Up;
+	snd_timebase.TIM_Prescaler = 0;
+	snd_timebase.TIM_ClockDivision = 0;
+	snd_timebase.TIM_RepetitionCounter = 0;
+	snd_timebase.TIM_Period = (SystemCoreClock / (BUZZER_FREQ << 1)) - 1;
+	TIM_TimeBaseInit(TIM4, &snd_timebase);
+    TIM_Cmd(TIM4, DISABLE);
+
+/*
 	//устанавливаем уровень приоритета прерывания от таймера TIM4
 	NVIC_SetPriority(TIM4_IRQn, 2);
 	//разрешаем обработку прерывания от таймера TIM4
@@ -43,7 +62,7 @@ void init_tim(){
     //разрешаем генерацию прерывания
     TIM_ITConfig(TIM4, TIM_DIER_UIE, ENABLE);
     TIM_Cmd(TIM4, DISABLE);
-
+*/
 
 	/* задержка перед отключением вентилятора фена */
 	//устанавливаем уровень приоритета прерывания от таймера TIM6
@@ -53,7 +72,7 @@ void init_tim(){
     // Запускаем таймер на тактовой частоте в 1 kHz
     TIM_BaseConfig.TIM_Prescaler = 23999;
     // Период - 10 сек
-    TIM_BaseConfig.TIM_Period = delay_airflow_off_ms; //задержка отключения в мс
+    TIM_BaseConfig.TIM_Period = AIRFLOW_DELAY_OFF_ms; //задержка отключения в мс
     // Инициализируем таймер №6
     TIM_TimeBaseInit(TIM6, &TIM_BaseConfig);
     //отключаем генирацию прерывания сразу после запуска таймера

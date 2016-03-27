@@ -12,7 +12,13 @@
 
 //#define STM32F100_DISCOVERY_BOARD
 
-#define delay_airflow_off_ms 5000
+#define AIRFLOW_DELAY_OFF_ms	5000
+#define BUZZER_FREQ			 	975
+#define BEEP_DELAY_ms		 	200
+#define AFTER_LOGO_DELAY_ms		2000
+#define SYMB_DEGREE				8
+#define SYMB_UP_ARROW			1
+#define SYMB_DN_ARROW			20
 
 #include <stdlib.h>
 #include <string.h>
@@ -31,6 +37,8 @@
 
 void init_All();
 void turnon_backlight();
-
+void buzzer(u8 state);
+void beep(u8 count);
+void draw_logo();
 
 #endif

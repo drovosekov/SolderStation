@@ -11,7 +11,7 @@ void mcu_gpio_deinit()
 	//разрешаем тактирование таймеров
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); //обработка энкодера
 	//RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); //ШИМ для фена
-	//RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //
 	//RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE); //задержка перед отключением вентилятора фена
 
 	//разрешаем тактирование портов
@@ -25,8 +25,6 @@ void mcu_gpio_deinit()
 
 	PIN_CONFIGURATION(SOLDER_HEATER);	//влючение/отключение паяльника
 	PIN_CONFIGURATION(AIR_HEATER);		//влючение/отключение фена
-	PIN_CONFIGURATION(SOLDER_GREEN_LED);//зеленый светодиод паяльника
-	PIN_CONFIGURATION(AIR_GREEN_LED);	//зеленый светодиод фена
 
 	PIN_CONFIGURATION(AIR_FLOW_PWM);	//выход TIM2 CH1 - ШИМ для фена
 	PIN_CONFIGURATION(AIR_HEATER);		//вкл./выкл. нагревателя фена
@@ -38,6 +36,8 @@ void mcu_gpio_deinit()
 
 	PIN_CONFIGURATION(ENCODER_A);
 	PIN_CONFIGURATION(ENCODER_B);
+
+	PIN_CONFIGURATION(BUZZER);
 
 	PIN_CONFIGURATION(USER_LED_green);
 #ifdef USER_LED_blue

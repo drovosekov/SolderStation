@@ -23,6 +23,8 @@
   uint8_t pcf8574_Value = 0;
 #endif
 
+  //массив для преобразования чисел при прямом выводе их на дисплей
+ const u8 lcd_decode[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
   
 // Макросы для управления выходами
 #if (HD44780_pcf8574_mode)
@@ -38,7 +40,6 @@
   #define HD44780_SetDATA_4bit(val)     {pcf8574_Value &= ~(0xF << HD44780_Data_Shift); pcf8574_Value |= ((val & 0xF) << HD44780_Data_Shift); pcf8574_write(HD44780_pcf8574_i2c_periph, HD44780_pcf8574_addr, pcf8574_Value);}
   #define HD44780_GetDATA_4bit()        ((pcf8574_read(HD44780_pcf8574_i2c_periph, HD44780_pcf8574_addr) >> HD44780_Data_Shift) & 0xF)
   #define HD44780_SetDATA_PinMode_In(mask)      {pcf8574_Value |= (mask); pcf8574_write(HD44780_pcf8574_i2c_periph, HD44780_pcf8574_addr, pcf8574_Value);}
-  #define HD44780_SetDATA_PinMode_Out(mask)     {}
 #else
   // Макросы для управления интерфейсом при работе напрямую через GPIO микроконтроллера 
   #define HD44780_RS_HIGH()             GPIO_SetBits(HD44780_RS_Port, HD44780_RS_Pin)
@@ -154,9 +155,10 @@ void hd44780_write(uint8_t Data, int8_t IsCmd)
   }
   
 #if HD44780_4bitMode
-  // Настраиваем биты данных как выходы
-  HD44780_SetDATA_PinMode_Out(0xF << HD44780_Data_Shift);
-  
+  #if (!HD44780_pcf8574_mode)
+    // Настраиваем биты данных как выходы
+    HD44780_SetDATA_PinMode_Out(0xF << HD44780_Data_Shift);
+  #endif
   // Выдаём старшую тетраду
   HD44780_SetDATA_4bit(Data >> 4);
   HD44780_E_HIGH();
@@ -174,8 +176,10 @@ void hd44780_write(uint8_t Data, int8_t IsCmd)
   // Настраиваем биты данных как входы
   HD44780_SetDATA_PinMode_In(0xF << HD44780_Data_Shift);
 #else
-  // Настраиваем биты данных как выходы
-  HD44780_SetDATA_PinMode_Out(0xFF);
+  #if (!HD44780_pcf8574_mode)
+    // Настраиваем биты данных как выходы
+    HD44780_SetDATA_PinMode_Out(0xFF);
+  #endif
   
   // Выдаём байт
   HD44780_SetDATA_8bit(Data);
@@ -271,12 +275,9 @@ void PortClockStart(GPIO_TypeDef *GPIOx)
 //==============================================================================
 void hd44780_backlight_set(uint8_t val)
 {
-  if (val)
-  {
+  if (val){
     HD44780_BL_HIGH();
-  }
-  else
-  {
+  }else{
     HD44780_BL_LOW();
   }
 }
@@ -425,6 +426,54 @@ void hd44780_write_buff(char *pBuff, uint8_t Len)
 
 
 //==============================================================================
+// Процедура отправки числовых значений
+//==============================================================================
+void lcd_write_dec_auto(uint16_t dig){
+	if(dig<10){
+		lcd_write_dec_x((u8)dig);
+	}else if(dig<100){
+		lcd_write_dec_xx((u8)dig);
+	}else if(dig<1000){
+		lcd_write_dec_xxx(dig);
+	}else {
+		lcd_write_dec_xxxx(dig);
+	}
+}
+void lcd_write_dec_xxxx(uint16_t dig){
+	u16 d=dig % 1000;
+	hd44780_write_data(lcd_decode[(dig / 1000) & 0x0F]);
+	hd44780_write_data(lcd_decode[(d / 100) & 0x0F]);
+	hd44780_write_data(lcd_decode[(d % 100) / 10 & 0x0F]);
+	hd44780_write_data(lcd_decode[(d % 100) % 10 & 0x0F]);
+}
+
+void lcd_write_dec_xxx(uint16_t dig){
+	hd44780_write_data(lcd_decode[(dig / 100) & 0x0F]);
+	hd44780_write_data(lcd_decode[((dig % 100) / 10) & 0x0F]);
+	hd44780_write_data(lcd_decode[((dig % 100) % 10) & 0x0F]);
+}
+
+void lcd_write_dec_xx(uint8_t dig){
+	hd44780_write_data(lcd_decode[((dig % 100) / 10) & 0x0F]);
+	hd44780_write_data(lcd_decode[((dig % 100) % 10) & 0x0F]);
+}
+
+void lcd_write_dec_x(uint8_t dig) {
+	hd44780_write_data(lcd_decode[dig]);
+}
+
+void lcd_write_float(float dig){//dig - дробное число с точностью до десятых долей
+	u8 dig_int = dig; //здесь будет целая часть
+	lcd_write_dec_xx(dig_int);
+
+	hd44780_puts(FLOAT_POINT);
+
+	u8 dig_float = (dig - dig_int) * 10; //здесь будет дробная часть
+	lcd_write_dec_x(dig_float);
+}
+//==============================================================================
+
+//==============================================================================
 // Процедура отправки ANSI-строки в текущую позицию дисплея
 //==============================================================================
 void hd44780_puts(char *str)
@@ -484,6 +533,8 @@ void hd44780_puts(char *str)
 	  hd44780_puts(hd44780_StrBuff);
 	}
 #endif
+
+
 //==============================================================================
 
 //==============================================================================
