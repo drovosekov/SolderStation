@@ -1,12 +1,11 @@
 #include "main.h"
 
-#define ADC_SAMPLE_TIME		ADC_SampleTime_239Cycles5	//количество тактов процессора для усреднения значения АЦП (здесь для всех каналов одинаковая)
+#define ADC_SAMPLE_TIME		ADC_SampleTime_239Cycles5	//количество тактов процессора для усреднения значения АЦП (здесь для всех используемых каналов одинаковая)
 #define ADC_COUNT_CHANELS	3  							//количество каналов
 #define ADC_PRECISION 		50 							//задается точность +/- от считанного значения не повлияет на изменение результата измерений (см. ф-ию get_value_w_precision)
 
 static __IO u16 ADCConvertedValue[ADC_COUNT_CHANELS];	//массив значений с АЦП полученных через DMA
 static u16 oldADCvalues[ADC_COUNT_CHANELS];  			//массив запомненых значений для учета погрешности
-const u8 precision = 48; 						//+ или - значение допустимой погрешности
 
 	 /*
 	  * The first channel of the DMA is setup to be used with ADC1.
@@ -49,13 +48,13 @@ void init_adc(void){
 	DMA_Cmd(DMA1_Channel1, ENABLE);  //Enable the DMA1 - Channel1
 
 
-	//==Configure ADC1 - Channel 1 and Channel 2==
+	//==Configure ADC1 - Channels
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
 	ADC_InitStructure.ADC_ScanConvMode = ENABLE;
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
-	ADC_InitStructure.ADC_NbrOfChannel = ADC_COUNT_CHANELS;  //We using two channels
+	ADC_InitStructure.ADC_NbrOfChannel = ADC_COUNT_CHANELS;
 
 	ADC_Init(ADC1, &ADC_InitStructure);  //Initialise ADC1
 
@@ -63,8 +62,6 @@ void init_adc(void){
 	for (adc_cnt = 0; adc_cnt < ADC_COUNT_CHANELS; ++adc_cnt) {
 		ADC_RegularChannelConfig(ADC1, adc_cnt, adc_cnt, ADC_SAMPLE_TIME);
 	}
-	//ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_239Cycles5);
-	//ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 2, ADC_SampleTime_239Cycles5);
 	//ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_239Cycles5);
 	//ADC_InjectedChannelConfig(ADC1, ADC_Channel_16, 1, ADC_SampleTime_13Cycles5);
 
@@ -85,20 +82,24 @@ void init_adc(void){
 }//end ADC_Configuration
 
 
-u16 get_solder_settemp(){
+u16 get_ctrl_buttons_value(){//с делителя напряжения на кнопках управления
+	return get_value_w_precision(0);
+}
+
+u16 get_solder_temp(){//температура паяльника
 	return get_value_w_precision(2);
 }
 
-u16 get_airfen_settemp(){
+u16 get_airfen_temp(){//температура фена
 	return get_value_w_precision(1);
 }
 
-u16 get_airfen_airflow_perc_value(){
+/*u16 get_airfen_airflow_perc_value(){//мощность потока воздуха в %
 	const u16 vMAX=	4028;	//верхний уровень
 	const u16 vMIN=	0;		//нижний уровень
 
 	return (100-100*(vMAX-get_value_w_precision(0))/(vMAX-vMIN));
-}
+}*/
 
 u16 get_value_w_precision(u8 idxArray){
 	if((ADCConvertedValue[idxArray] > oldADCvalues[idxArray] + ADC_PRECISION) || (oldADCvalues[idxArray] - ADC_PRECISION > ADCConvertedValue[idxArray])) {

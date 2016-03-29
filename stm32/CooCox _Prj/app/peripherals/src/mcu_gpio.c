@@ -22,6 +22,7 @@ void mcu_gpio_deinit()
 	//настрока выводов МК
 	PIN_CONFIGURATION(SOLDER_TEMP_ADC); //уст. температуры паяльника
 	PIN_CONFIGURATION(AIRFEN_TEMP_ADC); //уст. температуры фена
+	PIN_CONFIGURATION(BUTTONS_ADC); 	//кнопки
 
 	PIN_CONFIGURATION(SOLDER_HEATER);	//влючение/отключение паяльника
 	PIN_CONFIGURATION(AIR_HEATER);		//влючение/отключение фена
@@ -30,7 +31,6 @@ void mcu_gpio_deinit()
 	PIN_CONFIGURATION(AIR_HEATER);		//вкл./выкл. нагревателя фена
 	PIN_CONFIGURATION(SOLDER_HEATER);	//вкл./выкл. нагревателя паяльника
 
-	PIN_CONFIGURATION(SELECT_BTN);
 	PIN_CONFIGURATION(GERKON_AIR);
 	PIN_CONFIGURATION(GERKON_SOLDER);
 

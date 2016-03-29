@@ -13,13 +13,13 @@ void mcu_gpio_deinit();
 /* ADC defines */
 #define SOLDER_TEMP_ADC			A, 1, LOW, ANALOG, SPEED_2MHZ //уст. температуры паяльника
 #define AIRFEN_TEMP_ADC			A, 2, LOW, ANALOG, SPEED_2MHZ //уст. температуры фена
+#define BUTTONS_ADC				A, 3, LOW, ANALOG, SPEED_2MHZ //кнопки
 /* end ADC defines */
 
 /* buttons defines */
 #define ENCODER_A				A, 6, HIGH, INPUT_PULL_UP, SPEED_10MHZ //энкодер вход 1
 #define ENCODER_B				A, 7, HIGH, INPUT_PULL_UP, SPEED_10MHZ //энкодер вход 2
 
-#define SELECT_BTN				C, 15, HIGH, INPUT_PULL_UP, SPEED_2MHZ //кнопка на энкодере
 #define GERKON_AIR				A, 15, LOW, INPUT_PULL_UP, SPEED_2MHZ //геркон установки фена на подставку
 #define GERKON_SOLDER			B, 4, LOW,  INPUT_PULL_UP, SPEED_2MHZ  //геркон установки паяльника на подставку
 

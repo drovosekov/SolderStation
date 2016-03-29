@@ -23,7 +23,7 @@ int main()
 	while (1)
 	{
 		//=========Solder=========
-		solderT = get_solder_settemp();
+		solderT = get_ctrl_buttons_value();//get_solder_temp();
 		hd44780_goto_xy(0, 0);
 		hd44780_puts("Solder t: ");
 		if(oldSolderT < solderT){
@@ -36,12 +36,12 @@ int main()
 		//========================
 
 		//====AirFlow Solder======
-		airT = get_airfen_settemp();
+		airT = get_airfen_temp();
 
 		hd44780_goto_xy(1, 0);
 		hd44780_puts("Air: ");
-		if(PIN_STATE(SELECT_BTN)){
-			lcd_write_dec_auto(get_airfen_airflow_perc_value());
+		if(!PIN_STATE(GERKON_AIR)){
+			lcd_write_dec_auto(0);
 			hd44780_puts("%   ");
 
 			hd44780_goto_xy(1, 10);
