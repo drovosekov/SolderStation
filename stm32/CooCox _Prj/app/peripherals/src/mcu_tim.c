@@ -49,52 +49,38 @@ void init_tim(){
 	TIM_TimeBaseInit(TIM4, &snd_timebase);
     TIM_Cmd(TIM4, DISABLE);
 
-/*
-	//устанавливаем уровень приоритета прерывания от таймера TIM4
-	NVIC_SetPriority(TIM4_IRQn, 2);
-	//разрешаем обработку прерывания от таймера TIM4
-	NVIC_EnableIRQ(TIM4_IRQn);
+
+	//устанавливаем уровень приоритета прерывания от таймера TIM2
+	NVIC_SetPriority(TIM2_IRQn, 3);
+	//разрешаем обработку прерывания от таймера TIM2
+	NVIC_EnableIRQ(TIM2_IRQn);
     TIM_BaseConfig.TIM_Prescaler = 23999;
     // Период - 1 раз в минуту
-    TIM_BaseConfig.TIM_Period = 60000;
-    // Инициализируем таймер №4
-    TIM_TimeBaseInit(TIM4, &TIM_BaseConfig);
+    TIM_BaseConfig.TIM_Period = 1000;
+    // Инициализируем таймер №2
+    TIM_TimeBaseInit(TIM2, &TIM_BaseConfig);
     //разрешаем генерацию прерывания
-    TIM_ITConfig(TIM4, TIM_DIER_UIE, ENABLE);
-    TIM_Cmd(TIM4, DISABLE);
-*/
+    TIM_ITConfig(TIM2, TIM_DIER_UIE, ENABLE);
+    TIM_Cmd(TIM2, DISABLE);
 
-	/* задержка перед отключением вентилятора фена */
-	//устанавливаем уровень приоритета прерывания от таймера TIM6
-	NVIC_SetPriority(TIM6_DAC_IRQn, 3);
-	//разрешаем обработку прерывания от таймера TIM6
-	NVIC_EnableIRQ(TIM6_DAC_IRQn);
+
+    /* ежесекундный таймер */
+	//устанавливаем уровень приоритета прерывания от таймера TIM7
+	NVIC_SetPriority(TIM7_IRQn, 2);
+	//разрешаем обработку прерывания от таймера TIM7
+	NVIC_EnableIRQ(TIM7_IRQn);
     // Запускаем таймер на тактовой частоте в 1 kHz
     TIM_BaseConfig.TIM_Prescaler = 23999;
-    // Период - 10 сек
-    TIM_BaseConfig.TIM_Period = AIRFLOW_DELAY_OFF_ms; //задержка отключения в мс
-    // Инициализируем таймер №6
-    TIM_TimeBaseInit(TIM6, &TIM_BaseConfig);
-    //отключаем генирацию прерывания сразу после запуска таймера
-	TIM_GenerateEvent(TIM6, TIM_EGR_UG);
-	TIM_ClearFlag(TIM6, TIM_SR_UIF);
+    // Период - 1000 тактов => 1000/1000 = 1 Hz
+    TIM_BaseConfig.TIM_Period = 1000;
+    // Инициализируем таймер №7
+    TIM_TimeBaseInit(TIM7, &TIM_BaseConfig);
     //разрешаем генерацию прерывания
-    TIM_ITConfig(TIM6, TIM_DIER_UIE, ENABLE);
+    TIM_ITConfig(TIM7, TIM_DIER_UIE, ENABLE);
 	// запускаем счет таймера
-    TIM_SelectOnePulseMode(TIM6, TIM_CR1_OPM);
-    TIM_Cmd(TIM6, DISABLE);
+	TIM_Cmd(TIM7, DISABLE);
 }
 
-
-//обработчик прерывания от таймера 6
-//задержка перед отключением ручного режима полива - 3мин
-void TIM6_DAC_IRQHandler(void)
-{
-	hd44780_backlight_set(0);
-
-	//TIM_ClearFlag(TIM6, TIM_SR_UIF);//Сбрасываем флаг прерывания
-	TIM_Cmd(TIM6, DISABLE);
-}
 
 //состояние таймера - запущен или нет
 u8 get_TIM_state(TIM_TypeDef* TIMx){

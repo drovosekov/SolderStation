@@ -19,6 +19,9 @@ int main()
 
 	PIN_ON(SOLDER_HEATER);
 	PIN_ON(AIR_HEATER);
+	// запускаем счет таймера
+    TIM_Cmd(TIM2, ENABLE);
+    PIN_REVERSE(USER_LED_green);
 
 	while (1)
 	{
@@ -33,6 +36,7 @@ int main()
 		}
 		lcd_write_dec_auto(solderT);
 		hd44780_write_data(SYMB_DEGREE);
+		hd44780_puts("   ");
 		//========================
 
 		//====AirFlow Solder======
@@ -52,6 +56,7 @@ int main()
 			}
 			lcd_write_dec_auto(airT);
 			hd44780_write_data(SYMB_DEGREE);
+			hd44780_puts("   ");
 		}else{
 			hd44780_puts("off         ");
 		}
@@ -88,13 +93,34 @@ void buzzer(u8 state){
 	TIM_Cmd(TIM4, state);
 }
 
-void turnon_backlight(){
-	//TIM_Cmd(TIM6, DISABLE);
-	//TIM_Cmd(TIM6, ENABLE);
+void turnon_backlight(void){
 	hd44780_backlight_set(1);
 }
 
-void init_All(){
+u8 get_ctrl_button_state(void){
+	u16 ctrl_adc = get_ctrl_buttons_value();
+	if(ctrl_adc<1400){
+		return BUTTON_ENCODER;
+	}else if(ctrl_adc>1500 && ctrl_adc<1700){
+		return BUTTON_SOLDER;
+	}else if(ctrl_adc>1900 && ctrl_adc<2000){
+		return BUTTON_AIRSOLDER;
+	}else{
+		return 0;
+	}
+}
+
+
+//обработчик прерывани€ от таймера 2
+void TIM2_IRQHandler(void)
+{
+	TIM_ClearFlag(TIM2, TIM_SR_UIF);//—брасываем флаг прерывани€
+
+	PIN_REVERSE(USER_LED_green);
+}
+
+
+void init_All(void){
 
 	SystemInit();
 
@@ -129,7 +155,7 @@ void init_All(){
 
 	hd44780_set_user_char(1, user_char);
 
-	//init_adc();
+	init_adc();
 
 	init_tim();
 
@@ -140,7 +166,7 @@ void init_All(){
 
 }
 
-void draw_logo(){
+void draw_logo(void){
 	hd44780_goto_xy(0, 1);
 	hd44780_puts("Solder station");
 	hd44780_goto_xy(1, 1);

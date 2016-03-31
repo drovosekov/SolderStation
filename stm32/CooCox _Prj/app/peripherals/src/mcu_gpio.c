@@ -10,9 +10,9 @@ void mcu_gpio_deinit()
 {
 	//разрешаем тактирование таймеров
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); //обработка энкодера
-	//RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); //ШИМ для фена
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); //ШИМ для фена
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //
-	//RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE); //задержка перед отключением вентилятора фена
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE); //секундный таймер
 
 	//разрешаем тактирование портов
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);

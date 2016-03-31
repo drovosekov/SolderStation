@@ -22,7 +22,7 @@ void SysTick_Handler(void)
 
 	if(++led >= 50000){
 		led=0;
-		PIN_REVERSE(USER_LED_green);
+		//PIN_REVERSE(USER_LED_green);
 	}
 }
 

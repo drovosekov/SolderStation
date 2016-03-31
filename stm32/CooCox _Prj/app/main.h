@@ -20,6 +20,13 @@
 #define SYMB_UP_ARROW			1
 #define SYMB_DN_ARROW			20
 
+typedef enum {
+	BUTTON_ENCODER = 1,
+	BUTTON_SOLDER,
+	BUTTON_AIRSOLDER
+} button_state;
+
+
 #include <stdlib.h>
 #include <string.h>
 #include "stm32f10x.h"
@@ -35,10 +42,10 @@
 #include "types.h"
 #include "delay.h"
 
-void init_All();
-void turnon_backlight();
+void init_All(void);
+void turnon_backlight(void);
 void buzzer(u8 state);
 void beep(u8 count);
-void draw_logo();
+void draw_logo(void);
 
 #endif
