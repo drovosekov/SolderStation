@@ -78,6 +78,7 @@
   <Files>
     <File name="types.h" path="app/types.h" type="1"/>
     <File name="hd44780/i2cm.h" path="app/hd44780/i2cm.h" type="1"/>
+    <File name="peripherals/src/buttons.c" path="app/peripherals/src/buttons.c" type="1"/>
     <File name="stm_lib/inc/stm32f10x_tim.h" path="stm_lib/inc/stm32f10x_tim.h" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
     <File name="hd44780/cp1251toepson.h" path="app/hd44780/cp1251toepson.h" type="1"/>
@@ -104,6 +105,7 @@
     <File name="stm_lib/src/stm32f10x_gpio.c" path="stm_lib/src/stm32f10x_gpio.c" type="1"/>
     <File name="stm_lib/inc/stm32f10x_gpio.h" path="stm_lib/inc/stm32f10x_gpio.h" type="1"/>
     <File name="hd44780" path="" type="2"/>
+    <File name="peripherals/inc/buttons.h" path="app/peripherals/inc/buttons.h" type="1"/>
     <File name="cmsis_boot/system_stm32f10x.c" path="cmsis_boot/system_stm32f10x.c" type="1"/>
     <File name="hd44780/hd44780.c" path="app/hd44780/hd44780.c" type="1"/>
     <File name="components/C_library" path="" type="2"/>

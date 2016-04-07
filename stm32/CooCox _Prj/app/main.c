@@ -11,9 +11,9 @@
 
 int main()
 {
-	static u16 oldSolderT = 0, oldAirT = 0;
 	//static EncoderModes modeSelected = selSolderTemperature;
-	u16 airT = 0, solderT = 0;
+	SolderingStates state_sld = notReady;
+	SolderingStates state_air = notReady;
 
 	init_All();
 
@@ -25,59 +25,95 @@ int main()
 
 	while (1)
 	{
-		//=========Solder=========
-		solderT = get_ctrl_buttons_value();//get_solder_temp();
-		hd44780_goto_xy(0, 0);
-		hd44780_puts("Solder t: ");
-		if(oldSolderT < solderT){
-			hd44780_write_data(SYMB_UP_ARROW);
-		}else{
-			hd44780_write_data(SYMB_DN_ARROW);
+    //////// FOR DEBUG ONLY!! //////////
+    PIN_ON(GERKON_SOLDER);
+    PIN_ON(GERKON_AIR);
+    //////// FOR DEBUG ONLY!! //////////
+
+		switch (get_ctrl_button_state()){
+			case BTN_SOLDER:
+				state_sld = isOn;
+				PIN_ON(SOLDER_HEATER);
+				break;
+			case BTN_AIRSOLDER:
+				state_air = isOn;
+				PIN_ON(AIR_HEATER);
+				break;
+			case BTN_ENCODER:
+				break;
 		}
-		lcd_write_dec_auto(solderT);
-		hd44780_write_data(SYMB_DEGREE);
-		hd44780_puts("   ");
+
+		//=========Solder=========
+		hd44780_goto_xy(0, 0);
+		if(!PIN_STATE(GERKON_SOLDER) && state_sld==notReady){
+			hd44780_puts("Sld is out stand");
+		}else if(!PIN_STATE(GERKON_SOLDER) && (state_sld == isOn || state_sld == isSleepMode)){
+			printSolderInfoLCD();
+		}else{
+			if(state_sld != isOff) {beep(1);}
+			state_sld = isOff;
+			hd44780_puts("Solder: off         ");
+			PIN_OFF(SOLDER_HEATER);
+		}
 		//========================
 
 		//====AirFlow Solder======
-		airT = get_airfen_temp();
-
 		hd44780_goto_xy(1, 0);
-		hd44780_puts("Air: ");
-		if(!PIN_STATE(GERKON_AIR)){
-			lcd_write_dec_auto(0);
-			hd44780_puts("%   ");
-
-			hd44780_goto_xy(1, 10);
-			if(oldAirT < airT){
-				hd44780_write_data(SYMB_UP_ARROW);
-			}else{
-				hd44780_write_data(SYMB_DN_ARROW);
-			}
-			lcd_write_dec_auto(airT);
-			hd44780_write_data(SYMB_DEGREE);
-			hd44780_puts("   ");
+		if(!PIN_STATE(GERKON_AIR) && state_air==notReady){
+			hd44780_puts("Air is out stand");
+		}else if(!PIN_STATE(GERKON_AIR) && (state_air == isOn || state_air == isSleepMode)){
+			printAirSolderInfoLCD();
 		}else{
-			hd44780_puts("off         ");
+			if(state_air != isOff) {beep(1);}
+			state_air = isOff;
+			hd44780_puts("Air: off        ");
+			PIN_OFF(AIR_HEATER);
 		}
 		//========================
 
-		if (PIN_STATE(GERKON_AIR)) {
-			PIN_ON(AIR_HEATER);
-			beep(2);
-		} else {
-			PIN_OFF(AIR_HEATER);
-		}
-
-		if(PIN_STATE(GERKON_SOLDER)){
-			PIN_ON(SOLDER_HEATER);
-		}else{
-			PIN_OFF(SOLDER_HEATER);
-		}
-
-		oldSolderT = solderT;
-		oldAirT = airT;
 	}
+}
+
+void printSolderInfoLCD(void){
+	static u16 oldSolderT = 0;
+	u16 solderT = 0;
+
+	solderT = get_solder_temp();
+
+	hd44780_puts("Solder: t ");
+	if(oldSolderT < solderT){
+		hd44780_write_data(SYMB_UP_ARROW);
+	}else{
+		hd44780_write_data(SYMB_DN_ARROW);
+	}
+	lcd_write_dec_auto(solderT);
+	hd44780_write_data(SYMB_DEGREE);
+	hd44780_puts("   ");
+
+	oldSolderT = solderT;
+}
+
+void printAirSolderInfoLCD(void){
+	static u16 oldAirT = 0;
+	u16 airT = 0;
+
+	airT = get_airfen_temp();
+
+	hd44780_puts("Air: ");
+	lcd_write_dec_auto(0);
+	hd44780_puts("%   ");
+
+	hd44780_goto_xy(1, 10);
+	if(oldAirT < airT){
+		hd44780_write_data(SYMB_UP_ARROW);
+	}else{
+		hd44780_write_data(SYMB_DN_ARROW);
+	}
+	lcd_write_dec_auto(airT);
+	hd44780_write_data(SYMB_DEGREE);
+	hd44780_puts("   ");
+
+	oldAirT = airT;
 }
 
 void beep(u8 count){
@@ -93,25 +129,8 @@ void buzzer(u8 state){
 	TIM_Cmd(TIM4, state);
 }
 
-void turnon_backlight(void){
-	hd44780_backlight_set(1);
-}
 
-u8 get_ctrl_button_state(void){
-	u16 ctrl_adc = get_ctrl_buttons_value();
-	if(ctrl_adc<1400){
-		return BUTTON_ENCODER;
-	}else if(ctrl_adc>1500 && ctrl_adc<1700){
-		return BUTTON_SOLDER;
-	}else if(ctrl_adc>1900 && ctrl_adc<2000){
-		return BUTTON_AIRSOLDER;
-	}else{
-		return 0;
-	}
-}
-
-
-//обработчик прерывания от таймера 2
+//обработчик прерывания от таймера 2 - срабатывает 1 раз в секунду
 void TIM2_IRQHandler(void)
 {
 	TIM_ClearFlag(TIM2, TIM_SR_UIF);//Сбрасываем флаг прерывания
@@ -159,7 +178,7 @@ void init_All(void){
 
 	init_tim();
 
-	turnon_backlight();
+	hd44780_backlight_set(SET);
 	draw_logo();
 	beep(3);
 	hd44780_clear();

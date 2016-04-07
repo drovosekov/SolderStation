@@ -162,15 +162,15 @@ void hd44780_write(uint8_t Data, int8_t IsCmd)
   // Выдаём старшую тетраду
   HD44780_SetDATA_4bit(Data >> 4);
   HD44780_E_HIGH();
-  delay_us(HD44780_ShortDelayUs); //TODO: check without this
+  delay_us(HD44780_ShortDelayUs);
   HD44780_E_LOW();
 
-  delay_us(HD44780_ShortDelayUs); //TODO: check without this
+  delay_us(HD44780_ShortDelayUs);
 
   // Выдаём младшую тетраду
   HD44780_SetDATA_4bit(Data & 0xF);
   HD44780_E_HIGH();
-  delay_us(HD44780_ShortDelayUs); //TODO: check without this
+  delay_us(HD44780_ShortDelayUs);
   HD44780_E_LOW();
   
   // Настраиваем биты данных как входы
