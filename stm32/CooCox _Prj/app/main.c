@@ -25,53 +25,109 @@ int main()
 
 	while (1)
 	{
-    //////// FOR DEBUG ONLY!! //////////
-    PIN_ON(GERKON_SOLDER);
-    PIN_ON(GERKON_AIR);
-    //////// FOR DEBUG ONLY!! //////////
+		//////// FOR DEBUG ONLY!! //////////
+		PIN_ON(GERKON_SOLDER);
+		PIN_ON(GERKON_AIR);
+		//////// FOR DEBUG ONLY!! //////////
 
-		switch (get_ctrl_button_state()){
-			case BTN_SOLDER:
-				state_sld = isOn;
-				PIN_ON(SOLDER_HEATER);
-				break;
-			case BTN_AIRSOLDER:
-				state_air = isOn;
-				PIN_ON(AIR_HEATER);
-				break;
-			case BTN_ENCODER:
-				break;
-		}
+		check_buttons_states(&state_sld, &state_air);
 
 		//=========Solder=========
 		hd44780_goto_xy(0, 0);
 		if(!PIN_STATE(GERKON_SOLDER) && state_sld==notReady){
 			hd44780_puts("Sld is out stand");
+			PIN_OFF(SOLDER_HEATER);
 		}else if(!PIN_STATE(GERKON_SOLDER) && (state_sld == isOn || state_sld == isSleepMode)){
 			printSolderInfoLCD();
 		}else{
 			if(state_sld != isOff) {beep(1);}
 			state_sld = isOff;
-			hd44780_puts("Solder: off         ");
+			hd44780_puts("Sld: off         ");
 			PIN_OFF(SOLDER_HEATER);
 		}
 		//========================
 
-		//====AirFlow Solder======
+		//========Fen Solder======
 		hd44780_goto_xy(1, 0);
 		if(!PIN_STATE(GERKON_AIR) && state_air==notReady){
-			hd44780_puts("Air is out stand");
+			hd44780_puts("Fen is out stand");
+			PIN_OFF(AIR_HEATER);
 		}else if(!PIN_STATE(GERKON_AIR) && (state_air == isOn || state_air == isSleepMode)){
-			printAirSolderInfoLCD();
+			printFenInfoLCD();
 		}else{
 			if(state_air != isOff) {beep(1);}
 			state_air = isOff;
-			hd44780_puts("Air: off        ");
+			hd44780_puts("Fen: off        ");
 			PIN_OFF(AIR_HEATER);
 		}
 		//========================
 
+		printDot();
 	}
+}
+
+void check_buttons_states(SolderingStates *sld, SolderingStates *fen){
+	EncBtnStates	encBtn = SLD_TEMP;
+	static u8 btnPressed = 0;
+
+	switch (get_ctrl_button_state()){
+	case BTN_SOLDER:
+		if(btnPressed) break;
+		if(*sld == isOn){
+			*sld = isOff;
+			PIN_OFF(SOLDER_HEATER);
+		}else{
+			*sld = isOn;
+			PIN_ON(SOLDER_HEATER);
+		}
+		btnPressed = 1;
+		break;
+
+	case BTN_FEN:
+		if(btnPressed) break;
+		if(*fen == isOn){
+			*fen = isOff;
+			PIN_OFF(AIR_HEATER);
+		}else{
+			*fen = isOn;
+			PIN_ON(AIR_HEATER);
+		}
+		btnPressed = 1;
+		break;
+
+	case BTN_ENCODER:
+		if(btnPressed) break;
+		switch(encBtn){
+		case SLD_TEMP:
+			encBtn = FEN_AIRFLOW;
+			break;
+		case FEN_AIRFLOW:
+			encBtn = FEN_TEMP;
+			break;
+		case FEN_TEMP:
+			encBtn = SLD_TEMP;
+			break;
+		}
+		btnPressed = 1;
+		break;
+
+	case BTN_NONE:
+		btnPressed = 0;
+		break;
+
+	}
+}
+
+void printDot(void){
+//выводит мигающую точку в конце второй строки
+	static u8 dot = 0;
+	hd44780_goto_xy(1, 15);
+	if(dot==3){
+		hd44780_puts(".");
+		dot=-2;
+	}
+	if(dot==0){hd44780_puts(" ");}
+	dot++;
 }
 
 void printSolderInfoLCD(void){
@@ -80,7 +136,7 @@ void printSolderInfoLCD(void){
 
 	solderT = get_solder_temp();
 
-	hd44780_puts("Solder: t ");
+	hd44780_puts("Sld: t ");
 	if(oldSolderT < solderT){
 		hd44780_write_data(SYMB_UP_ARROW);
 	}else{
@@ -93,13 +149,13 @@ void printSolderInfoLCD(void){
 	oldSolderT = solderT;
 }
 
-void printAirSolderInfoLCD(void){
+void printFenInfoLCD(void){
 	static u16 oldAirT = 0;
 	u16 airT = 0;
 
 	airT = get_airfen_temp();
 
-	hd44780_puts("Air: ");
+	hd44780_puts("Fen: ");
 	lcd_write_dec_auto(0);
 	hd44780_puts("%   ");
 

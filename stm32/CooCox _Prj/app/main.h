@@ -12,13 +12,6 @@
 
 //#define STM32F100_DISCOVERY_BOARD
 
-typedef enum{
-	notReady = 0,
-	isOff,
-	isOn,
-	isSleepMode
-}SolderingStates;
-
 #define AIRFLOW_DELAY_OFF_ms	5000
 #define BUZZER_FREQ			 	975
 #define BEEP_DELAY_ms		 	200
@@ -34,13 +27,13 @@ typedef enum{
 #include "stm32f10x_adc.h"
 #include "stm32f10x_tim.h"
 #include "stm32f10x_dma.h"
+#include "types.h"
 #include "delay\delay.h"
 #include "hd44780\hd44780.h"
 #include "peripherals/inc/mcu_adc.h"
 #include "peripherals/inc/mcu_gpio.h"
 #include "peripherals/inc/mcu_tim.h"
 #include "peripherals/inc/buttons.h"
-#include "types.h"
 #include "delay.h"
 
 void init_All(void);
@@ -48,6 +41,8 @@ void buzzer(u8 state);
 void beep(u8 count);
 void draw_logo(void);
 void printSolderInfoLCD(void);
-void printAirSolderInfoLCD(void);
+void printFenInfoLCD(void);
+void printDot(void);
+void check_buttons_states(SolderingStates *sld, SolderingStates *fen);
 
 #endif

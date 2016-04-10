@@ -20,8 +20,17 @@
 
 enum EncoderModes{
 	selSolderTemperature = 0,
-	selAirFlowPower = 1,
-	selAirHeaterTemperature = 2
+	selAirFlowPower,
+	selAirHeaterTemperature
 };
+
+enum SolderingStates{
+	notReady = 0,
+	isOff,
+	isOn,
+	isSleepMode
+};
+
+typedef enum SolderingStates SolderingStates;
 
 #endif
