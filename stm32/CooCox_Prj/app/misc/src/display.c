@@ -1,5 +1,8 @@
 #include "main.h"
 
+SLD_INFO sld;
+SLD_INFO fen;
+
 void printSolderInfoLCD(void){
 	static u16 oldSolderT = 0;
 	u16 solderT = 0;
@@ -26,7 +29,7 @@ void printFenInfoLCD(void){
 	airT = get_airfen_temp();
 
 	hd44780_puts("Fen: ");
-	lcd_write_dec_auto(0);
+	lcd_write_dec_auto(fen.air_flow);
 	hd44780_puts("%   ");
 
 	hd44780_goto_xy(1, 10);

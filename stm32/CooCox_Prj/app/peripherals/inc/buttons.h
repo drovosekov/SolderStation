@@ -15,4 +15,4 @@ typedef enum{
 
 u8 get_ctrl_button_state(void);
 
-void check_control_panel_buttons(SolderingStates *sld, SolderingStates *fen);
+void check_control_panel_buttons();

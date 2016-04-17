@@ -7,7 +7,8 @@
 #endif
 
 enum EncoderModes{
-	selSolderTemperature = 0,
+	selRealTimeInfo = 0,
+	selSolderTemperature,
 	selAirFlowPower,
 	selAirHeaterTemperature
 };
@@ -21,5 +22,12 @@ enum SolderingStates{
 };
 
 typedef enum SolderingStates SolderingStates;
+
+typedef struct SLD_INFO{
+	u16 auto_off;
+	u16 temp;
+	SolderingStates state;
+	u8 air_flow;
+}SLD_INFO;
 
 #endif

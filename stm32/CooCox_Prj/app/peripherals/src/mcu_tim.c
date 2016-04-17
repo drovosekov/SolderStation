@@ -6,13 +6,13 @@ void init_tim(){
     // Конфигурация выхода таймера
     TIM_OCInitTypeDef TIM_OCConfig;
 
-    //работа энкодера
+    //энкодер
     TIM_TimeBaseStructInit(&TIM_BaseConfig);
     TIM_BaseConfig.TIM_Period = 512;
     TIM_BaseConfig.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(TIM3, &TIM_BaseConfig);
     TIM_EncoderInterfaceConfig(TIM3, TIM_EncoderMode_TI12, TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);
-    TIM3->CNT=22; //начальное значение
+    //TIM3->CNT=0; //начальное значение
     TIM_Cmd(TIM3, ENABLE);
 
 

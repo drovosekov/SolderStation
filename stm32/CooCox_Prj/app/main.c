@@ -9,13 +9,11 @@
 
 #include "main.h"
 
+SLD_INFO sld;
+SLD_INFO fen;
 
-SolderingStates state_sld = notReady;
-SolderingStates state_air = notReady;
 u8 count_do_beep = 0;
 u16 power_off_count = 0;
-u16 auto_sld_off = 0;
-u16 auto_fen_off = 0;
 
 #define DEBUG	1
 
@@ -26,7 +24,7 @@ int main()
 
 	while (1)
 	{
-		check_control_panel_buttons(&state_sld, &state_air);
+		check_control_panel_buttons();
 
 		if(count_do_beep){//см. в обработчике прерываний от герконов Fen_Gerkon_IRQHandler и Sld_Gerkon_IRQHandler
 			beep(count_do_beep);
@@ -36,7 +34,7 @@ int main()
 		//=========Solder=========
 		hd44780_goto_xy(0, 0);
 
-		switch(state_sld){
+		switch(sld.state){
 		case notReady:
 			hd44780_puts("Sld is out stand");
 			break;
@@ -54,7 +52,7 @@ int main()
 		//========Fen Solder======
 		hd44780_goto_xy(1, 0);
 
-		switch(state_air){
+		switch(fen.state){
 		case notReady:
 			hd44780_puts("Fen is out stand");
 			break;
@@ -68,6 +66,7 @@ int main()
 			break;
 		}
 		//========================
+
 	}
 }
 
@@ -93,8 +92,8 @@ void TIM2_IRQHandler(void)
 	PIN_REVERSE(USER_LED_green);	//просто мигаем раз в секунду светодиодом на плате контроллера
 
 	//==обработчик автоотключения станции==
-	if((state_air == isOff || state_air == notReady) &&
-	   (state_sld == isOff || state_sld == notReady)){
+	if((fen.state == isOff || fen.state == notReady) &&
+	   (sld.state == isOff || sld.state == notReady)){
 		power_off_count++;
 		if(power_off_count > AUTO_POWER_OFF){
 			PIN_OFF(RELAY_POWER);
@@ -104,13 +103,22 @@ void TIM2_IRQHandler(void)
 	}
 	//=====================================
 
-	if(state_air == isPreOn || state_air == isSleepMode){
-		auto_sld_off++;
-		if(auto_sld_off > AUTO_SLD_OFF){
-			state_air = isOff;
+	if(fen.state == isPreOn || fen.state == isSleepMode){
+		fen.auto_off++;
+		if(fen.auto_off > AUTO_SLD_OFF){
+			fen.state = isOff;
 		}
 	}else{
-		auto_sld_off=0;
+		fen.auto_off=0;
+	}
+
+	if(sld.state == isPreOn || sld.state == isSleepMode){
+		sld.auto_off++;
+		if(sld.auto_off > AUTO_SLD_OFF){
+			sld.state = isOff;
+		}
+	}else{
+		sld.auto_off=0;
 	}
 }
 
@@ -142,8 +150,8 @@ void init_All(void){
 
 	PIN_ON(RELAY_POWER);	//блокируем цепь питания станции
 
-	state_sld = (PIN_STATE(GERKON_SOLDER)) ? isOff : notReady;
-	state_air = (PIN_STATE(GERKON_AIR))    ? isOff : notReady;
+	sld.state = (PIN_STATE(GERKON_SOLDER)) ? isOff : notReady;
+	fen.state = (PIN_STATE(GERKON_AIR))    ? isOff : notReady;
 
 	init_tim();			//инициализация таймеров
 }
