@@ -5,6 +5,7 @@ SLD_INFO fen;
 
 void printSolderInfoLCD(void){
 	static u16 oldSolderT = 0;
+	static u8 dust_clock = 0;
 	u16 solderT = 0;
 
 	solderT = get_solder_temp();
@@ -19,11 +20,18 @@ void printSolderInfoLCD(void){
 	hd44780_write_data(SYMB_DEGREE);
 	hd44780_puts("   ");
 
+	if(sld.state == isPreOn || sld.state == isSleepMode){
+		hd44780_goto_xy(0, 15);
+		dust_clock = (dust_clock==2) ? 3 : 2;
+		hd44780_write_data(dust_clock);
+	}
+
 	oldSolderT = solderT;
 }
 
 void printFenInfoLCD(void){
 	static u16 oldAirT = 0;
+	static u8 dust_clock = 0;
 	u16 airT = 0;
 
 	airT = get_airfen_temp();
@@ -41,6 +49,12 @@ void printFenInfoLCD(void){
 	lcd_write_dec_auto(airT);
 	hd44780_write_data(SYMB_DEGREE);
 	hd44780_puts("   ");
+
+	if(fen.state == isPreOn || fen.state == isSleepMode){
+		hd44780_goto_xy(1, 15);
+		dust_clock = (dust_clock==2) ? 3 : 2;
+		hd44780_write_data(dust_clock);
+	}
 
 	oldAirT = airT;
 }
@@ -70,6 +84,28 @@ void init_user_chars(void){
 	user_char[7]=0b00000;
 
 	hd44780_set_user_char(1, user_char);
+
+	user_char[0]=0b11111;
+	user_char[1]=0b10001; // песочные часы
+	user_char[2]=0b01010; //
+	user_char[3]=0b00100; //
+	user_char[4]=0b01110; //
+	user_char[5]=0b11111; //
+	user_char[6]=0b11111; //
+	user_char[7]=0b00000;
+
+	hd44780_set_user_char(2, user_char);
+
+	user_char[0]=0b11111;
+	user_char[1]=0b11111; // песочные часы
+	user_char[2]=0b01110; //
+	user_char[3]=0b00100; //
+	user_char[4]=0b01010; //
+	user_char[5]=0b10001; //
+	user_char[6]=0b11111; //
+	user_char[7]=0b00000;
+
+	hd44780_set_user_char(3, user_char);
 
 }
 

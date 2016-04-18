@@ -23,7 +23,7 @@
 </editorArea>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/main.c" title="main.c" tooltip="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/main.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="30" selectionOffset="653" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="26" selectionOffset="1094" selectionTopPixel="120"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="mcu_gpio.h" partName="mcu_gpio.h" path="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/peripherals/inc/mcu_gpio.h" title="mcu_gpio.h" tooltip="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/peripherals/inc/mcu_gpio.h" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/peripherals/inc/mcu_gpio.h"/>
@@ -33,9 +33,9 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/peripherals/src/buttons.c"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2528" selectionTopPixel="1088"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="display.c" partName="display.c" path="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/src/display.c" title="display.c" tooltip="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/src/display.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="display.c" partName="display.c" path="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/src/display.c" title="display.c" tooltip="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/src/display.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/misc/src/display.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="592" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="462" selectionTopPixel="0"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="mcu_tim.c" partName="mcu_tim.c" path="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/peripherals/src/mcu_tim.c" title="mcu_tim.c" tooltip="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/peripherals/src/mcu_tim.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/peripherals/src/mcu_tim.c"/>
@@ -43,11 +43,11 @@
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.h" partName="main.h" path="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/main.h" title="main.h" tooltip="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/main.h" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/main.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="12" selectionOffset="1364" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="666" selectionTopPixel="0"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="types.h" partName="types.h" path="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/inc/types.h" title="types.h" tooltip="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/inc/types.h" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="types.h" partName="types.h" path="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/inc/types.h" title="types.h" tooltip="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/inc/types.h" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/misc/inc/types.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="211" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="704" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -275,40 +275,11 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/inc/buttons.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/misc/src/display.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/misc/inc/display.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/main.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/src/mcu_tim.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/misc/src/display.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/main.c"/>
 </editors>
-<item historyLabel="types.h" index="2">
-<position info="not_deleted" x="429" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="types.h" index="2">
-<position info="not_deleted" x="472" y="6"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="types.h" index="2">
-<position info="not_deleted" x="514" y="8"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="685" y="0"/>
-</item>
-<item historyLabel="types.h" index="2">
-<position info="not_deleted" x="591" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="660" y="0"/>
-</item>
-<item historyLabel="types.h" index="2">
-<position info="not_deleted" x="523" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="885" y="0"/>
-</item>
-<item historyLabel="buttons.c" index="1">
-<position info="not_deleted" x="1510" y="0"/>
-</item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="653" y="30"/>
 </item>
@@ -423,8 +394,41 @@
 <item historyLabel="buttons.c" index="1">
 <position info="not_deleted" x="2528" y="0"/>
 </item>
-<item active="true" historyLabel="types.h" index="2">
+<item historyLabel="types.h" index="2">
 <position info="not_deleted" x="111" y="0"/>
+</item>
+<item historyLabel="main.h" index="6">
+<position info="not_deleted" x="1376" y="12"/>
+</item>
+<item historyLabel="types.h" index="2">
+<position info="not_deleted" x="704" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="7">
+<position info="not_deleted" x="516" y="9"/>
+</item>
+<item historyLabel="main.h" index="6">
+<position info="not_deleted" x="1376" y="12"/>
+</item>
+<item historyLabel="display.c" index="8">
+<position info="not_deleted" x="813" y="0"/>
+</item>
+<item historyLabel="display.c" index="8">
+<position info="not_deleted" x="1120" y="0"/>
+</item>
+<item historyLabel="main.c" index="9">
+<position info="not_deleted" x="1237" y="11"/>
+</item>
+<item historyLabel="display.c" index="8">
+<position info="not_deleted" x="1225" y="0"/>
+</item>
+<item historyLabel="main.c" index="9">
+<position info="not_deleted" x="1094" y="26"/>
+</item>
+<item historyLabel="display.c" index="8">
+<position info="not_deleted" x="1225" y="0"/>
+</item>
+<item active="true" historyLabel="display.c" index="8">
+<position info="not_deleted" x="1190" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>

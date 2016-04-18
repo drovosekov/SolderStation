@@ -24,10 +24,10 @@ enum SolderingStates{
 typedef enum SolderingStates SolderingStates;
 
 typedef struct SLD_INFO{
-	u16 auto_off;
-	u16 temp;
-	SolderingStates state;
-	u8 air_flow;
+	u16 auto_off;		//счетчик автоотключения
+	u16 temp;			//переменная уст. температуры
+	SolderingStates state;	//текущее состояние
+	u8 air_flow;		//поток воздуха (только для фена)
 }SLD_INFO;
 
 #endif

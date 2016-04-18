@@ -12,10 +12,10 @@
 
 //#define STM32F100_DISCOVERY_BOARD
 
-#define AIRFLOW_DELAY_OFF_ms	5000	//секунд до отключения мотора фена
-#define BUZZER_FREQ			 	975		//частота звука биппа
+#define AIRFLOW_DELAY_OFF_ms	5000	//милисекунд до отключения мотора фена
+#define BUZZER_FREQ			 	975		//частота звука биппа в Гц
 #define BEEP_DELAY_ms		 	200		//интервал в мс между сигналами бипп
-#define AFTER_LOGO_DELAY_ms		2000	//время отображения заставки
+#define AFTER_LOGO_DELAY_ms		2000	//время отображения заставки мс
 #define SYMB_DEGREE				8		//номер пользовательского символа градуса
 #define SYMB_UP_ARROW			1		//номер символа стрелки вверх при росте температуры выше заданной
 #define SYMB_DN_ARROW			20		//номер символа стрелки вниз при падении температуры ниже заданной (по умолчанию не отображается - пробел)

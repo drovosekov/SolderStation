@@ -38,6 +38,9 @@
       </source>
       <source file="..\..\..\app\misc\inc\bitbanding.h" lastModified="1541b6faf28">
       </source>
+      <source file="..\..\..\app\misc\src\display.c" lastModified="1542aec349a">
+         <include file="..\..\..\app\main.h"/>
+      </source>
       <source file="..\..\..\cmsis_boot\system_stm32f10x.c" lastModified="15260851b10">
          <include file="..\..\..\cmsis_boot\stm32f10x.h"/>
       </source>
@@ -68,7 +71,7 @@
          <include file="..\..\..\stm_lib\inc\stm32f10x_tim.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
       </source>
-      <source file="..\..\..\app\misc\inc\types.h" lastModified="15425ebd36f">
+      <source file="..\..\..\app\misc\inc\types.h" lastModified="1542ae4ca98">
       </source>
       <source file="..\..\..\app\hd44780\cp866toepson.c" lastModified="15265e56330">
          <include file="..\..\..\app\hd44780\cp866toepson.h"/>
@@ -86,7 +89,7 @@
       </source>
       <source file="..\..\..\components\coocox-master\C_library\source\syscalls.c" lastModified="15245d159f0">
       </source>
-      <source file="..\..\..\app\main.h" lastModified="15420de4f74">
+      <source file="..\..\..\app\main.h" lastModified="1542ae5b02c">
          <include file="..\..\..\cmsis_boot\stm32f10x.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_rcc.h"/>
          <include file="..\..\..\stm_lib\inc\stm32f10x_adc.h"/>
@@ -147,6 +150,9 @@
       </source>
       <source file="..\..\..\stm_lib\inc\stm32f10x_tim.h" lastModified="15260895ce8">
          <include file="..\..\..\cmsis_boot\stm32f10x.h"/>
+      </source>
+      <source file="..\..\..\app\peripherals\src\buttons.c" lastModified="1542604df85">
+         <include file="..\..\..\app\main.h"/>
       </source>
       <source file="..\..\..\app\peripherals\src\mcu_adc.c" lastModified="153c405ade5">
          <include file="..\..\..\app\main.h"/>
