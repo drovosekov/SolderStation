@@ -8,7 +8,7 @@ SLD_INFO fen;
 
 u8 count_do_beep;
 u16 power_off_count;
-
+s8 cursor_cnt_state;
 
 u8 get_ctrl_button_state(void){
 	u16 ctrl_adc = get_ctrl_buttons_value();
@@ -31,7 +31,8 @@ void Fen_Gerkon_IRQHandler(void)
 	EXTI->PR = 1<<FEN_GERKON_PIN;
 	//обработка события
 
-	power_off_count = 0;
+	power_off_count = 0;//сброс автоотключения
+
 	if(PIN_STATE(GERKON_AIR)){
 		if(fen.state != isOff) {count_do_beep = 1;}
 		fen.state = (fen.state == notReady || fen.state == isOff) ? isOff : isSleepMode;
@@ -49,7 +50,8 @@ void Sld_Gerkon_IRQHandler(void)
 	EXTI->PR = 1<<SLD_GERKON_PIN;
 	//обработка события
 
-	power_off_count = 0;
+	power_off_count = 0;//сброс автоотключения
+
 	if(PIN_STATE(GERKON_SOLDER)){
 		if(sld.state != isOff) {count_do_beep = 1;}
 		sld.state = (sld.state == notReady || sld.state == isOff) ? isOff : isSleepMode;
@@ -61,7 +63,7 @@ void Sld_Gerkon_IRQHandler(void)
 }
 
 void check_control_panel_buttons(){
-	EncBtnStates encBtn = SLD_TEMP;
+	static EncBtnStates encBtn = FEN_TEMP;
 	static u8 btnPressed = 0;
 
 	switch (get_ctrl_button_state()){
@@ -96,21 +98,50 @@ void check_control_panel_buttons(){
 	case BTN_ENCODER:
 		power_off_count = 0;//сброс автоотключения
 
-		if(btnPressed) break;
+		if(btnPressed) {break;}
+
+		count_do_beep=2;
+
+		switch(encBtn){
+		case SLD_TEMP:
+			if((fen.state == isOff || fen.state == notReady)){
+				if(sld.state == isOff || sld.state == notReady){
+					break;
+				}else{
+					encBtn = FEN_AIRFLOW;
+				}
+			}
+			break;
+		case FEN_TEMP:
+			if(sld.state == isOff || sld.state == notReady){
+				encBtn = SLD_TEMP;
+			}
+			break;
+
+		case FEN_AIRFLOW:
+			break;
+		}
 		switch(encBtn){
 		case SLD_TEMP:
 			encBtn = FEN_AIRFLOW;
 			TIM3->CNT = fen.air_flow;
+			hd44780_goto_xy(1, 5);
 			break;
 		case FEN_AIRFLOW:
 			encBtn = FEN_TEMP;
 			TIM3->CNT = fen.temp;
+			hd44780_goto_xy(1, 11);
 			break;
 		case FEN_TEMP:
 			encBtn = SLD_TEMP;
 			TIM3->CNT = sld.temp;
+			hd44780_goto_xy(0, 7);
 			break;
 		}
+
+		cursor_cnt_state = CURSOR_OFF_TIMEOUT;
+		hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
+
 		btnPressed = 1;
 		break;
 

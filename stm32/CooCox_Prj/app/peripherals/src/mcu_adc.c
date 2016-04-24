@@ -5,7 +5,6 @@
 #define ADC_PRECISION 		50 							//задается точность +/- от считанного значения не повлияет на изменение результата измерений (см. ф-ию get_value_w_precision)
 
 static __IO u16 ADCConvertedValue[ADC_COUNT_CHANELS];	//массив значений с АЦП полученных через DMA
-static u16 oldADCvalues[ADC_COUNT_CHANELS];  			//массив запомненых значений для учета погрешности
 
 	 /*
 	  * The first channel of the DMA is setup to be used with ADC1.
@@ -102,6 +101,8 @@ u16 get_airfen_temp(){//температура фена
 }*/
 
 u16 get_value_w_precision(u8 idxArray){
+	static u16 oldADCvalues[ADC_COUNT_CHANELS];  			//массив запомненых значений для учета погрешности
+
 	if((ADCConvertedValue[idxArray] > oldADCvalues[idxArray] + ADC_PRECISION) || (oldADCvalues[idxArray] - ADC_PRECISION > ADCConvertedValue[idxArray])) {
 		oldADCvalues[idxArray] = ADCConvertedValue[idxArray];
 	}

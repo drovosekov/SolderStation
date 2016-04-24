@@ -21,12 +21,12 @@ enum SolderingStates{
 	isPreOn			//на подставке - готов к включению. Включится при снятии с подставки
 };
 
-typedef enum SolderingStates SolderingStates;
+typedef enum SolderingStates States;
 
 typedef struct SLD_INFO{
 	u16 auto_off;		//счетчик автоотключения
 	u16 temp;			//переменная уст. температуры
-	SolderingStates state;	//текущее состояние
+	States state;		//текущее состояние
 	u8 air_flow;		//поток воздуха (только для фена)
 }SLD_INFO;
 

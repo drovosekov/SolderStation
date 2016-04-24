@@ -3,22 +3,19 @@
 SLD_INFO sld;
 SLD_INFO fen;
 
-void printSolderInfoLCD(void){
+void printSolderInfoLCD(u16 *solderT){
 	static u16 oldSolderT = 0;
 	static u8 dust_clock = 0;
-	u16 solderT = 0;
 
-	solderT = get_solder_temp();
-
-	hd44780_puts("Sld: t ");
-	if(oldSolderT < solderT){
+	hd44780_puts("Sld: t");
+	if(oldSolderT < *solderT){
 		hd44780_write_data(SYMB_UP_ARROW);
 	}else{
 		hd44780_write_data(SYMB_DN_ARROW);
 	}
-	lcd_write_dec_auto(solderT);
+	lcd_write_dec_auto(*solderT);
 	hd44780_write_data(SYMB_DEGREE);
-	hd44780_puts("   ");
+	hd44780_puts("    ");
 
 	if(sld.state == isPreOn || sld.state == isSleepMode){
 		hd44780_goto_xy(0, 15);
@@ -26,27 +23,24 @@ void printSolderInfoLCD(void){
 		hd44780_write_data(dust_clock);
 	}
 
-	oldSolderT = solderT;
+	oldSolderT = *solderT;
 }
 
-void printFenInfoLCD(void){
+void printFenInfoLCD(u16 *airT){
 	static u16 oldAirT = 0;
 	static u8 dust_clock = 0;
-	u16 airT = 0;
-
-	airT = get_airfen_temp();
 
 	hd44780_puts("Fen: ");
 	lcd_write_dec_auto(fen.air_flow);
 	hd44780_puts("%   ");
 
 	hd44780_goto_xy(1, 10);
-	if(oldAirT < airT){
+	if(oldAirT < *airT){
 		hd44780_write_data(SYMB_UP_ARROW);
 	}else{
 		hd44780_write_data(SYMB_DN_ARROW);
 	}
-	lcd_write_dec_auto(airT);
+	lcd_write_dec_auto(*airT);
 	hd44780_write_data(SYMB_DEGREE);
 	hd44780_puts("   ");
 
@@ -56,7 +50,7 @@ void printFenInfoLCD(void){
 		hd44780_write_data(dust_clock);
 	}
 
-	oldAirT = airT;
+	oldAirT = *airT;
 }
 
 void init_user_chars(void){

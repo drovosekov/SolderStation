@@ -12,8 +12,9 @@
 SLD_INFO sld;
 SLD_INFO fen;
 
-u8 count_do_beep = 0;
-u16 power_off_count = 0;
+u8 count_do_beep = 0;		//кол-во биппов
+u16 power_off_count = 0;	//счетчик авототключения станции
+s8 cursor_cnt_state = -1;	//счетчик автоотключения мигания курсора
 
 #define DEBUG	1
 
@@ -21,6 +22,9 @@ int main()
 {
 	//static EncoderModes modeSelected = selSolderTemperature;
 	init_All();
+
+	u16 airT = 0;
+	u16 solderT = 0;
 
 	while (1)
 	{
@@ -34,14 +38,15 @@ int main()
 		//=========Solder=========
 		hd44780_goto_xy(0, 0);
 
+		solderT = get_solder_temp();
 		switch(sld.state){
 		case notReady:
 			hd44780_puts("Sld is out stand");
 			break;
+		case isOn:
 		case isPreOn:
 		case isSleepMode:
-		case isOn:
-			printSolderInfoLCD();
+			printSolderInfoLCD(&solderT);
 			break;
 		case isOff:
 			hd44780_puts("Sld: =off=       ");
@@ -52,14 +57,15 @@ int main()
 		//========Fen Solder======
 		hd44780_goto_xy(1, 0);
 
+		airT = get_airfen_temp();
 		switch(fen.state){
 		case notReady:
 			hd44780_puts("Fen is out stand");
 			break;
+		case isOn:
 		case isPreOn:
 		case isSleepMode:
-		case isOn:
-			printFenInfoLCD();
+			printFenInfoLCD(&airT);
 			break;
 		case isOff:
 			hd44780_puts("Fen: =off=       ");
@@ -103,13 +109,14 @@ void TIM2_IRQHandler(void)
 	}
 	//=====================================
 
+	//====полное отключение из режима предвключения или спящего режима===
 	if(fen.state == isPreOn || fen.state == isSleepMode){
 		fen.auto_off++;
-		if(fen.auto_off > AUTO_SLD_OFF){
+		if(fen.auto_off > AUTO_FEN_OFF){
 			fen.state = isOff;
 		}
 	}else{
-		fen.auto_off=0;
+		fen.auto_off = 0;
 	}
 
 	if(sld.state == isPreOn || sld.state == isSleepMode){
@@ -118,7 +125,16 @@ void TIM2_IRQHandler(void)
 			sld.state = isOff;
 		}
 	}else{
-		sld.auto_off=0;
+		sld.auto_off = 0;
+	}
+	//===================================================================
+
+	if(cursor_cnt_state == 0){
+		cursor_cnt_state = -1;
+		hd44780_set_state(LCD_ENABLE, CURSOR_DISABLE);
+	}else if(cursor_cnt_state > 0){
+		cursor_cnt_state--;
+		hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
 	}
 }
 
