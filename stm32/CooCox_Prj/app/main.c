@@ -22,7 +22,7 @@ int main()
 {
 	//static EncoderModes modeSelected = selSolderTemperature;
 	init_All();
-
+	hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
 	u16 airT = 0;
 	u16 solderT = 0;
 
@@ -73,6 +73,9 @@ int main()
 		}
 		//========================
 
+		if(cursor_cnt_state){
+			hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
+		}
 	}
 }
 
@@ -131,10 +134,10 @@ void TIM2_IRQHandler(void)
 
 	if(cursor_cnt_state == 0){
 		cursor_cnt_state = -1;
-		hd44780_set_state(LCD_ENABLE, CURSOR_DISABLE);
+		//hd44780_set_state(LCD_ENABLE, CURSOR_DISABLE);
 	}else if(cursor_cnt_state > 0){
 		cursor_cnt_state--;
-		hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
+		//hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
 	}
 }
 

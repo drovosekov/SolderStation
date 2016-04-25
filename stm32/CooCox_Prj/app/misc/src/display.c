@@ -35,6 +35,7 @@ void printFenInfoLCD(u16 *airT){
 	hd44780_puts("%   ");
 
 	hd44780_goto_xy(1, 10);
+	hd44780_puts("t");
 	if(oldAirT < *airT){
 		hd44780_write_data(SYMB_UP_ARROW);
 	}else{

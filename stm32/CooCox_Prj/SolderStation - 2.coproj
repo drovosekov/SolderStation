@@ -68,7 +68,7 @@
       <Option name="org.coocox.codebugger.gdbjtag.core.autoDownload" value="1"/>
       <Option name="org.coocox.codebugger.gdbjtag.core.verify" value="1"/>
       <Option name="org.coocox.codebugger.gdbjtag.core.downloadFuction" value="Erase Effected"/>
-      <Option name="org.coocox.codebugger.gdbjtag.core.defaultAlgorithm" value="Mini51_4.elf"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.defaultAlgorithm" value="STM32F10x_MD_64.elf"/>
       <Option name="org.coocox.codebugger.gdbjtag.coredebugInRamInitCommands" value="cd D:/WorkSync/SolderStation/stm32/CooCox _Prj/SolderStation/Debug/bin restore SolderStation.elf set {unsigned int*}0xE000ED08 = 0x20000000 set $sp = {unsigned int*}0x20000000 set $pc = {unsigned int*}0x20000004 "/>
     </DebugOption>
     <ExcludeFile/>
@@ -76,38 +76,40 @@
   <Components path="./"/>
   <LocalComponents/>
   <Files>
-    <File name="types.h" path="app/types.h" type="1"/>
     <File name="hd44780/i2cm.h" path="app/hd44780/i2cm.h" type="1"/>
     <File name="peripherals/src/buttons.c" path="app/peripherals/src/buttons.c" type="1"/>
     <File name="stm_lib/inc/stm32f10x_tim.h" path="stm_lib/inc/stm32f10x_tim.h" type="1"/>
+    <File name="misc/inc/display.h" path="app/misc/inc/display.h" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
-    <File name="hd44780/cp1251toepson.h" path="app/hd44780/cp1251toepson.h" type="1"/>
+    <File name="peripherals/src/external.c" path="app/peripherals/src/external.c" type="1"/>
     <File name="stm_lib/src/stm32f10x_tim.c" path="stm_lib/src/stm32f10x_tim.c" type="1"/>
     <File name="cmsis_boot/startup" path="" type="2"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
     <File name="peripherals/src/mcu_tim.c" path="app/peripherals/src/mcu_tim.c" type="1"/>
+    <File name="misc/inc" path="" type="2"/>
+    <File name="misc/inc/types.h" path="app/misc/inc/types.h" type="1"/>
     <File name="cmsis_boot/stm32f10x.h" path="cmsis_boot/stm32f10x.h" type="1"/>
-    <File name="delay" path="" type="2"/>
     <File name="cmsis_boot/stm32f10x_conf.h" path="cmsis_boot/stm32f10x_conf.h" type="1"/>
-    <File name="delay/delay.h" path="app/delay/delay.h" type="1"/>
-    <File name="peripherals/inc/mcu_adc.h" path="app/peripherals/inc/mcu_adc.h" type="1"/>
     <File name="peripherals/inc/mcu_tim.h" path="app/peripherals/inc/mcu_tim.h" type="1"/>
+    <File name="peripherals/inc/mcu_adc.h" path="app/peripherals/inc/mcu_adc.h" type="1"/>
     <File name="main.h" path="app/main.h" type="1"/>
     <File name="peripherals/src/mcu_gpio.c" path="app/peripherals/src/mcu_gpio.c" type="1"/>
     <File name="hd44780/i2cm.c" path="app/hd44780/i2cm.c" type="1"/>
     <File name="stm_lib/src/stm32f10x_adc.c" path="stm_lib/src/stm32f10x_adc.c" type="1"/>
     <File name="stm_lib/inc/stm32f10x_dma.h" path="stm_lib/inc/stm32f10x_dma.h" type="1"/>
     <File name="peripherals/inc/mcu_gpio.h" path="app/peripherals/inc/mcu_gpio.h" type="1"/>
-    <File name="hd44780/cp866toepson.h" path="app/hd44780/cp866toepson.h" type="1"/>
     <File name="peripherals/src/mcu_adc.c" path="app/peripherals/src/mcu_adc.c" type="1"/>
-    <File name="delay/delay.c" path="app/delay/delay.c" type="1"/>
+    <File name="misc/inc/delay.h" path="app/misc/inc/delay.h" type="1"/>
     <File name="cmsis_boot/startup/startup_stm32f10x_md.c" path="cmsis_boot/startup/startup_stm32f10x_md.c" type="1"/>
     <File name="stm_lib/src/stm32f10x_gpio.c" path="stm_lib/src/stm32f10x_gpio.c" type="1"/>
     <File name="stm_lib/inc/stm32f10x_gpio.h" path="stm_lib/inc/stm32f10x_gpio.h" type="1"/>
+    <File name="misc/inc/bitbanding.h" path="app/misc/inc/bitbanding.h" type="1"/>
     <File name="hd44780" path="" type="2"/>
+    <File name="misc/src" path="" type="2"/>
     <File name="peripherals/inc/buttons.h" path="app/peripherals/inc/buttons.h" type="1"/>
-    <File name="cmsis_boot/system_stm32f10x.c" path="cmsis_boot/system_stm32f10x.c" type="1"/>
+    <File name="misc/src/display.c" path="app/misc/src/display.c" type="1"/>
     <File name="hd44780/hd44780.c" path="app/hd44780/hd44780.c" type="1"/>
+    <File name="cmsis_boot/system_stm32f10x.c" path="cmsis_boot/system_stm32f10x.c" type="1"/>
     <File name="components/C_library" path="" type="2"/>
     <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
     <File name="peripherals/inc" path="" type="2"/>
@@ -115,19 +117,20 @@
     <File name="cmsis/core_cm3.h" path="cmsis/core_cm3.h" type="1"/>
     <File name="stm_lib/src/stm32f10x_rcc.c" path="stm_lib/src/stm32f10x_rcc.c" type="1"/>
     <File name="hd44780/pcf8574.c" path="app/hd44780/pcf8574.c" type="1"/>
-    <File name="hd44780/cp866toepson.c" path="app/hd44780/cp866toepson.c" type="1"/>
     <File name="stm_lib/src/stm32f10x_dma.c" path="stm_lib/src/stm32f10x_dma.c" type="1"/>
     <File name="stm_lib/src" path="" type="2"/>
     <File name="cmsis" path="" type="2"/>
     <File name="stm_lib" path="" type="2"/>
+    <File name="misc/src/delay.c" path="app/misc/src/delay.c" type="1"/>
     <File name="hd44780/pcf8574.h" path="app/hd44780/pcf8574.h" type="1"/>
     <File name="stm_lib/inc/stm32f10x_adc.h" path="stm_lib/inc/stm32f10x_adc.h" type="1"/>
+    <File name="peripherals/inc/external.h" path="app/peripherals/inc/external.h" type="1"/>
     <File name="hd44780/hd44780.h" path="app/hd44780/hd44780.h" type="1"/>
     <File name="cmsis_boot/system_stm32f10x.h" path="cmsis_boot/system_stm32f10x.h" type="1"/>
     <File name="stm_lib/inc/stm32f10x_rcc.h" path="stm_lib/inc/stm32f10x_rcc.h" type="1"/>
     <File name="stm_lib/inc/stm32f10x_i2c.h" path="stm_lib/inc/stm32f10x_i2c.h" type="1"/>
     <File name="peripherals/src" path="" type="2"/>
-    <File name="hd44780/cp1251toepson.c" path="app/hd44780/cp1251toepson.c" type="1"/>
+    <File name="misc" path="" type="2"/>
     <File name="components" path="" type="2"/>
     <File name="stm_lib/src/stm32f10x_i2c.c" path="stm_lib/src/stm32f10x_i2c.c" type="1"/>
     <File name="peripherals" path="" type="2"/>

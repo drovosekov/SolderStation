@@ -100,42 +100,45 @@ void check_control_panel_buttons(){
 
 		if(btnPressed) {break;}
 
+		if((fen.state == isOff || fen.state == notReady) &&
+		   (sld.state == isOff || sld.state == notReady)) {break;}
+
 		count_do_beep=2;
 
 		switch(encBtn){
 		case SLD_TEMP:
-			if((fen.state == isOff || fen.state == notReady)){
-				if(sld.state == isOff || sld.state == notReady){
-					break;
-				}else{
-					encBtn = FEN_AIRFLOW;
-				}
-			}
-			break;
-		case FEN_TEMP:
-			if(sld.state == isOff || sld.state == notReady){
-				encBtn = SLD_TEMP;
+			if(!(fen.state == isOff || fen.state == notReady)){
+				encBtn = FEN_AIRFLOW;
 			}
 			break;
 
 		case FEN_AIRFLOW:
+			encBtn = FEN_TEMP;
+			break;
+
+		case FEN_TEMP:
+			if(sld.state == isOff || sld.state == notReady){
+				encBtn = FEN_AIRFLOW;
+			}else{
+				encBtn = SLD_TEMP;
+			}
 			break;
 		}
+
 		switch(encBtn){
 		case SLD_TEMP:
-			encBtn = FEN_AIRFLOW;
+			TIM3->CNT = sld.temp;
+			hd44780_goto_xy(0, 7);
+			break;
+
+		case FEN_AIRFLOW:
 			TIM3->CNT = fen.air_flow;
 			hd44780_goto_xy(1, 5);
 			break;
-		case FEN_AIRFLOW:
-			encBtn = FEN_TEMP;
-			TIM3->CNT = fen.temp;
-			hd44780_goto_xy(1, 11);
-			break;
+
 		case FEN_TEMP:
-			encBtn = SLD_TEMP;
-			TIM3->CNT = sld.temp;
-			hd44780_goto_xy(0, 7);
+			TIM3->CNT = fen.temp;
+			hd44780_goto_xy(1, 12);
 			break;
 		}
 
