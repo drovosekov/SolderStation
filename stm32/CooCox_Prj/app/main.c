@@ -14,7 +14,8 @@ SLD_INFO fen;
 
 u8 count_do_beep = 0;		//кол-во биппов
 u16 power_off_count = 0;	//счетчик авототключения станции
-s8 cursor_cnt_state = -1;	//счетчик автоотключения мигания курсора
+u8 cursor_cnt_state = 0;	//счетчик автоотключения мигания курсора
+EncBtnStates encBtn;
 
 #define DEBUG	1
 
@@ -22,7 +23,6 @@ int main()
 {
 	//static EncoderModes modeSelected = selSolderTemperature;
 	init_All();
-	hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
 	u16 airT = 0;
 	u16 solderT = 0;
 
@@ -73,9 +73,8 @@ int main()
 		}
 		//========================
 
-		if(cursor_cnt_state){
-			hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
-		}
+		//hd44780_goto_xy(0, 14);
+		//lcd_write_dec_auto(cursor_cnt_state);
 	}
 }
 
@@ -132,12 +131,12 @@ void TIM2_IRQHandler(void)
 	}
 	//===================================================================
 
-	if(cursor_cnt_state == 0){
-		cursor_cnt_state = -1;
-		//hd44780_set_state(LCD_ENABLE, CURSOR_DISABLE);
-	}else if(cursor_cnt_state > 0){
+
+	if(cursor_cnt_state > 1){
 		cursor_cnt_state--;
-		//hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
+	}else if(cursor_cnt_state == 1){
+		cursor_cnt_state = 0;
+		encBtn = FEN_TEMP;
 	}
 }
 

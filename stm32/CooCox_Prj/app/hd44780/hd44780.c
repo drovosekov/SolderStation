@@ -10,8 +10,6 @@
 #include <stm32f10x_rcc.h>
 #include "main.h"
 #include "i2cm.h"
-#include "cp1251toepson.h"
-#include "cp866toepson.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -161,7 +159,7 @@ void hd44780_write(uint8_t Data, int8_t IsCmd)
   // Выдаём старшую тетраду
   HD44780_SetDATA_4bit(Data >> 4);
   HD44780_E_HIGH();
-  delay_us(HD44780_ShortDelayUs);
+  delay_ms(HD44780_ShortDelayUs);
   HD44780_E_LOW();
 
   delay_us(HD44780_ShortDelayUs);
@@ -169,7 +167,7 @@ void hd44780_write(uint8_t Data, int8_t IsCmd)
   // Выдаём младшую тетраду
   HD44780_SetDATA_4bit(Data & 0xF);
   HD44780_E_HIGH();
-  delay_us(HD44780_ShortDelayUs);
+  delay_ms(HD44780_ShortDelayUs);
   HD44780_E_LOW();
   
   // Настраиваем биты данных как входы
@@ -341,17 +339,17 @@ void hd44780_start(void)
 
 #if HD44780_4bitMode
   hd44780_write_cmd(0x02);       // Размер символа, ширина шина данных
-  uint8_t Reg = 0x20;
-#else
-  uint8_t Reg = 0x30;
+  //uint8_t Reg = 0x20;
+//#else
+//  uint8_t Reg = 0x30;
 #endif
-
+/*
 #if (HD44780_ROWS > 1)
   Reg |= 0x08;
 #endif
-  
+  */
   //hd44780_write_cmd(Reg);       // Размер символа, ширина шина данных
-  delay_ms(1);
+  //delay_ms(1);
   hd44780_write_cmd(0x0C);      // Включаем дисплей
   delay_ms(1);
   hd44780_write_cmd(0x06);      // Автоинкремент адреса

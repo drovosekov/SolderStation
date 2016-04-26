@@ -9,6 +9,7 @@ SLD_INFO fen;
 u8 count_do_beep;
 u16 power_off_count;
 s8 cursor_cnt_state;
+EncBtnStates encBtn = FEN_TEMP;
 
 u8 get_ctrl_button_state(void){
 	u16 ctrl_adc = get_ctrl_buttons_value();
@@ -63,7 +64,7 @@ void Sld_Gerkon_IRQHandler(void)
 }
 
 void check_control_panel_buttons(){
-	static EncBtnStates encBtn = FEN_TEMP;
+	//обработка нажатия аналоговых кнопок
 	static u8 btnPressed = 0;
 
 	switch (get_ctrl_button_state()){
@@ -128,22 +129,18 @@ void check_control_panel_buttons(){
 		switch(encBtn){
 		case SLD_TEMP:
 			TIM3->CNT = sld.temp;
-			hd44780_goto_xy(0, 7);
 			break;
 
 		case FEN_AIRFLOW:
 			TIM3->CNT = fen.air_flow;
-			hd44780_goto_xy(1, 5);
 			break;
 
 		case FEN_TEMP:
 			TIM3->CNT = fen.temp;
-			hd44780_goto_xy(1, 12);
 			break;
 		}
 
 		cursor_cnt_state = CURSOR_OFF_TIMEOUT;
-		hd44780_set_state(LCD_ENABLE, CURSOR_ENABLE);
 
 		btnPressed = 1;
 		break;
