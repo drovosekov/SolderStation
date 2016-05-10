@@ -13,13 +13,15 @@ void printSolderInfoLCD(u16 *solderT){
 	hd44780_puts("Sld: t");
 	if(cursor_cnt_state && encBtn == SLD_TEMP){
 		hd44780_write_data((set) ? SYMB_SET_ARROW : 20);
+		lcd_write_dec_auto(sld.temp);
 	}else if(oldSolderT < *solderT){
 		hd44780_write_data(SYMB_UP_ARROW);
+		lcd_write_dec_auto(*solderT);
 	}else{
 		hd44780_write_data(SYMB_DN_ARROW);
+		lcd_write_dec_auto(*solderT);
 	}
 
-	lcd_write_dec_auto(*solderT);
 	hd44780_write_data(SYMB_DEGREE);
 	hd44780_puts("    ");
 
@@ -40,8 +42,8 @@ void printFenInfoLCD(u16 *airT){
 	static u8 set = 0;
 
 	hd44780_puts("Fen:");
-	if(cursor_cnt_state && encBtn == FEN_AIRFLOW){
-		hd44780_write_data((set) ? SYMB_SET_ARROW : 20);
+	if(cursor_cnt_state && encBtn == FEN_AIRFLOW && set){
+		hd44780_write_data(SYMB_SET_ARROW);
 	}else{
 		hd44780_puts(" ");
 	}
@@ -53,12 +55,14 @@ void printFenInfoLCD(u16 *airT){
 	hd44780_puts("t");
 	if(cursor_cnt_state && encBtn == FEN_TEMP){
 		hd44780_write_data((set) ? SYMB_SET_ARROW : 20);
+		lcd_write_dec_auto(fen.temp);
 	}else if(oldAirT < *airT){
 		hd44780_write_data(SYMB_UP_ARROW);
+		lcd_write_dec_auto(*airT);
 	}else{
 		hd44780_write_data(SYMB_DN_ARROW);
+		lcd_write_dec_auto(*airT);
 	}
-	lcd_write_dec_auto(*airT);
 	hd44780_write_data(SYMB_DEGREE);
 	hd44780_puts("   ");
 

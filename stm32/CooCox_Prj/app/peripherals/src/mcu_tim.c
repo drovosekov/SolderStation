@@ -1,5 +1,12 @@
 #include "main.h"
 
+u16 power_off_count;	//счетчик авототключения станции
+u8 cursor_cnt_state;	//счетчик автоотключения мигания курсора
+EncBtnStates encBtn;
+
+SLD_INFO sld;
+SLD_INFO fen;
+
 void init_tim(){
     // Конфигурация таймера в режим PWM
     TIM_TimeBaseInitTypeDef TIM_BaseConfig;
@@ -63,6 +70,57 @@ void init_tim(){
     TIM_ITConfig(TIM2, TIM_DIER_UIE, ENABLE);
 	// запускаем счет таймера
     TIM_Cmd(TIM2, ENABLE);
+}
+
+
+
+//обработчик прерывания от таймера 2 - срабатывает 1 раз в секунду
+void TIM2_IRQHandler(void)
+{
+	TIM_ClearFlag(TIM2, TIM_SR_UIF);//Сбрасываем флаг прерывания
+
+	PIN_REVERSE(USER_LED_green);	//просто мигаем раз в секунду светодиодом на плате контроллера
+
+	//==обработчик автоотключения станции==
+	if((fen.state == isOff || fen.state == notReady) &&
+	   (sld.state == isOff || sld.state == notReady)){
+		power_off_count++;
+		if(power_off_count > AUTO_POWER_OFF){
+			PIN_OFF(RELAY_POWER);
+		}
+	}else{
+		power_off_count = 0;
+	}
+	//=====================================
+
+	//====полное отключение из режима предвключения или спящего режима===
+	if(fen.state == isPreOn || fen.state == isSleepMode){
+		fen.auto_off++;
+		if(fen.auto_off > AUTO_FEN_OFF){
+			fen.state = isOff;
+		}
+	}else{
+		fen.auto_off = 0;
+	}
+
+	if(sld.state == isPreOn || sld.state == isSleepMode){
+		sld.auto_off++;
+		if(sld.auto_off > AUTO_SLD_OFF){
+			sld.state = isOff;
+		}
+	}else{
+		sld.auto_off = 0;
+	}
+	//===================================================================
+
+	//=====отключение режима мигания курсора при изменении установок=====
+	if(cursor_cnt_state > 1){
+		cursor_cnt_state--;
+	}else if(cursor_cnt_state == 1){
+		cursor_cnt_state = 0;
+		encBtn = FEN_TEMP;
+	}
+	//====================================================================
 }
 
 

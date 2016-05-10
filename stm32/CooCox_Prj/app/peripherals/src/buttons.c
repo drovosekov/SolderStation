@@ -63,8 +63,8 @@ void Sld_Gerkon_IRQHandler(void)
 	NVIC_EnableIRQ(PIN_TO_EXTI_IRQn(SLD_GERKON_PIN));
 }
 
-void check_control_panel_buttons(){
 	//обработка нажатия аналоговых кнопок
+void check_control_panel_buttons(){
 	static u8 btnPressed = 0;
 
 	switch (get_ctrl_button_state()){
@@ -104,7 +104,7 @@ void check_control_panel_buttons(){
 		if((fen.state == isOff || fen.state == notReady) &&
 		   (sld.state == isOff || sld.state == notReady)) {break;}
 
-		count_do_beep=2;
+		count_do_beep=1;
 
 		switch(encBtn){
 		case SLD_TEMP:

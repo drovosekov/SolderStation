@@ -77,8 +77,8 @@
   <Files>
     <File name="hd44780/i2cm.h" path="app/hd44780/i2cm.h" type="1"/>
     <File name="peripherals/src/buttons.c" path="app/peripherals/src/buttons.c" type="1"/>
-    <File name="misc/inc/display.h" path="app/misc/inc/display.h" type="1"/>
     <File name="stm_lib/inc/stm32f10x_tim.h" path="stm_lib/inc/stm32f10x_tim.h" type="1"/>
+    <File name="misc/inc/display.h" path="app/misc/inc/display.h" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
     <File name="peripherals/src/external.c" path="app/peripherals/src/external.c" type="1"/>
     <File name="stm_lib/src/stm32f10x_tim.c" path="stm_lib/src/stm32f10x_tim.c" type="1"/>
@@ -89,13 +89,13 @@
     <File name="cmsis_boot/stm32f10x.h" path="cmsis_boot/stm32f10x.h" type="1"/>
     <File name="misc/inc/types.h" path="app/misc/inc/types.h" type="1"/>
     <File name="cmsis_boot/stm32f10x_conf.h" path="cmsis_boot/stm32f10x_conf.h" type="1"/>
-    <File name="peripherals/inc/mcu_tim.h" path="app/peripherals/inc/mcu_tim.h" type="1"/>
     <File name="peripherals/inc/mcu_adc.h" path="app/peripherals/inc/mcu_adc.h" type="1"/>
+    <File name="peripherals/inc/mcu_tim.h" path="app/peripherals/inc/mcu_tim.h" type="1"/>
     <File name="main.h" path="app/main.h" type="1"/>
-    <File name="hd44780/i2cm.c" path="app/hd44780/i2cm.c" type="1"/>
     <File name="peripherals/src/mcu_gpio.c" path="app/peripherals/src/mcu_gpio.c" type="1"/>
-    <File name="stm_lib/inc/stm32f10x_dma.h" path="stm_lib/inc/stm32f10x_dma.h" type="1"/>
+    <File name="hd44780/i2cm.c" path="app/hd44780/i2cm.c" type="1"/>
     <File name="stm_lib/src/stm32f10x_adc.c" path="stm_lib/src/stm32f10x_adc.c" type="1"/>
+    <File name="stm_lib/inc/stm32f10x_dma.h" path="stm_lib/inc/stm32f10x_dma.h" type="1"/>
     <File name="peripherals/inc/mcu_gpio.h" path="app/peripherals/inc/mcu_gpio.h" type="1"/>
     <File name="peripherals/src/mcu_adc.c" path="app/peripherals/src/mcu_adc.c" type="1"/>
     <File name="misc/inc/delay.h" path="app/misc/inc/delay.h" type="1"/>
@@ -122,14 +122,14 @@
     <File name="stm_lib" path="" type="2"/>
     <File name="misc/src/delay.c" path="app/misc/src/delay.c" type="1"/>
     <File name="hd44780/pcf8574.h" path="app/hd44780/pcf8574.h" type="1"/>
-    <File name="stm_lib/inc/stm32f10x_adc.h" path="stm_lib/inc/stm32f10x_adc.h" type="1"/>
     <File name="peripherals/inc/external.h" path="app/peripherals/inc/external.h" type="1"/>
+    <File name="stm_lib/inc/stm32f10x_adc.h" path="stm_lib/inc/stm32f10x_adc.h" type="1"/>
     <File name="hd44780/hd44780.h" path="app/hd44780/hd44780.h" type="1"/>
     <File name="cmsis_boot/system_stm32f10x.h" path="cmsis_boot/system_stm32f10x.h" type="1"/>
     <File name="stm_lib/inc/stm32f10x_rcc.h" path="stm_lib/inc/stm32f10x_rcc.h" type="1"/>
     <File name="stm_lib/inc/stm32f10x_i2c.h" path="stm_lib/inc/stm32f10x_i2c.h" type="1"/>
-    <File name="peripherals/src" path="" type="2"/>
     <File name="misc" path="" type="2"/>
+    <File name="peripherals/src" path="" type="2"/>
     <File name="components" path="" type="2"/>
     <File name="stm_lib/src/stm32f10x_i2c.c" path="stm_lib/src/stm32f10x_i2c.c" type="1"/>
     <File name="peripherals" path="" type="2"/>

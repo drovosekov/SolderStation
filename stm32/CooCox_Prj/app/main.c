@@ -13,8 +13,7 @@ SLD_INFO sld;
 SLD_INFO fen;
 
 u8 count_do_beep = 0;		//кол-во биппов
-u16 power_off_count = 0;	//счетчик авототключения станции
-u8 cursor_cnt_state = 0;	//счетчик автоотключения мигания курсора
+u8 cursor_cnt_state;	//счетчик автоотключения мигания курсора
 EncBtnStates encBtn;
 
 #define DEBUG	1
@@ -61,18 +60,40 @@ int main()
 		switch(fen.state){
 		case notReady:
 			hd44780_puts("Fen is out stand");
+			PIN_OFF(AIR_HEATER);
 			break;
 		case isOn:
+			if(airT < fen.temp){
+				PIN_ON(AIR_HEATER);
+			}else{
+				PIN_OFF(AIR_HEATER);
+			}
 		case isPreOn:
 		case isSleepMode:
 			printFenInfoLCD(&airT);
 			break;
 		case isOff:
+			PIN_OFF(AIR_HEATER);
 			hd44780_puts("Fen: =off=       ");
 			break;
 		}
 		//========================
 
+		if(cursor_cnt_state){
+			switch(encBtn){
+			case SLD_TEMP:
+				sld.temp = TIM3->CNT;
+				break;
+
+			case FEN_AIRFLOW:
+				fen.air_flow = TIM3->CNT;
+				break;
+
+			case FEN_TEMP:
+				fen.temp = TIM3->CNT;
+				break;
+			}
+		}
 		//hd44780_goto_xy(0, 14);
 		//lcd_write_dec_auto(cursor_cnt_state);
 	}
@@ -91,54 +112,6 @@ void buzzer(u8 state){
 	TIM_Cmd(TIM4, state);
 }
 
-
-//обработчик прерывания от таймера 2 - срабатывает 1 раз в секунду
-void TIM2_IRQHandler(void)
-{
-	TIM_ClearFlag(TIM2, TIM_SR_UIF);//Сбрасываем флаг прерывания
-
-	PIN_REVERSE(USER_LED_green);	//просто мигаем раз в секунду светодиодом на плате контроллера
-
-	//==обработчик автоотключения станции==
-	if((fen.state == isOff || fen.state == notReady) &&
-	   (sld.state == isOff || sld.state == notReady)){
-		power_off_count++;
-		if(power_off_count > AUTO_POWER_OFF){
-			PIN_OFF(RELAY_POWER);
-		}
-	}else{
-		power_off_count = 0;
-	}
-	//=====================================
-
-	//====полное отключение из режима предвключения или спящего режима===
-	if(fen.state == isPreOn || fen.state == isSleepMode){
-		fen.auto_off++;
-		if(fen.auto_off > AUTO_FEN_OFF){
-			fen.state = isOff;
-		}
-	}else{
-		fen.auto_off = 0;
-	}
-
-	if(sld.state == isPreOn || sld.state == isSleepMode){
-		sld.auto_off++;
-		if(sld.auto_off > AUTO_SLD_OFF){
-			sld.state = isOff;
-		}
-	}else{
-		sld.auto_off = 0;
-	}
-	//===================================================================
-
-
-	if(cursor_cnt_state > 1){
-		cursor_cnt_state--;
-	}else if(cursor_cnt_state == 1){
-		cursor_cnt_state = 0;
-		encBtn = FEN_TEMP;
-	}
-}
 
 
 void init_All(void){
