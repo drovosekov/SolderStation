@@ -104,8 +104,6 @@ void hd44780_puts(char *str);
 void hd44780_printf(const char *format, ...);
 // Процедура записи в дисплей ползовательских символов
 void hd44780_set_user_char(uint8_t char_num, uint8_t * char_data);
-// Процедура установки режима дисплея
-void hd44780_set_state(lcd_state state, cursor_state cur_state);
 
 void lcd_write_dec_auto(uint16_t dig);
 void lcd_write_dec_xxxx(uint16_t dig);

@@ -12,7 +12,7 @@ typedef enum{
 	FEN_TEMP
 } EncBtnStates;
 
-
-u8 get_ctrl_button_state(void);
-
+//состояние кнопок подключеных к АЦП
+button_state get_ctrl_button_state(void);
+//обработка нажатия кнопок подключенных к АЦП
 void check_control_panel_buttons();

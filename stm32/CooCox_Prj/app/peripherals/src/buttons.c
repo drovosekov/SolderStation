@@ -11,20 +11,6 @@ u16 power_off_count;
 s8 cursor_cnt_state;
 EncBtnStates encBtn = FEN_TEMP;
 
-u8 get_ctrl_button_state(void){
-	u16 ctrl_adc = get_ctrl_buttons_value();
-	if(ctrl_adc < 1400){
-		return BTN_ENCODER;
-	}else if(ctrl_adc > 1500 && ctrl_adc < 1700){
-		return BTN_SOLDER;
-	}else if(ctrl_adc > 1900 && ctrl_adc < 2000){
-		return BTN_FEN;
-	}else{
-		return BTN_NONE;
-	}
-}
-
-
 void Fen_Gerkon_IRQHandler(void)
 {
 	NVIC_DisableIRQ(PIN_TO_EXTI_IRQn(FEN_GERKON_PIN));
@@ -63,7 +49,22 @@ void Sld_Gerkon_IRQHandler(void)
 	NVIC_EnableIRQ(PIN_TO_EXTI_IRQn(SLD_GERKON_PIN));
 }
 
-	//обработка нажатия аналоговых кнопок
+//состояние кнопок подключеных к АЦП
+button_state get_ctrl_button_state(void){
+	u16 ctrl_adc = get_ctrl_buttons_value();
+	if(ctrl_adc < 1400){
+		return BTN_ENCODER;
+	}else if(ctrl_adc > 1500 && ctrl_adc < 1700){
+		return BTN_SOLDER;
+	}else if(ctrl_adc > 1900 && ctrl_adc < 2000){
+		return BTN_FEN;
+	}else{
+		return BTN_NONE;
+	}
+}
+
+
+//обработка нажатия кнопок подключенных к АЦП
 void check_control_panel_buttons(){
 	static u8 btnPressed = 0;
 
@@ -107,17 +108,17 @@ void check_control_panel_buttons(){
 		count_do_beep=1;
 
 		switch(encBtn){
-		case SLD_TEMP:
+		case SLD_TEMP: //настройка температуры паяльника
 			if(!(fen.state == isOff || fen.state == notReady)){
 				encBtn = FEN_AIRFLOW;
 			}
 			break;
 
-		case FEN_AIRFLOW:
+		case FEN_AIRFLOW: //настройка силы воздушного потока фена
 			encBtn = FEN_TEMP;
 			break;
 
-		case FEN_TEMP:
+		case FEN_TEMP: //настрйока температуры воздушного потока фна
 			if(sld.state == isOff || sld.state == notReady){
 				encBtn = FEN_AIRFLOW;
 			}else{
@@ -126,7 +127,7 @@ void check_control_panel_buttons(){
 			break;
 		}
 
-		switch(encBtn){
+		switch(encBtn){ //задание нач.значения таймера обработчика энкодера
 		case SLD_TEMP:
 			TIM3->CNT = sld.temp;
 			break;
@@ -140,7 +141,7 @@ void check_control_panel_buttons(){
 			break;
 		}
 
-		cursor_cnt_state = CURSOR_OFF_TIMEOUT;
+		cursor_cnt_state = CURSOR_OFF_TIMEOUT; //включаем имитацию курсора на заданое время в секундах
 
 		btnPressed = 1;
 		break;
