@@ -1,6 +1,6 @@
 #include "main.h"
 
-u16 power_off_count;	//счетчик авототключения станции
+u16 power_off_count;	//счетчик автоотключения станции
 u8 cursor_cnt_state;	//счетчик автоотключения мигания курсора
 EncBtnStates encBtn;
 
@@ -19,7 +19,7 @@ void init_tim(){
     TIM_BaseConfig.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(TIM3, &TIM_BaseConfig);
     TIM_EncoderInterfaceConfig(TIM3, TIM_EncoderMode_TI12, TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);
-    //TIM3->CNT=0; //начальное значение
+    TIM3->CNT=0; //начальное значение
     TIM_Cmd(TIM3, ENABLE);
 
 
@@ -73,10 +73,10 @@ void init_tim(){
 }
 
 
-
 //обработчик прерывания от таймера 2 - срабатывает 1 раз в секунду
 void TIM2_IRQHandler(void)
 {
+
 	TIM_ClearFlag(TIM2, TIM_SR_UIF);//Сбрасываем флаг прерывания
 
 	PIN_REVERSE(USER_LED_green);	//просто мигаем раз в секунду светодиодом на плате контроллера
@@ -114,7 +114,12 @@ void TIM2_IRQHandler(void)
 	//===================================================================
 
 	//=====отключение режима мигания курсора при изменении установок=====
-	if(cursor_cnt_state > 1){
+	static u16 enc=0;
+
+	if(enc != TIM3->CNT){
+		cursor_cnt_state = CURSOR_OFF_TIMEOUT;
+		enc = TIM3->CNT;
+	}else if(cursor_cnt_state > 1){
 		cursor_cnt_state--;
 	}else if(cursor_cnt_state == 1){
 		cursor_cnt_state = 0;

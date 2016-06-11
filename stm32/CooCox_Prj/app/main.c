@@ -41,13 +41,31 @@ int main()
 		switch(sld.state){
 		case notReady:
 			hd44780_puts("Sld is out stand");
+			PIN_OFF(SOLDER_HEATER);
+			PIN_OFF(SOLDER_LEDBTN);
 			break;
 		case isOn:
-		case isPreOn:
-		case isSleepMode:
+			PIN_ON(SOLDER_LEDBTN);
+			if(solderT < sld.temp){
+				PIN_ON(SOLDER_HEATER);
+			}else{
+				PIN_OFF(SOLDER_HEATER);
+			}
 			printSolderInfoLCD(&solderT);
 			break;
+		case isPreOn:
+		case isSleepMode:
+			PIN_REVERSE(SOLDER_LEDBTN);
+			printSolderInfoLCD(&solderT);
+			if(solderT < sld.temp * 0.7){
+				PIN_ON(SOLDER_HEATER);
+			}else{
+				PIN_OFF(SOLDER_HEATER);
+			}
+			break;
 		case isOff:
+			PIN_OFF(SOLDER_HEATER);
+			PIN_OFF(SOLDER_LEDBTN);
 			hd44780_puts("Sld: =off=       ");
 			break;
 		}
@@ -61,19 +79,29 @@ int main()
 		case notReady:
 			hd44780_puts("Fen is out stand");
 			PIN_OFF(AIR_HEATER);
+			PIN_OFF(RELAY_FEN);
+			PIN_OFF(AIRFEN_LEDBTN);
 			break;
 		case isOn:
+			PIN_ON(RELAY_FEN);
+			PIN_ON(AIRFEN_LEDBTN);
 			if(airT < fen.temp){
 				PIN_ON(AIR_HEATER);
 			}else{
 				PIN_OFF(AIR_HEATER);
 			}
+			printFenInfoLCD(&airT);
+			break;
 		case isPreOn:
 		case isSleepMode:
+			PIN_REVERSE(AIRFEN_LEDBTN);
+			PIN_OFF(AIR_HEATER);
 			printFenInfoLCD(&airT);
 			break;
 		case isOff:
 			PIN_OFF(AIR_HEATER);
+			PIN_OFF(RELAY_FEN);
+			PIN_OFF(AIRFEN_LEDBTN);
 			hd44780_puts("Fen: =off=       ");
 			break;
 		}

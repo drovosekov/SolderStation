@@ -27,6 +27,9 @@ void mcu_gpio_init()
 	PIN_CONFIGURATION(SOLDER_HEATER);	//влючение/отключение паяльника
 	PIN_CONFIGURATION(AIR_HEATER);		//влючение/отключение фена
 
+	PIN_CONFIGURATION(SOLDER_LEDBTN);	//светодиод включения паяльника
+	PIN_CONFIGURATION(AIRFEN_LEDBTN);	//светодиод включения фена
+
 	PIN_CONFIGURATION(AIR_FLOW_PWM);	//выход TIM2 CH1 - ШИМ для фена
 	PIN_CONFIGURATION(AIR_HEATER);		//вкл./выкл. нагревателя фена
 	PIN_CONFIGURATION(SOLDER_HEATER);	//вкл./выкл. нагревателя паяльника

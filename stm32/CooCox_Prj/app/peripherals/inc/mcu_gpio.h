@@ -48,10 +48,13 @@ void mcu_gpio_init();
 #define AIR_HEATER				B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревател€ фена
 #define AIR_FLOW_PWM			B, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM1 CH1N - Ў»ћ дл€ фена
 
+#define SOLDER_LEDBTN			C, 15, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //светодиод включени€ па€льника
+#define AIRFEN_LEDBTN			C, 14, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //светодиод включени€ фена
+
 #define BUZZER					B, 7, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_2MHZ //выход TIM4 CH2N - пищалка
 
-#define RELAY_POWER				B, 15, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //реле удерживающее питание 220в
-#define RELAY_FEN				B, 6, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //реле удерживающее питание 220в
+#define RELAY_POWER				B, 6, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //реле удерживающее питание 220в
+#define RELAY_FEN				B, 15, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //реле удерживающее питание 220в
 /* end out pins defines */
 
 
