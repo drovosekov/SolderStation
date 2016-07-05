@@ -15,6 +15,7 @@ SLD_INFO fen;
 u8 count_do_beep = 0;		//кол-во биппов
 u8 cursor_cnt_state;	//счетчик автоотключения мигания курсора
 EncBtnStates encBtn;
+HeaterDynamic sldHeaterDynamic;
 
 #define DEBUG	1
 
@@ -34,79 +35,102 @@ int main()
 			count_do_beep = 0;
 		}
 
+		solderT = get_solder_temp()/10;
+
 		//=========Solder=========
 		hd44780_goto_xy(0, 0);
-
-		solderT = get_solder_temp();
-		switch(sld.state){
-		case notReady:
-			hd44780_puts("Sld is out stand");
+		/*if(solderT>4090){
+			hd44780_puts("Sld disconnected");
 			PIN_OFF(SOLDER_HEATER);
 			PIN_OFF(SOLDER_LEDBTN);
-			break;
-		case isOn:
-			PIN_ON(SOLDER_LEDBTN);
-			if(solderT < sld.temp){
-				PIN_ON(SOLDER_HEATER);
-			}else{
+			if(sld.state != notReady) beep(3);
+			sld.state = notReady;
+		}else{*/
+			switch(sld.state){
+			case notReady:
+				hd44780_puts("Sld is out stand");
 				PIN_OFF(SOLDER_HEATER);
-			}
-			printSolderInfoLCD(&solderT);
-			break;
-		case isPreOn:
-		case isSleepMode:
-			PIN_REVERSE(SOLDER_LEDBTN);
-			printSolderInfoLCD(&solderT);
-			if(solderT < sld.temp * 0.7){
-				PIN_ON(SOLDER_HEATER);
-			}else{
+				PIN_OFF(SOLDER_LEDBTN);
+				break;
+			case isOn:
+				PIN_ON(SOLDER_LEDBTN);
+				if(solderT < sld.temp){
+					PIN_ON(SOLDER_HEATER);
+				}else{
+					PIN_OFF(SOLDER_HEATER);
+				}
+				PIN_ON(SOLDER_HEATER);/////////////
+				printSolderInfoLCD(&solderT);
+				break;
+			case isPreOn:
+			case isSleepMode:
+				PIN_REVERSE(SOLDER_LEDBTN);
+				printSolderInfoLCD(&solderT);
+				if(solderT < sld.temp * 0.7){
+					PIN_ON(SOLDER_HEATER);
+				}else{
+					PIN_OFF(SOLDER_HEATER);
+				}
+				break;
+			case isOff:
 				PIN_OFF(SOLDER_HEATER);
+				PIN_OFF(SOLDER_LEDBTN);
+				hd44780_puts("Sld: =off=       ");
+				break;
 			}
-			break;
-		case isOff:
-			PIN_OFF(SOLDER_HEATER);
-			PIN_OFF(SOLDER_LEDBTN);
-			hd44780_puts("Sld: =off=       ");
-			break;
-		}
+		//}
 		//========================
 
 		//========Fen Solder======
 		hd44780_goto_xy(1, 0);
-
 		airT = get_airfen_temp();
-		switch(fen.state){
-		case notReady:
-			hd44780_puts("Fen is out stand");
+		/*if(airT>4090){
+			hd44780_puts("Fen disconnected");
 			PIN_OFF(AIR_HEATER);
 			PIN_OFF(RELAY_FEN);
 			PIN_OFF(AIRFEN_LEDBTN);
-			break;
-		case isOn:
-			PIN_ON(RELAY_FEN);
-			PIN_ON(AIRFEN_LEDBTN);
-			if(airT < fen.temp){
-				PIN_ON(AIR_HEATER);
-			}else{
+			if(fen.state != notReady) beep(3);
+			fen.state = notReady;
+		}else{*/
+			switch(fen.state){
+			case notReady:
+				hd44780_puts("Fen is out stand");
 				PIN_OFF(AIR_HEATER);
+				PIN_OFF(RELAY_FEN);
+				PIN_OFF(AIRFEN_LEDBTN);
+				TIM_Cmd(TIM1, DISABLE);
+				break;
+			case isOn:
+				PIN_ON(AIR_FLOW_PWM);
+				//TIM_Cmd(TIM1, ENABLE);//airmotor on
+				PIN_ON(RELAY_FEN);
+				PIN_ON(AIRFEN_LEDBTN);
+				if(airT < fen.temp){
+					PIN_ON(AIR_HEATER);
+				}else{
+					PIN_OFF(AIR_HEATER);
+				}
+				printFenInfoLCD(&airT);
+				break;
+			case isPreOn:
+			case isSleepMode:
+				PIN_REVERSE(AIRFEN_LEDBTN);
+				PIN_OFF(AIR_HEATER);
+				printFenInfoLCD(&airT);
+				break;
+			case isOff:
+				TIM_Cmd(TIM1, DISABLE);//airmotor off
+				PIN_OFF(AIR_FLOW_PWM);
+				PIN_OFF(AIR_HEATER);
+				PIN_OFF(RELAY_FEN);
+				PIN_OFF(AIRFEN_LEDBTN);
+				hd44780_puts("Fen: =off=       ");
+				break;
 			}
-			printFenInfoLCD(&airT);
-			break;
-		case isPreOn:
-		case isSleepMode:
-			PIN_REVERSE(AIRFEN_LEDBTN);
-			PIN_OFF(AIR_HEATER);
-			printFenInfoLCD(&airT);
-			break;
-		case isOff:
-			PIN_OFF(AIR_HEATER);
-			PIN_OFF(RELAY_FEN);
-			PIN_OFF(AIRFEN_LEDBTN);
-			hd44780_puts("Fen: =off=       ");
-			break;
-		}
+		//}
 		//========================
 
+		//static u16 aif1;
 		if(cursor_cnt_state){
 			switch(encBtn){
 			case SLD_TEMP:
@@ -115,6 +139,10 @@ int main()
 
 			case FEN_AIRFLOW:
 				fen.air_flow = TIM3->CNT;
+				//if(aif1 != fen.air_flow){
+					TIM_SetCompare1(TIM1, fen.air_flow);
+					//aif1=fen.air_flow;
+				//}
 				break;
 
 			case FEN_TEMP:
@@ -129,8 +157,10 @@ int main()
 
 void beep(u8 count){
 	while(count--){
+		//PIN_ON(BUZZER);
 		buzzer(ENABLE);
 		delay_ms(BEEP_DELAY_ms);
+		//PIN_OFF(BUZZER);
 		buzzer(DISABLE);
 		if(count) {delay_ms(BEEP_DELAY_ms);}
 	}

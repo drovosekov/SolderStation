@@ -123,9 +123,9 @@ uint8_t hd44780_read(int8_t IsCmd)
   HD44780_E_LOW();
 #else
   HD44780_E_HIGH();
-  delay_us(HD44780_ShortDelayMks);
+  delay_us(HD44780_ShortDelayUs);
   // Считываем байт с шины данных
-  Data = HD44780_GetDATA_8bit();
+  //Data = HD44780_GetDATA_8bit();
   HD44780_E_LOW();
 #endif
   
@@ -333,23 +333,43 @@ void hd44780_start(void)
 	hd44780_write_cmd(0x30); //reset lcd
 	delay_ms(5);
 	hd44780_write_cmd(0x30); //reset lcd
-	delay_ms(1);
+	delay_ms(5);
 	hd44780_write_cmd(0x30); //reset lcd
-	delay_ms(1);
+	delay_ms(5);
 
+	u8 Reg=0;
 #if HD44780_4bitMode
-  hd44780_write_cmd(0x02);       // Размер символа, ширина шина данных
-  //uint8_t Reg = 0x20;
-//#else
-//  uint8_t Reg = 0x30;
+	  HD44780_SetDATA_4bit(2 >> 4);
+	  HD44780_E_HIGH();
+	  delay_ms(HD44780_ShortDelayUs);
+	  HD44780_E_LOW();
+
+	  HD44780_SetDATA_4bit(2 >> 4);
+	  HD44780_E_HIGH();
+	  delay_ms(HD44780_ShortDelayUs);
+	  HD44780_E_LOW();
+
+	  HD44780_SetDATA_4bit(8 >> 4);
+	  HD44780_E_HIGH();
+	  delay_ms(HD44780_ShortDelayUs);
+	  HD44780_E_LOW();
+	  hd44780_clear();
+  hd44780_write_cmd(0x02);       // Установка нулевой позиции курсора и дисплея
+  //hd44780_write_cmd(0x20);       // 4-х разрядная шина данных.
+  //hd44780_clear();
+  Reg = 0x20;
+#else
+  hd44780_write_cmd(0x30);       // 8-и разрядная шина данных
+  Reg = 0x30;
 #endif
-/*
+
+	delay_ms(5);
 #if (HD44780_ROWS > 1)
   Reg |= 0x08;
+  hd44780_write_cmd(Reg);       // Размер символа, ширина шина данных
 #endif
-  */
-  //hd44780_write_cmd(Reg);       // Размер символа, ширина шина данных
-  //delay_ms(1);
+
+  delay_ms(1);
   hd44780_write_cmd(0x0C);      // Включаем дисплей
   delay_ms(1);
   hd44780_write_cmd(0x06);      // Автоинкремент адреса

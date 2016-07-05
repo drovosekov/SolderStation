@@ -2,7 +2,7 @@
 
 #define ADC_SAMPLE_TIME		ADC_SampleTime_239Cycles5	//количество тактов процессора для усреднения значения АЦП (здесь для всех используемых каналов одинаковая)
 #define ADC_COUNT_CHANELS	3  							//количество каналов
-#define ADC_PRECISION 		50 							//задается точность +/- от считанного значения не повлияет на изменение результата измерений (см. ф-ию get_value_w_precision)
+#define ADC_PRECISION 		20 							//задается точность +/- от считанного значения не повлияет на изменение результата измерений (см. ф-ию get_value_w_precision)
 
 static __IO u16 ADCConvertedValue[ADC_COUNT_CHANELS];	//массив значений с АЦП полученных через DMA
 
@@ -19,7 +19,7 @@ void init_adc(void){
 
 	//==Configure the systems clocks for the ADC and DMA==
 	//ADCCLK = PCLK2 / 4
-	RCC_ADCCLKConfig(RCC_PCLK2_Div8);  //Defines the ADC clock divider.  This clock is derived from the APB2 clock (PCLK2).  The
+	RCC_ADCCLKConfig(RCC_PCLK2_Div2);  //Defines the ADC clock divider.  This clock is derived from the APB2 clock (PCLK2).  The
 	//ADCs are clocked by the clock of the high speed domian (APB2) dibivied by 2/4/6/8.
 	//The frequency can never be bigger than 14MHz!!!!
 
@@ -34,7 +34,7 @@ void init_adc(void){
 	DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_DR_Address;  //Address of peripheral the DMA must map to
 	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) & ADCConvertedValue;  //Variable to which ADC values will be stored
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-	DMA_InitStructure.DMA_BufferSize = ADC_COUNT_CHANELS;  //Buffer size (2 because we using two channels)
+	DMA_InitStructure.DMA_BufferSize = ADC_COUNT_CHANELS;  //Buffer size (count using channels)
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
@@ -58,7 +58,7 @@ void init_adc(void){
 	ADC_Init(ADC1, &ADC_InitStructure);  //Initialise ADC1
 
 	//Setup order in which the Channels are sampled....
-	for (adc_cnt = 0; adc_cnt < ADC_COUNT_CHANELS; ++adc_cnt) {
+	for (adc_cnt = 0; adc_cnt < ADC_COUNT_CHANELS; adc_cnt++) {
 		ADC_RegularChannelConfig(ADC1, adc_cnt, adc_cnt, ADC_SAMPLE_TIME);
 	}
 	//ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_239Cycles5);

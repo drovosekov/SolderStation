@@ -9,7 +9,9 @@
 void mcu_gpio_init()
 {
 	//разрешаем тактирование таймеров
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE); //ШИМ для фена
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE); //ШИМ для вентилятора фена
+    GPIO_PinRemapConfig(GPIO_FullRemap_TIM1, ENABLE);	//исп. альтернативные выходы таймера 1
+
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); //секундный таймер
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); //обработка энкодера
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //генератор для биппера
@@ -30,7 +32,7 @@ void mcu_gpio_init()
 	PIN_CONFIGURATION(SOLDER_LEDBTN);	//светодиод включения паяльника
 	PIN_CONFIGURATION(AIRFEN_LEDBTN);	//светодиод включения фена
 
-	PIN_CONFIGURATION(AIR_FLOW_PWM);	//выход TIM2 CH1 - ШИМ для фена
+	PIN_CONFIGURATION(AIR_FLOW_PWM);	//выход TIM1 CH2N - ШИМ для фена
 	PIN_CONFIGURATION(AIR_HEATER);		//вкл./выкл. нагревателя фена
 	PIN_CONFIGURATION(SOLDER_HEATER);	//вкл./выкл. нагревателя паяльника
 

@@ -24,18 +24,28 @@ void init_tim(){
 
 
     //ШИМ для вентилятора фена
+
+    TIM_BaseConfig.TIM_Period = (SystemCoreClock / 25000) - 1;
+    TIM_BaseConfig.TIM_Prescaler = 0;
+    TIM_BaseConfig.TIM_ClockDivision = TIM_CKD_DIV1;
+    TIM_BaseConfig.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_TimeBaseInit(TIM1, &TIM_BaseConfig);
+
     // Конфигурируем выход таймера, режим - PWM1
     TIM_OCConfig.TIM_OCMode = TIM_OCMode_PWM1;
     // Собственно - выход включен
-    TIM_OCConfig.TIM_OutputState = TIM_OutputState_Enable;
+    TIM_OCConfig.TIM_OutputNState  = TIM_OutputNState_Enable;
     // Пульс длинной 500 тактов => 500/1000 = 50%
-    TIM_OCConfig.TIM_Pulse = 500;
+    TIM_OCConfig.TIM_Pulse = 512;
     // Полярность => пульс - это единица (+3.3V)
-    TIM_OCConfig.TIM_OCPolarity = TIM_OCPolarity_Low;
+    TIM_OCConfig.TIM_OCNPolarity = TIM_OCNPolarity_Low;
+    TIM_OCConfig.TIM_OCNIdleState = TIM_OCNIdleState_Set;
     // Инициализируем 1й выход таймера №1
-    TIM_OC1Init(TIM1, &TIM_OCConfig);
+    //TIM_OC2Init(TIM1, &TIM_OCConfig);
+    //TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
+    /* enable main output */
+    TIM_CtrlPWMOutputs(TIM1, ENABLE);
     TIM_Cmd(TIM1, DISABLE);
-
 
     //генератор для зуммера
     // Конфигурируем выход таймера, режим - PWM1
@@ -50,7 +60,7 @@ void init_tim(){
 	TIM_TimeBaseInitTypeDef snd_timebase;
 	snd_timebase.TIM_CounterMode = TIM_CounterMode_Up;
 	snd_timebase.TIM_Prescaler = 0;
-	snd_timebase.TIM_ClockDivision = 0;
+	snd_timebase.TIM_ClockDivision = TIM_CKD_DIV1;
 	snd_timebase.TIM_RepetitionCounter = 0;
 	snd_timebase.TIM_Period = (SystemCoreClock / (BUZZER_FREQ << 1)) - 1;
 	TIM_TimeBaseInit(TIM4, &snd_timebase);

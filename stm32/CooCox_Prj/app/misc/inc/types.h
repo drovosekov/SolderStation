@@ -13,6 +13,12 @@ enum EncoderModes{
 	selAirHeaterTemperature
 };
 
+typedef enum {
+	heatOff = 0,
+	heatFast,
+	heatNormal
+}HeaterDynamic;
+
 enum SolderingStates{
 	notReady = 0,	//вне подставки - не готов
 	isOff,			//выключен
@@ -27,7 +33,7 @@ typedef struct SLD_INFO{
 	u16 auto_off;		//счетчик автоотключения
 	u16 temp;			//переменная уст. температуры
 	States state;		//текущее состояние
-	u8 air_flow;		//поток воздуха (только для фена)
+	u16 air_flow;		//поток воздуха (только для фена)
 }SLD_INFO;
 
 #endif

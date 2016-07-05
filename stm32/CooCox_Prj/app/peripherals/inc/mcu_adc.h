@@ -1,5 +1,5 @@
 
-#define ADC1_DR_Address ((uint32_t)0x4001244C)
+#define ADC1_DR_Address (uint32_t)&(ADC1->DR) //((uint32_t)0x4001244C)
 
 void init_adc(void);
 u16 get_ctrl_buttons_value();

@@ -54,9 +54,9 @@ button_state get_ctrl_button_state(void){
 	u16 ctrl_adc = get_ctrl_buttons_value();
 	if(ctrl_adc < 1400){
 		return BTN_ENCODER;
-	}else if(ctrl_adc > 1500 && ctrl_adc < 1700){
+	}else if(ctrl_adc > 1400 && ctrl_adc < 1700){
 		return BTN_FEN;
-	}else if(ctrl_adc > 2000 && ctrl_adc < 2500){
+	}else if(ctrl_adc > 1800 && ctrl_adc < 2200){
 		return BTN_SOLDER;
 	}else{
 		return BTN_NONE;

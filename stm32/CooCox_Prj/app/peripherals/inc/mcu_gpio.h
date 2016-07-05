@@ -22,34 +22,32 @@ void mcu_gpio_init();
 #define ENCODER_A				A, 6, HIGH, INPUT_PULL_UP, SPEED_10MHZ //энкодер вход 1
 #define ENCODER_B				A, 7, HIGH, INPUT_PULL_UP, SPEED_10MHZ //энкодер вход 2
 
-#define FEN_GERKONS_PORT		A
-#define SLD_GERKONS_PORT		B
-#define FEN_GERKONS_EXT_PORT	GPIOA
-#define SLD_GERKONS_EXT_PORT	GPIOB
-#define FEN_GERKON_PIN			15
-#define SLD_GERKON_PIN			4
+#define FEN_GERKONS_PORT		B
+#define SLD_GERKONS_PORT		A
+#define FEN_GERKONS_EXT_PORT	GPIOB
+#define SLD_GERKONS_EXT_PORT	GPIOA
+#define FEN_GERKON_PIN			4
+#define SLD_GERKON_PIN			15
 
 #define GERKON_AIR				FEN_GERKONS_PORT, FEN_GERKON_PIN, LOW, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //геркон установки фена на подставку
 #define GERKON_SOLDER			SLD_GERKONS_PORT, SLD_GERKON_PIN, LOW, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //геркон установки паяльника на подставку
 
-
-
 #ifdef STM32F100_DISCOVERY_BOARD
 	#define USER_BTN			A, 0, HIGH, INPUT_PULL_UP, SPEED_2MHZ 				//user button on STM32F100R8T6B dev board
-	#define USER_LED_green		C, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED green on STM32F100R8T6B dev board
-	#define USER_LED_blue		C, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ   //user LED blue on STM32F100R8T6B dev board
+	#define USER_LED_green		C, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ   //user LED green on STM32F100R8T6B dev board
+	#define USER_LED_blue		C, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ   //user LED blue on STM32F100R8T6B dev board
 #else
-	#define USER_LED_green		C, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //user LED green on STM32F103C8T6 dev board
+	#define USER_LED_green		C, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //user LED green on STM32F103C8T6 dev board
 #endif
 /* end buttons defines */
 
 /* out pins defines */
-#define SOLDER_HEATER			B, 5, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя паяльника
-#define AIR_HEATER				B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ  //вкл./выкл. нагревателя фена
-#define AIR_FLOW_PWM			B, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM1 CH1N - ШИМ для фена
+#define SOLDER_HEATER			B, 5, LOW, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //вкл./выкл. нагревателя паяльника
+#define AIR_HEATER				B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //вкл./выкл. нагревателя фена
+#define AIR_FLOW_PWM			B, 14, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM1 CH2N - ШИМ для фена
 
-#define SOLDER_LEDBTN			C, 15, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //светодиод включения паяльника
-#define AIRFEN_LEDBTN			C, 14, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //светодиод включения фена
+#define SOLDER_LEDBTN			C, 15, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //светодиод включения паяльника
+#define AIRFEN_LEDBTN			C, 14, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //светодиод включения фена
 
 #define BUZZER					B, 7, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_2MHZ //выход TIM4 CH2N - пищалка
 
@@ -69,8 +67,8 @@ void mcu_gpio_init();
 //#define NAME								название вывода в коде программы
 //		(A,B,C,D,E,F,G),					используемый порт IO
 //		(#0-15),							номер в порту
-//		(HIGH|			для корректной работы PIN_STATE() в случае входа подтянутого к GND (INPUT_PULL_DOWN); в случае сконфигурированного выхода через PIN_ON() установит VCC на выводе
-//		 LOW),			для корректной работы PIN_STATE() в случае входа подтянутого к VCC (INPUT_PULL_UP);   в случае сконфигурированного выхода через PIN_ON() установит GND на выводе
+//		(HIGH|			для корректной работы PIN_STATE() в случае входа подтянутого к GND (INPUT_PULL_DOWN); для сконфигурированного выхода через PIN_ON() установит VCC на выводе
+//		 LOW),			для корректной работы PIN_STATE() в случае входа подтянутого к VCC (INPUT_PULL_UP);   для сконфигурированного выхода через PIN_ON() установит GND на выводе
 //		(ANALOG|							аналоговый вход;
 //		 INPUT_FLOATING|					вход без подтяжки, болтающийся (англ. float) в воздухе
 //		 INPUT_PULL_DOWN|					вход с подтяжкой к земле (англ. Pull-down)
