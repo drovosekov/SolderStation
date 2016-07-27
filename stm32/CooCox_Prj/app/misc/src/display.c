@@ -49,7 +49,12 @@ void printFenInfoLCD(u16 *airT){
 	}
 
 	lcd_write_dec_auto(fen.air_flow);
-	hd44780_puts("%   ");
+	hd44780_puts("% ");
+	if(fen.air_flow<10){
+		hd44780_puts("  ");
+	}else if(fen.air_flow<100){
+		hd44780_puts(" ");
+	}
 
 	hd44780_goto_xy(1, 10);
 	hd44780_puts("t");

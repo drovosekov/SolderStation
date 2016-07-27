@@ -22,12 +22,12 @@ void mcu_gpio_init()
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
 
 	//настрока выводов МК
+	PIN_CONFIGURATION(SOLDER_HEATER);	//влючение/отключение паяльника
+	PIN_CONFIGURATION(AIR_HEATER);		//влючение/отключение фена
+
 	PIN_CONFIGURATION(SOLDER_TEMP_ADC); //уст. температуры паяльника
 	PIN_CONFIGURATION(AIRFEN_TEMP_ADC); //уст. температуры фена
 	PIN_CONFIGURATION(BUTTONS_ADC); 	//кнопки
-
-	PIN_CONFIGURATION(SOLDER_HEATER);	//влючение/отключение паяльника
-	PIN_CONFIGURATION(AIR_HEATER);		//влючение/отключение фена
 
 	PIN_CONFIGURATION(SOLDER_LEDBTN);	//светодиод включения паяльника
 	PIN_CONFIGURATION(AIRFEN_LEDBTN);	//светодиод включения фена
