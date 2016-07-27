@@ -9,7 +9,8 @@ SLD_INFO fen;
 u8 count_do_beep;
 u16 power_off_count;
 s8 cursor_cnt_state;
-EncBtnStates encBtn = FEN_TEMP;
+u16 encoder_value;
+EncBtnStates encBtn = SEL_OFF;
 
 void Fen_Gerkon_IRQHandler(void)
 {
@@ -52,11 +53,11 @@ void Sld_Gerkon_IRQHandler(void)
 //состояние кнопок подключеных к АЦП
 button_state get_ctrl_button_state(void){
 	u16 ctrl_adc = get_ctrl_buttons_value();
-	if(ctrl_adc < 1400){
+	if(ctrl_adc < 500){
 		return BTN_ENCODER;
-	}else if(ctrl_adc > 1400 && ctrl_adc < 1700){
+	}else if(ctrl_adc > 600 && ctrl_adc < 900){
 		return BTN_FEN;
-	}else if(ctrl_adc > 1800 && ctrl_adc < 2200){
+	}else if(ctrl_adc > 1800 && ctrl_adc < 2300){
 		return BTN_SOLDER;
 	}else{
 		return BTN_NONE;
@@ -108,36 +109,48 @@ void check_control_panel_buttons(){
 		count_do_beep=1;
 
 		switch(encBtn){
-		case SLD_TEMP: //настройка температуры паяльника
-			if(!(fen.state == isOff || fen.state == notReady)){
-				encBtn = FEN_AIRFLOW;
-			}
-			break;
-
-		case FEN_AIRFLOW: //настройка силы воздушного потока фена
-			encBtn = FEN_TEMP;
-			break;
-
-		case FEN_TEMP: //настрйока температуры воздушного потока фна
+		case SEL_OFF:
 			if(sld.state == isOff || sld.state == notReady){
 				encBtn = FEN_AIRFLOW;
 			}else{
 				encBtn = SLD_TEMP;
 			}
 			break;
-		}
 
-		switch(encBtn){ //задание нач.значения таймера обработчика энкодера
 		case SLD_TEMP:
-			TIM3->CNT = sld.temp;
+			if(fen.state == isOff || fen.state == notReady){
+				encBtn = SEL_OFF;
+			}else{
+				encBtn = FEN_AIRFLOW;
+			}
 			break;
 
 		case FEN_AIRFLOW:
-			TIM3->CNT = fen.air_flow;
+			encBtn = FEN_TEMP;
 			break;
 
 		case FEN_TEMP:
-			TIM3->CNT = fen.temp;
+			encBtn = SEL_OFF;
+			break;
+		}
+
+		switch(encBtn){ //задание нач.значения таймера обработчика энкодера
+		case SLD_TEMP:  //настройка температуры паяльника
+			encoder_value = sld.temp;
+			break;
+
+		case FEN_AIRFLOW://настройка силы воздушного потока фена
+			encoder_value = fen.air_flow;
+			break;
+
+		case FEN_TEMP: //настрйока температуры воздушного потока фна
+			encoder_value = fen.temp;
+			break;
+
+		case SEL_OFF:
+			cursor_cnt_state = 0;
+			btnPressed = 1;
+			return;
 			break;
 		}
 

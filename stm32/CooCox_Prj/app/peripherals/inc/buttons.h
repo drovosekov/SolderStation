@@ -7,7 +7,8 @@ typedef enum {
 } button_state;
 
 typedef enum{
-	SLD_TEMP = 0,
+	SEL_OFF = 0,
+	SLD_TEMP,
 	FEN_AIRFLOW,
 	FEN_TEMP
 } EncBtnStates;

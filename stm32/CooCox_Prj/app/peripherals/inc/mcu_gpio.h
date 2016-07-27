@@ -15,12 +15,12 @@ void mcu_gpio_init();
 /* ADC defines */
 #define SOLDER_TEMP_ADC			A, 1, LOW, ANALOG, SPEED_2MHZ //уст. температуры паяльника
 #define AIRFEN_TEMP_ADC			A, 2, LOW, ANALOG, SPEED_2MHZ //уст. температуры фена
-#define BUTTONS_ADC				A, 3, LOW, ANALOG, SPEED_2MHZ //кнопки
+#define BUTTONS_ADC				A, 0, LOW, ANALOG, SPEED_2MHZ //кнопки
 /* end ADC defines */
 
 /* buttons defines */
-#define ENCODER_A				A, 6, HIGH, INPUT_PULL_UP, SPEED_10MHZ //энкодер вход 1
-#define ENCODER_B				A, 7, HIGH, INPUT_PULL_UP, SPEED_10MHZ //энкодер вход 2
+#define ENCODER_A				A, 6, HIGH, INPUT_PULL_UP, SPEED_2MHZ //энкодер вход 1
+#define ENCODER_B				A, 7, HIGH, INPUT_PULL_UP, SPEED_2MHZ //энкодер вход 2
 
 #define FEN_GERKONS_PORT		B
 #define SLD_GERKONS_PORT		A
@@ -44,7 +44,7 @@ void mcu_gpio_init();
 /* out pins defines */
 #define SOLDER_HEATER			B, 5, LOW, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //вкл./выкл. нагревателя паяльника
 #define AIR_HEATER				B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ  //вкл./выкл. нагревателя фена
-#define AIR_FLOW_PWM			B, 14, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM1 CH2N - ШИМ для фена
+#define AIR_FLOW_PWM			B, 13, LOW, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_2MHZ //выход TIM1 CH1N - ШИМ для фена
 
 #define SOLDER_LEDBTN			C, 15, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //светодиод включения паяльника
 #define AIRFEN_LEDBTN			C, 14, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //светодиод включения фена

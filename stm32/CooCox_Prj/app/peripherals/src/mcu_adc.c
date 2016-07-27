@@ -82,11 +82,11 @@ void init_adc(void){
 
 
 u16 get_ctrl_buttons_value(){//с делителя напряжения на кнопках управления
-	return get_value_w_precision(0);
+	return get_value_w_precision(2);
 }
 
 u16 get_solder_temp(){//температура паяльника
-	return get_value_w_precision(2);
+	return get_value_w_precision(0);
 }
 
 u16 get_airfen_temp(){//температура фена

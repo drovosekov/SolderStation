@@ -17,6 +17,8 @@ u8 cursor_cnt_state;	//счетчик автоотключения мигания курсора
 EncBtnStates encBtn;
 HeaterDynamic sldHeaterDynamic;
 
+u16 encoder_value;
+
 #define DEBUG	1
 
 int main()
@@ -59,14 +61,13 @@ int main()
 				}else{
 					PIN_OFF(SOLDER_HEATER);
 				}
-				PIN_ON(SOLDER_HEATER);/////////////
 				printSolderInfoLCD(&solderT);
 				break;
 			case isPreOn:
 			case isSleepMode:
 				PIN_REVERSE(SOLDER_LEDBTN);
 				printSolderInfoLCD(&solderT);
-				if(solderT < sld.temp * 0.7){
+				if(solderT < sld.temp * 0.6){
 					PIN_ON(SOLDER_HEATER);
 				}else{
 					PIN_OFF(SOLDER_HEATER);
@@ -83,26 +84,27 @@ int main()
 
 		//========Fen Solder======
 		hd44780_goto_xy(1, 0);
-		airT = get_airfen_temp();
-		/*if(airT>4090){
+		if(get_airfen_temp() > 4090){
 			hd44780_puts("Fen disconnected");
 			PIN_OFF(AIR_HEATER);
 			PIN_OFF(RELAY_FEN);
 			PIN_OFF(AIRFEN_LEDBTN);
 			if(fen.state != notReady) beep(3);
 			fen.state = notReady;
-		}else{*/
+		}else{
+			airT = get_airfen_temp()/10;
 			switch(fen.state){
 			case notReady:
 				hd44780_puts("Fen is out stand");
 				PIN_OFF(AIR_HEATER);
 				PIN_OFF(RELAY_FEN);
 				PIN_OFF(AIRFEN_LEDBTN);
+				TIM_SetCompare1(TIM1, 0);
 				TIM_Cmd(TIM1, DISABLE);
 				break;
 			case isOn:
-				PIN_ON(AIR_FLOW_PWM);
-				//TIM_Cmd(TIM1, ENABLE);//airmotor on
+				TIM_Cmd(TIM1, ENABLE);
+				TIM_SetCompare1(TIM1, fen.air_flow);
 				PIN_ON(RELAY_FEN);
 				PIN_ON(AIRFEN_LEDBTN);
 				if(airT < fen.temp){
@@ -119,6 +121,7 @@ int main()
 				printFenInfoLCD(&airT);
 				break;
 			case isOff:
+				TIM_SetCompare1(TIM1, 0);
 				TIM_Cmd(TIM1, DISABLE);//airmotor off
 				PIN_OFF(AIR_FLOW_PWM);
 				PIN_OFF(AIR_HEATER);
@@ -127,31 +130,11 @@ int main()
 				hd44780_puts("Fen: =off=       ");
 				break;
 			}
-		//}
+		}
 		//========================
 
-		//static u16 aif1;
-		if(cursor_cnt_state){
-			switch(encBtn){
-			case SLD_TEMP:
-				sld.temp = TIM3->CNT;
-				break;
-
-			case FEN_AIRFLOW:
-				fen.air_flow = TIM3->CNT;
-				//if(aif1 != fen.air_flow){
-					TIM_SetCompare1(TIM1, fen.air_flow);
-					//aif1=fen.air_flow;
-				//}
-				break;
-
-			case FEN_TEMP:
-				fen.temp = TIM3->CNT;
-				break;
-			}
-		}
-		//hd44780_goto_xy(0, 14);
-		//lcd_write_dec_auto(cursor_cnt_state);
+		//hd44780_goto_xy(0, 12);
+		//lcd_write_dec_auto(captured_direction);
 	}
 }
 
@@ -180,6 +163,9 @@ void init_All(void){
 
 	mcu_gpio_init();	//инициальзация портов
 
+	PIN_ON(RELAY_POWER);	//блокируем цепь питания станции
+	//PIN_OFF(AIR_FLOW_PWM);
+
 	hd44780_init();		//инициализация LCD дисплея
 
 	init_user_chars();	//загрузка пользовательских символов
@@ -196,8 +182,6 @@ void init_All(void){
 #endif
 
 	hd44780_clear();
-
-	PIN_ON(RELAY_POWER);	//блокируем цепь питания станции
 
 	sld.state = (PIN_STATE(GERKON_SOLDER)) ? isOff : notReady;
 	fen.state = (PIN_STATE(GERKON_AIR))    ? isOff : notReady;
