@@ -55,6 +55,10 @@ int main()
 				PIN_OFF(SOLDER_LEDBTN);
 				break;
 			case isOn:
+				if(solderT > SLD_FIRE_PROTECT_TEMP){
+					sld.state = isFireProtect;
+					break;
+				}
 				PIN_ON(SOLDER_LEDBTN);
 				if(solderT < sld.temp){
 					PIN_ON(SOLDER_HEATER);
@@ -73,10 +77,15 @@ int main()
 					PIN_OFF(SOLDER_HEATER);
 				}
 				break;
+			case isFireProtect:
+				PIN_OFF(SOLDER_HEATER);
+				PIN_OFF(SOLDER_LEDBTN);
+				hd44780_puts("Sld:FIRE PROTECT");
+				break;
 			case isOff:
 				PIN_OFF(SOLDER_HEATER);
 				PIN_OFF(SOLDER_LEDBTN);
-				hd44780_puts("Sld: =off=       ");
+				hd44780_puts("Sld: =off=      ");
 				break;
 			}
 		//}
@@ -86,13 +95,15 @@ int main()
 		hd44780_goto_xy(1, 0);
 		if(get_airfen_temp() > 4090){
 			hd44780_puts("Fen disconnected");
+			TIM_SetCompare1(TIM1, 0);
+			TIM_Cmd(TIM1, DISABLE);//airmotor off
 			PIN_OFF(AIR_HEATER);
 			PIN_OFF(RELAY_FEN);
 			PIN_OFF(AIRFEN_LEDBTN);
 			if(fen.state != notReady) beep(3);
 			fen.state = notReady;
 		}else{
-			airT = get_airfen_temp()/10;
+			airT = get_airfen_temp() / 10;
 			switch(fen.state){
 			case notReady:
 				hd44780_puts("Fen is out stand");
@@ -103,6 +114,10 @@ int main()
 				TIM_Cmd(TIM1, DISABLE);
 				break;
 			case isOn:
+				if(airT > FEN_FIRE_PROTECT_TEMP){
+					fen.state = isFireProtect;
+					break;
+				}
 				TIM_Cmd(TIM1, ENABLE);
 				TIM_SetCompare1(TIM1, fen.air_flow);
 				PIN_ON(RELAY_FEN);
@@ -116,14 +131,25 @@ int main()
 				break;
 			case isPreOn:
 			case isSleepMode:
+				if(airT < 30){
+					TIM_SetCompare1(TIM1, 0);
+					TIM_Cmd(TIM1, DISABLE);//airmotor off
+				}
 				PIN_REVERSE(AIRFEN_LEDBTN);
 				PIN_OFF(AIR_HEATER);
 				printFenInfoLCD(&airT);
 				break;
+			case isFireProtect:
+				PIN_OFF(AIR_HEATER);
+				PIN_OFF(RELAY_FEN);
+				PIN_REVERSE(AIRFEN_LEDBTN);
+				hd44780_puts("Fen:FIRE PROTECT");
+				break;
 			case isOff:
-				TIM_SetCompare1(TIM1, 0);
-				TIM_Cmd(TIM1, DISABLE);//airmotor off
-				PIN_OFF(AIR_FLOW_PWM);
+				if(airT < 30){
+					TIM_SetCompare1(TIM1, 0);
+					TIM_Cmd(TIM1, DISABLE);//airmotor off
+				}
 				PIN_OFF(AIR_HEATER);
 				PIN_OFF(RELAY_FEN);
 				PIN_OFF(AIRFEN_LEDBTN);
@@ -185,6 +211,8 @@ void init_All(void){
 
 	sld.state = (PIN_STATE(GERKON_SOLDER)) ? isOff : notReady;
 	fen.state = (PIN_STATE(GERKON_AIR))    ? isOff : notReady;
+
+	fen.air_flow = 100; //начальная скорость фена 100%
 
 	init_tim();			//инициализация таймеров
 }

@@ -12,7 +12,6 @@
 
 //#define STM32F100_DISCOVERY_BOARD
 
-#define AIRFLOW_DELAY_OFF_ms	5000	//милисекунд до отключения мотора фена
 #define BUZZER_FREQ			 	975		//частота звука биппа в Гц
 #define BEEP_DELAY_ms		 	200		//интервал в мс между сигналами бипп
 #define AFTER_LOGO_DELAY_ms		2000	//время отображения заставки мс
@@ -23,11 +22,15 @@
 #define SYMB_DUST_CLOCK1		2		//песочные часы
 #define SYMB_DUST_CLOCK2		3		//песочные часы
 #define SYMB_SET_ARROW			4		//стрелка вправо (для устанавливаемых значений)
+#define SYMB_TERM				5		//символ градусника
 
 #define AUTO_POWER_OFF			600		//секунд до автоматического отключения станции при бездействии
 #define AUTO_SLD_OFF			300		//секнуд до перевода паяльника из режима экономной работы в выключенное состояние
 #define AUTO_FEN_OFF			300		//секнуд до перевода фена из режима ожидания в выключенное состояние
 #define CURSOR_OFF_TIMEOUT		5		//секунд до отключения мигания курсора
+
+#define SLD_FIRE_PROTECT_TEMP	350		//температура защиты от перегрева паяльника
+#define FEN_FIRE_PROTECT_TEMP	300		//температура защиты от перегрева фена
 
 #include <stdlib.h>
 #include <string.h>

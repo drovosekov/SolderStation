@@ -24,7 +24,8 @@ enum SolderingStates{
 	isOff,			//выключен
 	isOn,			//включен
 	isSleepMode,	//экономный режим ожидания
-	isPreOn			//на подставке - готов к включению. Включится при снятии с подставки
+	isPreOn,		//на подставке - готов к включению. Включится при снятии с подставки
+	isFireProtect	//режим защиты от перегрева
 };
 
 typedef enum SolderingStates States;

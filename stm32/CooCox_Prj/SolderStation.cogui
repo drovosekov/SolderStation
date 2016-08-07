@@ -21,23 +21,23 @@
 </editorArea>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="buttons.c" partName="buttons.c" path="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/peripherals/src/buttons.c" title="buttons.c" tooltip="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/peripherals/src/buttons.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/peripherals/src/buttons.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3186" selectionTopPixel="1474"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3186" selectionTopPixel="864"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="display.c" partName="display.c" path="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/src/display.c" title="display.c" tooltip="D:/WorkSync/SolderStation/stm32/CooCox_Prj/app/misc/src/display.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="display.c" partName="display.c" path="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/misc/src/display.c" title="display.c" tooltip="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/misc/src/display.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/misc/src/display.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="7" selectionOffset="119" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1244" selectionTopPixel="540"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="mcu_tim.c" partName="mcu_tim.c" path="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/peripherals/src/mcu_tim.c" title="mcu_tim.c" tooltip="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/peripherals/src/mcu_tim.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="mcu_tim.c" partName="mcu_tim.c" path="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/peripherals/src/mcu_tim.c" title="mcu_tim.c" tooltip="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/peripherals/src/mcu_tim.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/peripherals/src/mcu_tim.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5742" selectionTopPixel="364"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6064" selectionTopPixel="2878"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="mcu_gpio.h" partName="mcu_gpio.h" path="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/peripherals/inc/mcu_gpio.h" title="mcu_gpio.h" tooltip="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/peripherals/inc/mcu_gpio.h" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/peripherals/inc/mcu_gpio.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="3" selectionOffset="1869" selectionTopPixel="90"/>
+<editorState selectionHorizontalPixel="0" selectionLength="3" selectionOffset="1869" selectionTopPixel="486"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/main.c" title="main.c" tooltip="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/main.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/main.c" title="main.c" tooltip="D:/Work_sync/SolderStation/stm32/CooCox_Prj/app/main.c" workbook="org.eclipse.ui.internal.EditorStack@cf065b">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SolderStation/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3585" selectionTopPixel="904"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2446" selectionTopPixel="1384"/>
 </editor>
 </editors>
 <views>
@@ -67,7 +67,8 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>&#x0A;<category IMemento.internal.id="Warnings (1 item)"/>
+<expanded>
+<category IMemento.internal.id="Warnings (1 item)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="1145"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -260,173 +261,163 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/src/mcu_adc.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/main.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/inc/buttons.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/inc/mcu_gpio.h"/>
-<editor factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.builder.ui.editors.ConfigEditor">
-<org.coocox.builder.ui.editors.ConfigEditor/>
-</editor>
-<editor factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.builder.ui.editors.ConfigEditor">
-<org.coocox.builder.ui.editors.ConfigEditor/>
-</editor>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/src/buttons.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/src/mcu_adc.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/src/mcu_tim.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/inc/mcu_gpio.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/main.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/stm_lib/src/stm32f10x_tim.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/misc/src/display.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/stm_lib/inc/stm32f10x_tim.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/inc/mcu_gpio.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/inc/mcu_gpio.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/main.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/peripherals/src/buttons.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SolderStation/stm_lib/src/stm32f10x_tim.c"/>
 </editors>
-<item historyLabel="mcu_adc.c" index="0">
-<position info="not_deleted" x="260" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="1520" y="1"/>
-</item>
-<item historyLabel="mcu_gpio.h" index="3">
-<position info="not_deleted" x="1771" y="0"/>
-</item>
-<item historyLabel="mcu_adc.c" index="0">
-<position info="not_deleted" x="260" y="0"/>
-</item>
-<item historyLabel="mcu_gpio.h" index="3">
-<position info="not_deleted" x="1771" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="1520" y="1"/>
-</item>
-<item historyLabel="buttons.h" index="2">
-<position info="not_deleted" x="278" y="36"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="1190" y="0"/>
-</item>
-<item historyLabel="mcu_adc.c" index="0">
-<position info="not_deleted" x="3728" y="15"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="1190" y="0"/>
-</item>
-<item historyLabel="mcu_gpio.h" index="3">
-<position info="not_deleted" x="1771" y="0"/>
-</item>
-<item historyLabel="mcu_adc.c" index="0">
-<position info="not_deleted" x="3728" y="15"/>
-</item>
-<item historyLabel="Configuration" index="4"/>
-<item historyLabel="Configuration" index="5"/>
-<item historyLabel="buttons.c" index="6">
-<position info="not_deleted" x="2908" y="6"/>
-</item>
-<item historyLabel="mcu_adc.c" index="7">
-<position info="not_deleted" x="3214" y="0"/>
-</item>
-<item historyLabel="buttons.c" index="6">
-<position info="not_deleted" x="2908" y="6"/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="1124" y="0"/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="5259" y="0"/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="1074" y="0"/>
-</item>
-<item historyLabel="buttons.c" index="6">
-<position info="not_deleted" x="2954" y="453"/>
-</item>
-<item historyLabel="main.c" index="9">
-<position/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="1074" y="0"/>
-</item>
-<item historyLabel="main.c" index="9">
-<position/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="1074" y="0"/>
-</item>
-<item historyLabel="main.c" index="9">
-<position info="not_deleted" x="3330" y="0"/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="5914" y="0"/>
-</item>
-<item historyLabel="main.c" index="9">
-<position info="not_deleted" x="3329" y="0"/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="413" y="0"/>
-</item>
-<item historyLabel="stm32f10x_tim.c" index="10">
-<position info="not_deleted" x="25578" y="22"/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position/>
-</item>
-<item historyLabel="stm32f10x_tim.h" index="11">
-<position info="not_deleted" x="23083" y="21"/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position/>
-</item>
-<item historyLabel="mcu_gpio.h" index="12">
-<position info="not_deleted" x="1795" y="0"/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="698" y="0"/>
-</item>
-<item historyLabel="mcu_gpio.h" index="13">
-<position info="not_deleted" x="1793" y="0"/>
-</item>
-<item historyLabel="main.c" index="14">
-<position info="not_deleted" x="3643" y="0"/>
-</item>
-<item historyLabel="mcu_gpio.h" index="13">
-<position info="not_deleted" x="1867" y="0"/>
-</item>
-<item historyLabel="buttons.c" index="15">
+<item historyLabel="buttons.c" index="5">
 <position info="not_deleted" x="3186" y="0"/>
 </item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="1685" y="0"/>
+<item historyLabel="mcu_tim.c" index="0">
+<position/>
 </item>
-<item historyLabel="mcu_gpio.h" index="13">
+<item historyLabel="display.c" index="3">
+<position info="not_deleted" x="1244" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="2239" y="0"/>
+</item>
+<item historyLabel="stm32f10x_tim.c" index="6">
+<position/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="1602" y="0"/>
+</item>
+<item historyLabel="stm32f10x_tim.h" index="4">
+<position info="not_deleted" x="14479" y="15"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="1602" y="0"/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
 <position info="not_deleted" x="1872" y="0"/>
 </item>
-<item historyLabel="main.c" index="14">
-<position info="not_deleted" x="2721" y="0"/>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="1602" y="0"/>
 </item>
-<item historyLabel="mcu_gpio.h" index="13">
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3201" y="0"/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
+<position info="not_deleted" x="1872" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3201" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3201" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="6028" y="0"/>
+</item>
+<item historyLabel="stm32f10x_tim.c" index="6">
+<position info="not_deleted" x="83550" y="15"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
+<position info="not_deleted" x="1929" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3201" y="0"/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
+<position info="not_deleted" x="1929" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="2122" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3171" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="1948" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3171" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="1948" y="0"/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
+<position info="not_deleted" x="1872" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3171" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="1833" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
+<position info="not_deleted" x="1872" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
+<position info="not_deleted" x="1909" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="1648" y="0"/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
+<position info="not_deleted" x="1909" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3883" y="0"/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
+<position info="not_deleted" x="1909" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="1648" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3883" y="0"/>
+</item>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="2058" y="38"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="3201" y="0"/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
+<position info="not_deleted" x="1909" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="2700" y="0"/>
+</item>
+<item historyLabel="mcu_gpio.h" index="1">
 <position info="not_deleted" x="1869" y="3"/>
 </item>
-<item historyLabel="main.c" index="14">
-<position info="not_deleted" x="3134" y="27"/>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="6017" y="42"/>
 </item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="1896" y="0"/>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="2757" y="0"/>
 </item>
-<item historyLabel="main.c" index="14">
-<position info="not_deleted" x="3585" y="0"/>
+<item historyLabel="mcu_tim.c" index="0">
+<position info="not_deleted" x="6064" y="0"/>
 </item>
-<item historyLabel="mcu_gpio.h" index="13">
-<position info="not_deleted" x="1869" y="3"/>
-</item>
-<item historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="2026" y="0"/>
-</item>
-<item historyLabel="stm32f10x_tim.c" index="16">
-<position info="not_deleted" x="28998" y="18"/>
-</item>
-<item active="true" historyLabel="mcu_tim.c" index="8">
-<position info="not_deleted" x="2026" y="0"/>
+<item active="true" historyLabel="main.c" index="2">
+<position info="not_deleted" x="2757" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -440,6 +431,9 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f10x_tim.h" tooltip="SolderStation/stm_lib/inc/stm32f10x_tim.h">
 <persistable path="/SolderStation/stm_lib/inc/stm32f10x_tim.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.h" tooltip="SolderStation/main.h">
+<persistable path="/SolderStation/main.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f10x_adc.h" tooltip="SolderStation/stm_lib/inc/stm32f10x_adc.h">
 <persistable path="/SolderStation/stm_lib/inc/stm32f10x_adc.h"/>
@@ -464,9 +458,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="pcf8574.c" tooltip="SolderStation/hd44780/pcf8574.c">
 <persistable path="/SolderStation/hd44780/pcf8574.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.h" tooltip="SolderStation/main.h">
-<persistable path="/SolderStation/main.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="i2cm.c" tooltip="SolderStation/hd44780/i2cm.c">
 <persistable path="/SolderStation/hd44780/i2cm.c"/>

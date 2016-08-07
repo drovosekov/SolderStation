@@ -6,11 +6,13 @@ EncBtnStates encBtn;
 s8 cursor_cnt_state;
 
 void printSolderInfoLCD(u16 *solderT){
-	static u16 oldSolderT = -1;
-	static u8 dust_clock = 0;
-	static u8 set = 0;
+	//static u16 oldSolderT = -1;
+	//static u8 dust_clock = 0;
+	//static u8 set = 0;
 
-	hd44780_puts("Sld: t");
+	hd44780_puts("Sld: ");
+	print_temp_val(solderT, &sld.temp, (encBtn == SLD_TEMP));
+	/*hd44780_write_data(SYMB_TERM);
 	if(cursor_cnt_state && encBtn == SLD_TEMP){
 		hd44780_write_data((set) ? SYMB_SET_ARROW : 20);
 		lcd_write_dec_auto(sld.temp);
@@ -22,42 +24,29 @@ void printSolderInfoLCD(u16 *solderT){
 		lcd_write_dec_auto(*solderT);
 	}
 
-	hd44780_write_data(SYMB_DEGREE);
-	hd44780_puts("    ");
+	hd44780_write_data(SYMB_DEGREE);*/
+	hd44780_puts("        ");
 
-	oldSolderT = *solderT;
-	set = !set;
+	//oldSolderT = *solderT;
+	//set = !set;
 
 	if(sld.state == isPreOn || sld.state == isSleepMode){
-		hd44780_goto_xy(0, 15);
+		print_dust_clck(0);
+		/*hd44780_goto_xy(0, 15);
 		dust_clock = (dust_clock==SYMB_DUST_CLOCK1) ? SYMB_DUST_CLOCK2 : SYMB_DUST_CLOCK1;
 		hd44780_write_data(dust_clock);
-		delay_ms(150);
+		delay_ms(150);*/
 	}
 }
 
 void printFenInfoLCD(u16 *airT){
-	static u16 oldAirT = -1;
-	static u8 dust_clock = 0;
+	//static u16 oldAirT = -1;
+	//static u8 dust_clock = 0;
 	static u8 set = 0;
 
-	hd44780_puts("Fen:");
-	if(cursor_cnt_state && encBtn == FEN_AIRFLOW && set){
-		hd44780_write_data(SYMB_SET_ARROW);
-	}else{
-		hd44780_puts(" ");
-	}
-
-	lcd_write_dec_auto(fen.air_flow);
-	hd44780_puts("% ");
-	if(fen.air_flow<10){
-		hd44780_puts("  ");
-	}else if(fen.air_flow<100){
-		hd44780_puts(" ");
-	}
-
-	hd44780_goto_xy(1, 10);
-	hd44780_puts("t");
+	hd44780_puts("Fen: ");
+	print_temp_val(airT, &fen.temp, (encBtn == FEN_TEMP));
+	/*hd44780_write_data(SYMB_TERM);
 	if(cursor_cnt_state && encBtn == FEN_TEMP){
 		hd44780_write_data((set) ? SYMB_SET_ARROW : 20);
 		lcd_write_dec_auto(fen.temp);
@@ -68,19 +57,62 @@ void printFenInfoLCD(u16 *airT){
 		hd44780_write_data(SYMB_DN_ARROW);
 		lcd_write_dec_auto(*airT);
 	}
-	hd44780_write_data(SYMB_DEGREE);
-	hd44780_puts("   ");
 
-	oldAirT = *airT;
+	hd44780_write_data(SYMB_DEGREE);*/
+	if(*airT < 10){
+		hd44780_puts("  ");
+	}else if(*airT < 100){
+		hd44780_puts(" ");
+	}
+
+	hd44780_goto_xy(1, 11);
+
+	if(cursor_cnt_state && encBtn == FEN_AIRFLOW && set){
+		hd44780_write_data(SYMB_SET_ARROW);
+	}else{
+		hd44780_puts(" ");
+	}
+	lcd_write_dec_auto(fen.air_flow);
+	hd44780_puts("%   ");
+
+	//oldAirT = *airT;
 	set = !set;
 
 	if(fen.state == isPreOn || fen.state == isSleepMode){
-		hd44780_goto_xy(1, 15);
+		print_dust_clck(1);
+		/*hd44780_goto_xy(1, 15);
 		dust_clock = (dust_clock==SYMB_DUST_CLOCK1) ? SYMB_DUST_CLOCK2 : SYMB_DUST_CLOCK1;
 		hd44780_write_data(dust_clock);
-		delay_ms(150);
+		delay_ms(150);*/
 	}
 
+}
+
+void print_dust_clck(u8 row){
+	static u8 dust_clock;
+	dust_clock = (dust_clock==SYMB_DUST_CLOCK1) ? SYMB_DUST_CLOCK2 : SYMB_DUST_CLOCK1;
+
+	hd44780_goto_xy(row, 15);
+	hd44780_write_data(dust_clock);
+	delay_ms(150);
+}
+
+void print_temp_val(u16 *temp, u16 *presetTemp, u8 cursor){
+	static u8 set = 0;
+	static u16 oldTemp = -1;
+
+	hd44780_write_data(SYMB_TERM);
+	if(cursor_cnt_state && cursor){
+		hd44780_write_data((set) ? SYMB_SET_ARROW : 20);
+		lcd_write_dec_auto(*presetTemp);
+	}else{
+		hd44780_write_data((oldTemp < *temp) ? SYMB_UP_ARROW : SYMB_DN_ARROW);
+		lcd_write_dec_auto(*temp);
+	}
+	hd44780_write_data(SYMB_DEGREE);
+
+	set = !set;
+	oldTemp = *temp;
 }
 
 void init_user_chars(void){
@@ -142,6 +174,16 @@ void init_user_chars(void){
 
 	hd44780_set_user_char(SYMB_SET_ARROW, user_char);
 
+	user_char[0]=0b00000;
+	user_char[1]=0b00100; // градусник
+	user_char[2]=0b01110; //
+	user_char[3]=0b00100; //
+	user_char[4]=0b01110; //
+	user_char[5]=0b00100; //
+	user_char[6]=0b11111; //
+	user_char[7]=0b01110;
+
+	hd44780_set_user_char(SYMB_TERM, user_char);
 }
 
 void draw_logo(void){

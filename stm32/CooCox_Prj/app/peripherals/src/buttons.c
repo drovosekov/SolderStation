@@ -74,11 +74,12 @@ void check_control_panel_buttons(){
 		power_off_count = 0;//сброс автоотключения
 
 		if(btnPressed) break;
-		if(sld.state == isOn || sld.state == isPreOn){
+		if(sld.state == isOn || sld.state == isPreOn || sld.state == isFireProtect){
 			sld.state = isOff;
 		}else if(PIN_STATE(GERKON_SOLDER)){
 			sld.state = isPreOn;
 		}else{
+			if(fen.state = isOn) {fen.state = isOff;}
 			sld.state = isOn;
 		}
 		btnPressed = 1;
@@ -88,11 +89,12 @@ void check_control_panel_buttons(){
 		power_off_count = 0;//сброс автоотключения
 
 		if(btnPressed) break;
-		if(fen.state == isOn || fen.state == isPreOn){
+		if(fen.state == isOn || fen.state == isPreOn || fen.state == isFireProtect){
 			fen.state = isOff;
 		}else if(PIN_STATE(GERKON_AIR)){
 			fen.state = isPreOn;
 		}else{
+			if(sld.state = isOn) {sld.state = isOff;}
 			fen.state = isOn;
 		}
 		btnPressed = 1;
@@ -103,15 +105,15 @@ void check_control_panel_buttons(){
 
 		if(btnPressed) {break;}
 
-		if((fen.state == isOff || fen.state == notReady) &&
-		   (sld.state == isOff || sld.state == notReady)) {break;}
+		if((fen.state == isOff || fen.state == notReady || fen.state == isFireProtect) &&
+		   (sld.state == isOff || sld.state == notReady || sld.state == isFireProtect)) {break;}
 
 		count_do_beep=1;
 
 		switch(encBtn){
 		case SEL_OFF:
 			if(sld.state == isOff || sld.state == notReady){
-				encBtn = FEN_AIRFLOW;
+				encBtn = FEN_TEMP;
 			}else{
 				encBtn = SLD_TEMP;
 			}
@@ -121,20 +123,20 @@ void check_control_panel_buttons(){
 			if(fen.state == isOff || fen.state == notReady){
 				encBtn = SEL_OFF;
 			}else{
-				encBtn = FEN_AIRFLOW;
+				encBtn = FEN_TEMP;
 			}
 			break;
 
 		case FEN_AIRFLOW:
-			encBtn = FEN_TEMP;
+			encBtn = SEL_OFF;
 			break;
 
 		case FEN_TEMP:
-			encBtn = SEL_OFF;
+			encBtn = FEN_AIRFLOW;
 			break;
 		}
 
-		switch(encBtn){ //задание нач.значения таймера обработчика энкодера
+		switch(encBtn){
 		case SLD_TEMP:  //настройка температуры паяльника
 			encoder_value = sld.temp;
 			break;
@@ -143,7 +145,7 @@ void check_control_panel_buttons(){
 			encoder_value = fen.air_flow;
 			break;
 
-		case FEN_TEMP: //настрйока температуры воздушного потока фна
+		case FEN_TEMP: //настрйока температуры воздушного потока фена
 			encoder_value = fen.temp;
 			break;
 
